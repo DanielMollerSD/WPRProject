@@ -6,6 +6,7 @@ import Footer from './components/footer';
 
 // pages imports
 import Home from './pages/home';
+import Login from './pages/login';
 
 function AppRoutes() {
   return (
@@ -17,6 +18,7 @@ function AppRoutes() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/login" element= {<Login />} />
           </Routes>
         </main>
 
