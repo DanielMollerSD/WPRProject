@@ -7,6 +7,7 @@ import Footer from './components/footer';
 // pages imports
 import Home from './pages/home';
 import Login from './pages/login';
+import SignUp from './pages/signup';
 
 function AppRoutes() {
   return (
@@ -19,6 +20,7 @@ function AppRoutes() {
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element= {<Login />} />
+            <Route path="/signup" element = {<SignUp/>}/>
           </Routes>
         </main>
 
