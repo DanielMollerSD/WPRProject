@@ -39,7 +39,7 @@ function Login() {
                         </button>
     
                         <p className="signup-link">
-                            Geen account? <a href="/register">Registreren</a>
+                            Geen account? <a href="/signup">Registreren</a>
                         </p>
                     </form>
                 </section>

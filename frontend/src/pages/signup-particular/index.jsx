@@ -1,7 +1,7 @@
 import './styles.scss';
 import React, {useRef} from "react";
 
-function SignUp() {
+function SignUpParticular() {
 
     const password1Ref = useRef(null);
     const password2Ref = useRef(null);
@@ -26,7 +26,7 @@ function SignUp() {
             <main className="SignUpMain">
                 <section className="signup-container">
                     <h2>Registreren</h2>
-                    <form action="/signup" method="POST">
+                    <form action="/signupParticular" method="POST">
                         <div className="form-group">
                             <div>
                                 <label  className="nameLabel">Voornaam</label>
@@ -161,4 +161,4 @@ function SignUp() {
     )
 }
 
-export default SignUp
+export default SignUpParticular

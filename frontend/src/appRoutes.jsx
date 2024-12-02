@@ -1,13 +1,15 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-// components imports
+// Components
 import Header from './components/header';
 import Footer from './components/footer';
 
-// pages imports
+// Pages
 import Home from './pages/home';
 import Login from './pages/login';
-import SignUp from './pages/signup';
+import SignUpParticular from './pages/signup-particular';
+import SignUpBusiness from './pages/signup-business';
+import SignupSelectionScreen from './pages/signup-select';
 
 function AppRoutes() {
   return (
@@ -19,8 +21,10 @@ function AppRoutes() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
-            <Route path="/login" element= {<Login />} />
-            <Route path="/signup" element = {<SignUp/>}/>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup-particular" element={<SignUpParticular />} />
+            <Route path="/signup-business" element={<SignUpBusiness />} />
+            <Route path="/signup-select" element={<SignupSelectionScreen />} />
           </Routes>
         </main>
 
@@ -28,6 +32,6 @@ function AppRoutes() {
       </div>
     </Router>
   );
-}
 
-export default AppRoutes;
+}
+export default AppRoutes
