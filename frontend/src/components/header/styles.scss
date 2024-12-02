@@ -2,8 +2,7 @@
     position: relative;
 
     .header {
-        background-color: black;
-        color: white;
+        background-color: white;
         width: 100%;
         position: relative;
 
@@ -11,6 +10,8 @@
             position: relative;
             z-index: 2;
             padding-top: 40px;
+            padding-bottom: 40px;
+
 
             nav {
                 display: flex;
@@ -18,7 +19,7 @@
                 align-items: center;
 
                 a {
-                    color: white;
+                    color: black;
                     font-size: 23px;
                     font-weight: 600;
                     text-decoration: none;
@@ -26,11 +27,12 @@
 
 
                     &:hover {
-                        color: $title-color-hover;
+                        color: rgb(70, 70, 70);
                     }
 
                     &:last-child {
                         background-color: $secondary-button-color;
+                        color: white;
                         padding: 5px 30px;
                         border-radius: 50px;
 
@@ -43,16 +45,22 @@
         }
 
         .header-banner {
+            display: none;
             position: relative;
             z-index: 2;
             
             padding-top: 100px;
             padding-bottom: 140px;
+            color: white;
+
+            &.visible {
+                display: block;
+            }
         }
 
         .background-image {
             content: ' ';
-            display: block;
+            display: none;
             position: absolute;
             left: 0;
             top: 0;
@@ -64,6 +72,45 @@
             background-size: cover;
             opacity: 0.3;
             z-index: 1;
+
+            &.visible {
+                display: block;
+            }
+        }
+
+        &.homepage {
+            background-color: black;
+
+            header {
+                padding-bottom: 0;
+
+                nav {
+                    a {
+                        color: white;
+
+                        &:hover {
+                            color: rgb(197, 197, 197);
+                        }
+
+                        &:last-child {
+                            background-color: $secondary-button-color;
+                            color: white;
+    
+                            &:hover {
+                                background-color: $secondary-button-hover-color;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .header-banner {
+                display: block;
+            }
+
+            .background-image {
+                display: block;
+            }
         }
     }
 }

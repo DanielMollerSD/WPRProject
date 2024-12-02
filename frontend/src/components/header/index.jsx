@@ -1,15 +1,20 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './styles.scss';
 
 function Header() {
+
+    const location = useLocation();
+    const isHomepage = location.pathname === '/' || location.pathname === '/home';
+
     return (
+        
         <div className="component component-header">
-            <div className="header">
+            <div className={`header${isHomepage ? ' homepage' : ''}`}>
                 <div className="container">
                     <header>
                         <nav>
                             <Link to="/">Home</Link>
-                            <Link to="/register">register</Link>
+                            <Link to="/register">Register</Link>
                             <Link to="/login">Login</Link>
                         </nav>
                     </header>
