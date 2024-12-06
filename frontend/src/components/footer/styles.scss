@@ -3,7 +3,6 @@
     * {
         margin: 0;
         padding: 0;
-        box-sizing: border-box;
     }
 
     .container {
@@ -18,6 +17,8 @@
     .footer {
         background-color: #24262b;
         padding: 70px 0;
+        bottom: 0; 
+        width: 100%;
     }
 
     .footerText{

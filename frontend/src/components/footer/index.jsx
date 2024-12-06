@@ -8,8 +8,8 @@ function Footer() {
             <footer className='footer'>
                 <div className='container'>
                     <div className='row'>
-                        <div className='col-md-4'>
-                            <h4 className='footerText'>edlldww</h4>
+                        <div className='col-md-5'>
+                            <h4 className='footerText'>Over ons</h4>
                             <ul className='footerText'>
                                 <li>dewqdq</li>
                                 <li>dewqdq</li>
@@ -18,7 +18,7 @@ function Footer() {
                             </ul>
                         </div>
                         <div className='col-md-4'>
-                            <h4 className='footerText'>hewcs</h4>
+                            <h4 className='footerText'>Extra</h4>
                             <ul className='footerText'>
                                 <li>dewqdq</li>
                                 <li>dewqdq</li>
@@ -26,13 +26,12 @@ function Footer() {
                                 <li>dewqdq</li>
                             </ul>
                         </div>
-                        <div className='col-md-4'>
-                            <h4 className='footerText'>test</h4>
+                        <div className='col-md-3'>
+                            <h4 className='footerText'>Socials</h4>
                             <ul className='footerText'>
-                                <li>dewqdq</li>
-                                <li>dewqdq</li>
-                                <li>dewqdq</li>
-                                <li>dewqdq</li>
+                            <li>Instagram <i class="fa-brands fa-instagram"></i></li>
+                            <li>TikTok <i class="fa-brands fa-tiktok"></i></li>
+                            <li>LinkedIn <i class="fa-brands fa-linkedin"></i></li>
                             </ul>
                         </div>
                     </div>
