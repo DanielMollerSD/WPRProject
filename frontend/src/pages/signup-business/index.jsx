@@ -1,5 +1,6 @@
 import './styles.scss';
 import React, {useRef} from "react";
+import { Link } from 'react-router-dom';
 
 function SignUpBusiness() {
 
@@ -157,8 +158,13 @@ function SignUpBusiness() {
                     <script src="togglePassword.js"></script>
                  
                 </section>
+                         <Link to="/rent-screen">
+                            <button>next page</button>
+                        </Link>
+
             </main>
         </div>
+        
     </div>
     <footer>
      

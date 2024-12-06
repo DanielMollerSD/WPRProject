@@ -1,5 +1,6 @@
 import './styles.scss';
 import React, {useRef} from "react";
+import { Link } from 'react-router-dom';
 
 function SignUpParticular() {
 
@@ -148,6 +149,11 @@ function SignUpParticular() {
                     </form>
 
                     <script src="togglePassword.js"></script>
+
+                     <Link to="/rent-screen">
+                            <button>next page</button>
+                        </Link>
+
                  
                 </section>
             </main>
