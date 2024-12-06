@@ -1,8 +1,6 @@
 import './styles.scss'
 import React, {useRef, useEffect} from "react";
 import { Link } from 'react-router-dom';
-import {config} from "dotenv";
-config();
 
 function RentScreen(){
 
@@ -28,13 +26,11 @@ function RentScreen(){
     
 
     return (
-        <>
-        <header>Header Rent</header>
+        <div className="page page-rent-screen">
+            
+            Rent-Screen
 
-        RENT PAGE
-
-        <footer>Footer Rent</footer>
-        </>
+        </div>
     )
 }
 
