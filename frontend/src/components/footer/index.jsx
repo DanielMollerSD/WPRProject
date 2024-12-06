@@ -5,40 +5,42 @@ function Footer() {
     return (
         <>
         <div className="component component-footer">
-        <footer className='footer'>
-            <div className='container'>
-                <div className='row'>
-                    <div className='col-md-4'>
-                        <h4>edlldww</h4>
-                        <ul>
-                            <li>dewqdq</li>
-                            <li>dewqdq</li>
-                            <li>dewqdq</li>
-                            <li>dewqdq</li>
-                        </ul>
-                    </div>
-                    <div className='col-md-4'>
-                        <h4>hewcs</h4>
-                        <ul>
-                            <li>dewqdq</li>
-                            <li>dewqdq</li>
-                            <li>dewqdq</li>
-                            <li>dewqdq</li>
-                        </ul>
-                    </div>
-                    <div className='col-md-4'>
-                        <h4>test</h4>
-                        <ul>
-                            <li>dewqdq</li>
-                            <li>dewqdq</li>
-                            <li>dewqdq</li>
-                            <li>dewqdq</li>
-                        </ul>
+            <footer className='footer'>
+                <div className='container'>
+                    <div className='row'>
+                        <div className='col-md-4'>
+                            <h4 className='footerText'>edlldww</h4>
+                            <ul className='footerText'>
+                                <li>dewqdq</li>
+                                <li>dewqdq</li>
+                                <li>dewqdq</li>
+                                <li>dewqdq</li>
+                            </ul>
+                        </div>
+                        <div className='col-md-4'>
+                            <h4 className='footerText'>hewcs</h4>
+                            <ul className='footerText'>
+                                <li>dewqdq</li>
+                                <li>dewqdq</li>
+                                <li>dewqdq</li>
+                                <li>dewqdq</li>
+                            </ul>
+                        </div>
+                        <div className='col-md-4'>
+                            <h4 className='footerText'>test</h4>
+                            <ul className='footerText'>
+                                <li>dewqdq</li>
+                                <li>dewqdq</li>
+                                <li>dewqdq</li>
+                                <li>dewqdq</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </footer>
+            </footer>
         </div>
+
+        
         </> 
     )
 }
