@@ -1,19 +1,15 @@
 import './styles.scss'
-import React, {useRef, useEffect, useState} from "react";
+import React, {useRef, useEffect} from "react";
 import { Link } from 'react-router-dom';
-import {config} from "dotenv";
-config();
 
 function RentScreen(){
-
-    const [Vehicle, setVehicles]= useState ([]);
 
     useEffect( () => {
 
         async function fetchVehicles(){
 
             try{
-                    const response = await fetch (`${process.env.apiLink}/Vehicle`);
+                    const respone = await fetch (`${process.env.apiLink}/Vehicle`);
                     const data = await respone.json();
                     setVehicles(data);
             }
@@ -26,34 +22,112 @@ function RentScreen(){
         fetchVehicles();
     }, []);
 
-    const renderVehicleBoxes = () =>{
-        return Vehicle.map((Vehicle)=>{
-            if (Vehicle.soort === "Auto"){
 
-           
-                return <RentalAutoBox key={Vehicle.Id} data={Vehicle} />;
-            }
-            else if(Vehicle.soort ==="Camper"){
-
-                return <RentalAutoBox key={Vehicle.Id} data={Vehicle}/>;
-                
-            }
-
-        })
-    }
-    
     
 
     return (
+        <div className="page page-rent-screen">
+            <div className="container">
+                <div className="rent-screen-content">
 
-        
-        <>
-        <header>Header Rent</header>
+                    <div className="vehicle-select">
+                        Selecteer een voertuig type:
+                        <select name="vehicleType" id="vehicleType">
+                            <option value="cars">Auto</option>
+                            <option value="campers">Camper</option>
+                            <option value="caravan">Caravan</option>
+                        </select>
+                    </div>
+                
+                    <div className="cards-container">
+                        <div className="row">
 
-        RENT PAGE
+                            <div className="col-md-6 col-lg-4">
+                                <a href="#">
+                                    <div className="card">
+                                        <img className="card-img-top" src="" alt="Card image"></img>
+                                        <div className="card-body">
+                                            <h5 className="card-title">Auto</h5>
+                                            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            <div className="icons">
+                                                <div className="icon">Type</div>
+                                                <div className="icon">Merk</div>
+                                                <div className="icon">Model</div>
+                                                <div className="icon">Koop Jaar</div>
+                                                <div className="icon">Beschikbaar</div>
+                                            </div>
+                                            <div className="price">Prijs</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
 
-        <footer>Footer Rent</footer>
-        </>
+                            <div className="col-md-6 col-lg-4">
+                                <a href="#">
+                                    <div className="card">
+                                        <img className="card-img-top" src="" alt="Card image"></img>
+                                        <div className="card-body">
+                                            <h5 className="card-title">Auto</h5>
+                                            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            <div className="icons">
+                                                <div className="icon">Type</div>
+                                                <div className="icon">Merk</div>
+                                                <div className="icon">Model</div>
+                                                <div className="icon">Koop Jaar</div>
+                                                <div className="icon">Beschikbaar</div>
+                                            </div>
+                                            <div className="price">Prijs</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div className="col-md-6 col-lg-4">
+                                <a href="#">
+                                    <div className="card">
+                                        <img className="card-img-top" src="" alt="Card image"></img>
+                                        <div className="card-body">
+                                            <h5 className="card-title">Auto</h5>
+                                            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            <div className="icons">
+                                                <div className="icon">Type</div>
+                                                <div className="icon">Merk</div>
+                                                <div className="icon">Model</div>
+                                                <div className="icon">Koop Jaar</div>
+                                                <div className="icon">Beschikbaar</div>
+                                            </div>
+                                            <div className="price">Prijs</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+
+                            <div className="col-md-6 col-lg-4">
+                                <a href="#">
+                                    <div className="card">
+                                        <img className="card-img-top" src="" alt="Card image"></img>
+                                        <div className="card-body">
+                                            <h5 className="card-title">Auto</h5>
+                                            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            <div className="icons">
+                                                <div className="icon">Type</div>
+                                                <div className="icon">Merk</div>
+                                                <div className="icon">Model</div>
+                                                <div className="icon">Koop Jaar</div>
+                                                <div className="icon">Beschikbaar</div>
+                                            </div>
+                                            <div className="price">Prijs</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     )
 }
 

@@ -1,0 +1,43 @@
+.page.page-rent-screen {
+    position: relative;
+    background-color: #d6d1c7;
+    padding-top: 100px;
+    padding-bottom: 100px;
+
+    .rent-screen-content {
+        background-color: white;
+        padding: 20px 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        .vehicle-select {
+            margin-bottom: 10px;
+        }
+
+        .cards-container {
+            a {
+                text-decoration: none;
+                .card {
+                    margin-bottom: 20px;
+
+                    .card-img-top {
+                        background-color: gray;
+                        height: 200px;
+                    }
+
+                    .card-body {
+
+                        .icons {
+                            display: flex;
+                            position: relative;
+
+                            .icon {
+                                padding-right: 5px;
+                            }
+                        }
+                    } 
+                }
+            }
+        }
+    }
+}

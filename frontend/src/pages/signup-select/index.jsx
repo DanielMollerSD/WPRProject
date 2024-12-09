@@ -11,7 +11,7 @@ function SignupSelectionScreen() {
                     <main className="SelectionName">
                         <section className="selection-container">
                             <h2>Selecteer uw type account</h2>
-                            <div className="form-group">
+                            <div id="form-group-select">
                                
                                 <Link to="/signup-particular">
                                     <button className="SelectionButtons particular-icon">

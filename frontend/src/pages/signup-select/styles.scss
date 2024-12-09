@@ -1,7 +1,6 @@
 html, body {
     margin: 0;
     padding: 0;
-    height: 100%;  
 }
 
 .SelectionBody {
@@ -15,6 +14,10 @@ html, body {
     align-items: center;
     height: 100vh; 
     width: 100vw; 
+    background-image: url(../../assets/img/icons/backgroundimg/campervan-image.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    image-rendering: optimizeQuality;
 }
 
 .selection-container {
@@ -23,15 +26,14 @@ html, body {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 800px;
-    width: 90%;
+    width: 100%;
     text-align: center;
 }
 
-.form-group {
+#form-group-select {
     display: flex; 
     justify-content: center; 
-    gap: 20px; 
-    flex-wrap: wrap; 
+    
 }
 
 .SelectionButtons {
