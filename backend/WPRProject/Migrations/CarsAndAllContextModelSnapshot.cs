@@ -84,6 +84,15 @@ namespace WPRProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
+
+                    b.Property<string>("TussenVoegsel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Customer");
@@ -258,8 +267,8 @@ namespace WPRProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("DailyRentCoverage")
-                        .HasColumnType("int");
+                    b.Property<double>("DailyRentCoverage")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -274,8 +283,8 @@ namespace WPRProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Discount")
-                        .HasColumnType("int");
+                    b.Property<double>("Discount")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
