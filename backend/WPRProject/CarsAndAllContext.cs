@@ -18,7 +18,7 @@ namespace WPRProject
         public DbSet<SubscriptionCoverage> SubscriptionCoverage { get; set; }
         public DbSet<SubscriptionDiscount> SubscriptionDiscount { get; set; }
         public DbSet<SubscriptionOrder> SubscriptionOrder { get; set; }
-        public DbSet<Vehicle> Vehicle { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
 
 
       

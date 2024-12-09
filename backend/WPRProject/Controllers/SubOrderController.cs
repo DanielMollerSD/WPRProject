@@ -25,7 +25,7 @@ namespace WPRProject.Controllers
             return Ok(orders);
         }
         [HttpGet("{Id}")]
-        public async Task<ActionResult<Employee>> GetOneOrder(int id)
+        public async Task<ActionResult<SubscriptionOrder>> GetOneOrder(int id)
         {
 
             var order = await _context.SubscriptionOrder.FindAsync(id);
