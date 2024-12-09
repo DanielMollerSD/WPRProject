@@ -4,10 +4,43 @@ function Footer() {
 
     return (
         <>
-            <div>
-                <h1>Footer</h1>
-            </div>
-        </>
+        <div className="component component-footer">
+            <footer className='footer'>
+                <div className='container'>
+                    <div className='row'>
+                        <div className='col-md-5'>
+                            <h4 className='footerText'>Over ons</h4>
+                            <ul className='footerText'>
+                                <li>dewqdq</li>
+                                <li>dewqdq</li>
+                                <li>dewqdq</li>
+                                <li>dewqdq</li>
+                            </ul>
+                        </div>
+                        <div className='col-md-4'>
+                            <h4 className='footerText'>Extra</h4>
+                            <ul className='footerText'>
+                                <li>dewqdq</li>
+                                <li>dewqdq</li>
+                                <li>dewqdq</li>
+                                <li>dewqdq</li>
+                            </ul>
+                        </div>
+                        <div className='col-md-3'>
+                            <h4 className='footerText'>Socials</h4>
+                            <ul className='footerText'>
+                            <li>Instagram <i class="fa-brands fa-instagram"></i></li>
+                            <li>TikTok <i class="fa-brands fa-tiktok"></i></li>
+                            <li>LinkedIn <i class="fa-brands fa-linkedin"></i></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+        
+        </> 
     )
 }
 

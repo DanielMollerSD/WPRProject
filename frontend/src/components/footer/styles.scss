@@ -1,3 +1,27 @@
-*{
-    margin:0;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+.component.component-footer {  
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 1170px;
+        margin: auto;
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    .footer {
+        background-color: #24262b;
+        padding: 70px 0;
+        bottom: 0; 
+        width: 100%;
+    }
+
+    .footerText{
+        color: white;
+    }
 }
