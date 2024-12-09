@@ -26,7 +26,7 @@ function SignUpBusiness() {
         <div className="SignUpBody">
             <main className="SignUpMain">
                 <section className="signup-container">
-                    <h2>Registreren Zakelijk Account</h2>
+                    <b id="title-signup-bus"> Zakelijk Account Registreren</b>
                     <form action="/signupBussines" method="POST">
                         <div className="form-group">
                             <div>
