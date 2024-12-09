@@ -18,14 +18,14 @@ namespace WPRProject.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Damage>>> GetEmployees()
+        public async Task<ActionResult<IEnumerable<Damage>>> GetDamages()
         {
 
             var damages = await _context.Damage.ToListAsync();
             return Ok(damages);
         }
         [HttpGet("{Id}")]
-        public async Task<ActionResult<Damage>> GetOneEmployee(int id)
+        public async Task<ActionResult<Damage>> GetOneDamage(int id)
         {
 
             var damage = await _context.Damage.FindAsync(id);
