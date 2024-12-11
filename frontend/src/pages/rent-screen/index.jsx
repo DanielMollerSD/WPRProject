@@ -1,29 +1,35 @@
 import './styles.scss'
-import React, {useRef, useEffect} from "react";
+import React, {useRef, useEffect, useState} from "react";
 import { Link } from 'react-router-dom';
 
 function RentScreen(){
 
-    useEffect( () => {
-
-        async function fetchVehicles(){
-
-            try{
-                    const respone = await fetch (`${process.env.apiLink}/Vehicle`);
-                    const data = await respone.json();
-                    setVehicles(data);
-            }
-            catch(e){
-
-                console.error(e);
-            }
-
-        }
-        fetchVehicles();
-    }, []);
+    // useEffect( () => {
 
 
-    
+    //     const empdata = {
+
+            
+    //         Id: 1,
+    //         Brand: BMW,
+    //         Model: M3
+
+    //     }
+    //     async function fetchVehicles(){
+
+    //         try{
+    //                 const respone = await fetch (`${process.env.apiLink}/Vehicle`);
+    //                 const data = await respone.json();
+    //                 setVehicles(data);
+    //         }
+    //         catch(e){
+
+    //             console.error(e);
+    //         }
+
+    //     }
+    //     fetchVehicles();
+    // }, []);
 
     return (
         <div className="page page-rent-screen">

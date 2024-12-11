@@ -44,6 +44,8 @@ function Login() {
                     </form>
                 </section>
             </main>
+            <div className="bgImgLogin"></div>
+          
         </div>
         </div>
     </>

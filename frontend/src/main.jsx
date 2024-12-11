@@ -5,6 +5,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import './styles/main.scss'
 import Routes from './appRoutes.jsx'
 
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Routes />

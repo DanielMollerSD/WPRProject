@@ -23,7 +23,7 @@ function SignUpBusiness() {
             
         </header>
     <div className="page page-signup">
-        <div className="SignUpBody">
+        <div id="SignUpBody">
             <main className="SignUpMain">
                 <section className="signup-container">
                     <b id="title-signup-bus"> Zakelijk Account Registreren</b>
