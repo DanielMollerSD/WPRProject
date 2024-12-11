@@ -1,11 +1,20 @@
 import './styles.scss'
-import React, {useRef, useEffect} from "react";
+import React, {useRef, useEffect, useState} from "react";
 import { Link } from 'react-router-dom';
 
 function RentScreen(){
 
     useEffect( () => {
 
+
+        const empdata = {
+
+            
+            Id: 1,
+            Brand: BMW,
+            Model: M3
+
+        }
         async function fetchVehicles(){
 
             try{

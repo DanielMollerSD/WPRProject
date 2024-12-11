@@ -16,6 +16,11 @@ html, body {
     justify-content: center;
     align-items: center;
     height: calc(100vh - 70px);
+    background-image: url(../../assets/img/Breaking.jpg);
+    background-repeat: no-repeat;
+    background-position: 50% 60%;
+    background-size: cover;
+    z-index: 1;
 }
 
 .SignUpMain {

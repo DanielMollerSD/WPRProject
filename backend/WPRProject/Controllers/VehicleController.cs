@@ -17,6 +17,7 @@ namespace WPRProject.Controllers
             _context = context;
         }
 
+        //Fetch alle voertuigen
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Vehicle>>> GetVehicles()
         {
@@ -24,5 +25,6 @@ namespace WPRProject.Controllers
             var vehicles = await _context.Vehicles.ToListAsync();
             return Ok(vehicles);
         }
+        
     }
 }

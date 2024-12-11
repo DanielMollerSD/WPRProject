@@ -16,6 +16,12 @@
         justify-content: center;
         align-items: center;
         height: calc(100vh - 70px);
+        background-image: url(../../assets/img/camperLake.jpg);
+        background-repeat: no-repeat;
+        background-position: 50% 60%;
+        background-size: cover;
+      
+        
     }
     
     
@@ -96,4 +102,5 @@
             .signup-link a:hover {
                 text-decoration: underline;
             }
+
         }
