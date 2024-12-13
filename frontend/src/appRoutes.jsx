@@ -7,6 +7,7 @@ import Footer from './components/footer';
 // Pages
 import Home from './pages/home';
 import Login from './pages/login';
+import Register from './pages/register'
 import SignUpParticular from './pages/signup-particular';
 import SignUpBusiness from './pages/signup-business';
 import SignupSelectionScreen from './pages/signup-select';
@@ -23,6 +24,7 @@ function AppRoutes() {
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/signup-particular" element={<SignUpParticular />} />
             <Route path="/signup-business" element={<SignUpBusiness />} />
             <Route path="/signup-select" element={<SignupSelectionScreen />} />

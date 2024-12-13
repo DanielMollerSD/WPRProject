@@ -12,8 +12,8 @@ using WPRProject;
 namespace WPRProject.Migrations
 {
     [DbContext(typeof(CarsAndAllContext))]
-    [Migration("20241206123743_AddedForeignKeyToCustomer")]
-    partial class AddedForeignKeyToCustomer
+    [Migration("20241213170743_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,16 +58,11 @@ namespace WPRProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
 
                     b.ToTable("BusinessEmployee");
                 });
@@ -152,16 +147,11 @@ namespace WPRProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
                     b.Property<int>("PhoneNumber")
                         .HasMaxLength(10)
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
 
                     b.ToTable("Individual");
                 });
@@ -371,36 +361,7 @@ namespace WPRProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Vehicle");
-                });
-
-            modelBuilder.Entity("WPRProject.Tables.BusinessEmployee", b =>
-                {
-                    b.HasOne("WPRProject.Tables.Customer", "Customer")
-                        .WithMany("BusinessEmployees")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("WPRProject.Tables.Individual", b =>
-                {
-                    b.HasOne("WPRProject.Tables.Customer", "Customer")
-                        .WithMany("Individuals")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("WPRProject.Tables.Customer", b =>
-                {
-                    b.Navigation("BusinessEmployees");
-
-                    b.Navigation("Individuals");
+                    b.ToTable("Vehicles");
                 });
 #pragma warning restore 612, 618
         }
