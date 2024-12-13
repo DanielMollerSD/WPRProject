@@ -105,53 +105,56 @@ namespace WPRProject.Controllers
             return NoContent();
         }
 
-  [HttpPost("login")]
-public async Task<ActionResult> Login(CustomerLoginDTO loginDto)
-{
-    // Validate the customer's credentials (you may need to check against your database)
-    var customer = await _context.Customer
-        .FirstOrDefaultAsync(c => c.Email == loginDto.Email && c.Password == loginDto.Password);
-
-    if (customer == null)
+    [HttpPost("login")]
+    public async Task<ActionResult> Login(CustomerLoginDTO loginDto)
     {
-        return Unauthorized("Invalid credentials");
+        var customer = await _context.Customer
+            .FirstOrDefaultAsync(c => c.Email == loginDto.Email && c.Password == loginDto.Password);
+
+        if (customer == null)
+        {
+            return Unauthorized("Invalid credentials");
+        }
+
+        var secretKey = _configuration["Jwt:Key"];
+        var issuer = _configuration["Jwt:Issuer"];
+        var audience = _configuration["Jwt:Audience"];
+
+        if (string.IsNullOrEmpty(secretKey))
+        {
+            throw new ArgumentNullException("The JWT secret key is missing from configuration.");
+        }
+
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, (customer.FirstName ?? "") + " " + (customer.LastName ?? "")),
+            new Claim(ClaimTypes.Email, customer.Email)
+        };
+
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        var token = new JwtSecurityToken(
+            issuer: issuer,
+            audience: audience,
+            claims: claims,
+            expires: DateTime.Now.AddMinutes(30),
+            signingCredentials: creds
+        );
+
+        var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+        
+        Response.Cookies.Append("access_token", tokenString, new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = false,  
+            SameSite = SameSiteMode.Strict,
+            Expires = DateTime.Now.AddMinutes(30)  
+        });
+
+
+        return Ok(new { Token = tokenString });
     }
 
-    // Retrieve JWT settings from configuration
-    var secretKey = _configuration["Jwt:Key"];
-    var issuer = _configuration["Jwt:Issuer"];
-    var audience = _configuration["Jwt:Audience"];
-
-    if (string.IsNullOrEmpty(secretKey))
-    {
-        throw new ArgumentNullException("The JWT secret key is missing from configuration.");
     }
-
-    // Define claims
-    var claims = new List<Claim>
-    {
-        new Claim(ClaimTypes.NameIdentifier, customer.Id.ToString()),
-        new Claim(ClaimTypes.Name, (customer.FirstName ?? "") + " " + (customer.LastName ?? "")),
-        new Claim(ClaimTypes.Email, customer.Email)
-    };
-
-    // Create JWT token
-    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
-    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-    var token = new JwtSecurityToken(
-        issuer: issuer,
-        audience: audience,
-        claims: claims,
-        expires: DateTime.Now.AddMinutes(30),
-        signingCredentials: creds
-    );
-
-    // Generate token string
-    var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-
-    // Return the token as part of the response
-    return Ok(new { Token = tokenString });
-}
-
-}
 }

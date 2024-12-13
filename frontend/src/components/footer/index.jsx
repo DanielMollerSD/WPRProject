@@ -29,9 +29,9 @@ function Footer() {
                         <div className='col-md-3'>
                             <h4 className='footerText'>Socials</h4>
                             <ul className='footerText'>
-                            <li>Instagram <i class="fa-brands fa-instagram"></i></li>
-                            <li>TikTok <i class="fa-brands fa-tiktok"></i></li>
-                            <li>LinkedIn <i class="fa-brands fa-linkedin"></i></li>
+                            <li>Instagram <i className="fa-brands fa-instagram"></i></li>
+                            <li>TikTok <i className="fa-brands fa-tiktok"></i></li>
+                            <li>LinkedIn <i className="fa-brands fa-linkedin"></i></li>
                             </ul>
                         </div>
                     </div>
