@@ -6,5 +6,7 @@ namespace WPRProject.Tables
     {
         [Key] public int Id { get; set; }
         public string Role { get; set; }
+
+     
     }
 }

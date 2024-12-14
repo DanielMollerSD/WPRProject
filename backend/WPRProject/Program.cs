@@ -9,7 +9,10 @@ using System.Text;
 
 using WPRProject;
 
-public class Program
+namespace WPRProject
+{
+
+public static class Program
 {
     public static void Main(string[] args)
     {
@@ -72,4 +75,5 @@ public class Program
 
         app.Run();
     }
+}
 }
