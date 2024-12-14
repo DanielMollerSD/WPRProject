@@ -1,10 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WPRProject.Tables;
+using WPRProject.DTOS;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
-using WPRProject.Models;
-using WPRProject.Data;
 using Microsoft.Extensions.Configuration;
 using System.Security.Cryptography;
 using System.Text;
@@ -28,17 +27,17 @@ namespace WPRProject.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Particular>>> GetParticulars()
+        public async Task<ActionResult<IEnumerable<Individual>>> GetParticulars()
         {
 
-            var damages = await _context.Damage.ToListAsync();
+            var damages = await _context.Individual.ToListAsync();
             return Ok(damages);
         }
         [HttpGet("{Id}")]
-        public async Task<ActionResult<Particular>> GetOneParticular(int id)
+        public async Task<ActionResult<Individual>> GetOneParticular(int id)
         {
 
-            var particular = await _context.Damage.FindAsync(id);
+            var particular = await _context.Individual.FindAsync(id);
 
             if (particular == null)
             {
@@ -50,7 +49,7 @@ namespace WPRProject.Controllers
 
         [HttpPost("registerPartiuclar")]
 
-        public async Task<IActionResult> Register ([FromBody]ParticularRegisterDto registerDto)
+        public async Task<IActionResult> Register ([FromBody] IndividualRegisterDto registerDto)
         {
             var existingCustomer = await _context.Customer
                 .FirstOrDefaultAsync(c => c.Email == registerDto.Email);
@@ -61,12 +60,13 @@ namespace WPRProject.Controllers
                 return BadRequest("Email is al in gebruik");
             }    
 
-            var passwordHash = BCrypt.HashPassword(registerDto.Password);
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(registerDto.Password);
 
-            var newCustomer = new Customer
+
+            var newIndividual = new Individual
             {
                 Email = registerDto.Email,
-                Password = passwordHash,
+                Password = hashedPassword,
                 FirstName = registerDto.FirstName,
                 LastName = registerDto.LastName,
                 TussenVoegsel = registerDto.TussenVoegsel,
@@ -75,12 +75,11 @@ namespace WPRProject.Controllers
                 PostalCode = registerDto.PostalCode
             };
 
-            _context.Customer.Add(newCustomer);
+            _context.Customer.Add(newIndividual);
             await _context.SaveChangesAsync();
 
-            return Ok(new{Message ="Registreren succesvol"});
-        }
+            return Ok(newIndividual);
 
         }
     }
-
+}

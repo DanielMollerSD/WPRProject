@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WPRProject.DTOS
 {
-    public class ParticularRegisterDto
+    public class IndividualRegisterDto
     {
         [Required(ErrorMessage = "Email is verplicht")]
         [EmailAddress(ErrorMessage = "Voer een geldig e-mailadres in")]

@@ -110,10 +110,11 @@ namespace WPRProject.Controllers
         var customer = await _context.Customer
             .FirstOrDefaultAsync(c => c.Email == loginDto.Email && c.Password == loginDto.Password);
 
-        if (customer == null || !BCrypt,Verify(loginDto.Password, customer.Password))
+        if (customer == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, customer.Password))
         {
             return Unauthorized("Invalid credentials");
         }
+
 
         var secretKey = _configuration["Jwt:Key"];
         var issuer = _configuration["Jwt:Issuer"];
