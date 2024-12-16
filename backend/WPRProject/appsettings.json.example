@@ -12,6 +12,6 @@
   "Audience": "CarsAndAll"
 },
   "ConnectionStrings": {
-    "DefaultConnection": "Server=DESKTOP-NLKUVO3\\SQLEXPRESS;Database=CarsAndAllDB;Trusted_Connection=True;Encrypt=True;TrustServerCertificate=True"
+    "DefaultConnection": "Server=YOURDATABASENAME;Database=CarsAndAllDB;Trusted_Connection=True;Encrypt=True;TrustServerCertificate=True"
   }
 }
