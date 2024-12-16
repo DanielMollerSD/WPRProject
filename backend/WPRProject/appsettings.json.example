@@ -12,6 +12,6 @@
   "Audience": "CarsAndAll"
 },
   "ConnectionStrings": {
-    "DefaultConnection": "Server=LAPTOP-DGN4NHI0\\SQLEXPRESS;Database=CarsAndAllDB;Trusted_Connection=True;Encrypt=True;TrustServerCertificate=True"
+    "DefaultConnection": "Server=YOURDATABASENAME;Database=CarsAndAllDB;Trusted_Connection=True;Encrypt=True;TrustServerCertificate=True"
   }
 }
