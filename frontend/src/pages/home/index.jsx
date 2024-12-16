@@ -5,18 +5,16 @@ function Home() {
     return (
         <>
         <div className="page page-home">
-            <div class="container mt-5">
-                <div class="row">
-                    <div class="col-md-6">
-                        <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Card Image"></img>
-                    </div>
-                    <div class="col-md-6 d-flex align-items-center">
+            <div className="container ">
+                <div className="row">
+                    <div className="col-md-6 d-flex align-items-center">
                         <div>
-                            <h2>Lorem Ipsum</h2>
-                            <p>Lorem ipsum dolor sit amet. Est rerum autem ut provident nihil vel omnis minus et sint exercitationem ut debitis natus eum optio incidunt.</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque interdum nulla id nisi vehicula, a fermentum sapien posuere.</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque interdum nulla id nisi vehicula, a fermentum sapien posuere.</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque interdum nulla id nisi vehicula, a fermentum sapien posuere.</p>
+                            <h2>Welkom bij CarsAndAll - Jouw Partner in Autoverhuur</h2>
+                            <p>Op zoek naar een auto voor een korte rit of een lange reis? Bij CarsAndAll bieden we een breed assortiment aan auto's voor elke gelegenheid. Eenvoudig, betaalbaar en betrouwbaar.</p>
+                                <p>✔ Ruim aanbod aan auto's - voor elk type reis</p>
+                                <p>✔ Eenvoudig reserveren - binnen enkele minuten geregeld</p>
+                                <p>✔ Transparante prijzen - geen verborgen kosten</p>
+                                <p>✔ 24/7 klantenservice - wij staan altijd voor je klaar</p>
                         </div>
                     </div>
                 </div>
