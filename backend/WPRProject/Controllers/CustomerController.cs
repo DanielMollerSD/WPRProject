@@ -108,12 +108,13 @@ namespace WPRProject.Controllers
     public async Task<ActionResult> Login(CustomerLoginDto loginDto)
     {
         var customer = await _context.Customer
-            .FirstOrDefaultAsync(c => c.Email == loginDto.Email && c.Password == loginDto.Password);
+        .FirstOrDefaultAsync(c => c.Email == loginDto.Email);
 
-        if (customer == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, customer.Password))
-        {
-            return Unauthorized("Invalid credentials");
-        }
+    if (customer == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, customer.Password))
+    {
+        return Unauthorized(new { Message = "Invalid credentials" });
+    }
+
 
 
         var secretKey = _configuration["Jwt:Key"];

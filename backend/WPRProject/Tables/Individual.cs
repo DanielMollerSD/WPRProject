@@ -4,8 +4,7 @@ namespace WPRProject.Tables
 {
     public class Individual : Customer
     {
-        [Key]
-        public int IndividualId { get; set; }
+       
 
         [Required]
         [StringLength(10, MinimumLength = 10, ErrorMessage = "Voer een geldig 06-telefoonnummer in")]

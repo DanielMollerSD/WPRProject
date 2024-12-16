@@ -28,5 +28,14 @@ namespace WPRProject
             {
             }
 
+            protected override void OnModelCreating(ModelBuilder modelBuilder)
+            {
+                modelBuilder.Entity<Customer>()
+                    .HasDiscriminator<string>("Discriminator")
+                    .HasValue<Individual>("Individual")
+                    .HasValue<BusinessEmployee>("BusinessEmployee");
+            }
+
+
         }
     }

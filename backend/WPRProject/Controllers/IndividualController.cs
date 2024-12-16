@@ -15,13 +15,13 @@ namespace WPRProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ParticularController : ControllerBase
+    public class IndividualController : ControllerBase
     {
 
         private readonly CarsAndAllContext _context;
        
 
-        public ParticularController(CarsAndAllContext context)
+        public IndividualController(CarsAndAllContext context)
         {
             _context = context;
         }
@@ -47,39 +47,43 @@ namespace WPRProject.Controllers
             return particular;
         }
 
-        [HttpPost("registerPartiuclar")]
+        [HttpPost("register")]
+public async Task<IActionResult> Register([FromBody] IndividualRegisterDto registerDto)
+{
+    try
+    {
+        var existingCustomer = await _context.Customer
+            .FirstOrDefaultAsync(c => c.Email == registerDto.Email);
 
-        public async Task<IActionResult> Register ([FromBody] IndividualRegisterDto registerDto)
+        if (existingCustomer != null)
         {
-            var existingCustomer = await _context.Customer
-                .FirstOrDefaultAsync(c => c.Email == registerDto.Email);
-
-
-            if (existingCustomer != null)
-            {
-                return BadRequest("Email is al in gebruik");
-            }    
-
-            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(registerDto.Password);
-
-
-            var newIndividual = new Individual
-            {
-                Email = registerDto.Email,
-                Password = hashedPassword,
-                FirstName = registerDto.FirstName,
-                LastName = registerDto.LastName,
-                TussenVoegsel = registerDto.TussenVoegsel,
-                PhoneNumber = registerDto.PhoneNumber,
-                Address = registerDto.Address,
-                PostalCode = registerDto.PostalCode
-            };
-
-            _context.Customer.Add(newIndividual);
-            await _context.SaveChangesAsync();
-
-            return Ok(newIndividual);
-
+            return BadRequest(new { message = "Email is al in gebruik" });
         }
+
+        var hashedPassword = BCrypt.Net.BCrypt.HashPassword(registerDto.Password);
+
+        var newIndividual = new Individual
+        {
+            Email = registerDto.Email,
+            Password = hashedPassword,
+            FirstName = registerDto.FirstName,
+            LastName = registerDto.LastName,
+            TussenVoegsel = registerDto.TussenVoegsel,
+            PhoneNumber = registerDto.PhoneNumber,
+            Address = registerDto.Address,
+            PostalCode = registerDto.PostalCode,
+        };
+
+        _context.Customer.Add(newIndividual);
+        await _context.SaveChangesAsync();
+
+        return Ok(new { individual = newIndividual }); 
+    }
+    catch (Exception ex)
+    {
+        return StatusCode(500, new { message = "An error occurred", details = ex.Message });
+    }
+}
+
     }
 }

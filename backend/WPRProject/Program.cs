@@ -37,7 +37,7 @@ public static class Program
                 policy.WithOrigins("http://localhost:5173")  // Replace with your frontend's origin
                     .AllowAnyMethod()
                     .AllowAnyHeader()
-                    .AllowCredentials();  // Allow credentials (cookies, authorization headers)
+                    .AllowCredentials();  
             });
         });
 

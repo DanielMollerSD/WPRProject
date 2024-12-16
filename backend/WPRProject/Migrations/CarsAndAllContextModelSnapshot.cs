@@ -47,23 +47,6 @@ namespace WPRProject.Migrations
                     b.ToTable("Business");
                 });
 
-            modelBuilder.Entity("WPRProject.Tables.BusinessEmployee", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BusinessEmployee");
-                });
-
             modelBuilder.Entity("WPRProject.Tables.Customer", b =>
                 {
                     b.Property<int>("Id")
@@ -71,6 +54,11 @@ namespace WPRProject.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(21)
+                        .HasColumnType("nvarchar(21)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -90,12 +78,15 @@ namespace WPRProject.Migrations
                         .HasColumnType("nvarchar(16)");
 
                     b.Property<string>("TussenVoegsel")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Customer");
+
+                    b.HasDiscriminator().HasValue("Customer");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("WPRProject.Tables.Damage", b =>
@@ -130,27 +121,6 @@ namespace WPRProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Employee");
-                });
-
-            modelBuilder.Entity("WPRProject.Tables.Individual", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Adress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PhoneNumber")
-                        .HasMaxLength(10)
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Individual");
                 });
 
             modelBuilder.Entity("WPRProject.Tables.Mail", b =>
@@ -359,6 +329,38 @@ namespace WPRProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Vehicles");
+                });
+
+            modelBuilder.Entity("WPRProject.Tables.BusinessEmployee", b =>
+                {
+                    b.HasBaseType("WPRProject.Tables.Customer");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("BusinessEmployee");
+                });
+
+            modelBuilder.Entity("WPRProject.Tables.Individual", b =>
+                {
+                    b.HasBaseType("WPRProject.Tables.Customer");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("Individual");
                 });
 #pragma warning restore 612, 618
         }
