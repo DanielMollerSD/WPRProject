@@ -12,7 +12,39 @@
 
         .vehicle-select {
             margin-bottom: 10px;
-        }
+            position: relative;
+            display: inline-block;
+          
+            select {
+                
+            border-radius: 10px;
+              appearance: none;
+              -webkit-appearance: none;
+              -moz-appearance: none;
+              position: relative;
+              z-index: 1;
+              text-indent: 50px; /* Ensure text doesn't overlap with the pseudo-element */
+              padding-left: 20px;
+              padding-right: 20px;
+              box-sizing: content-box; /* Let width be based only on content */
+              min-width: calc(100% + 20px); /* Adds 50px for the ::before pseudo-element */
+            }
+          
+            &::before {
+              content: "Type: ";
+              position: absolute;
+              left: 20px;
+              top: 50%;
+              transform: translateY(-50%);
+              font-size: 1rem;
+              color: #333;
+              font-weight: bold;
+              z-index: 2;
+              pointer-events: none;
+            }
+          }
+          
+        
 
         .cards-container {
             a {
