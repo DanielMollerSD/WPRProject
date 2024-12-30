@@ -16,21 +16,23 @@ function SignUpParticular() {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
     
-       
         const formData = {
-            voornaam: e.target.voornaam.value,
-            achternaam: e.target.achternaam.value,
-            tussenvoegsel: e.target.tussenvoegsel.value || null,
-            email: e.target.email.value,
-            adres: e.target.adres.value,
-            postcode: e.target.postcode.value,
-            telefoonnummer: e.target.telefoonnummer.value,
-            password: e.target.password.value,
+            FirstName: e.target.voornaam.value,
+            LastName: e.target.achternaam.value,
+            TussenVoegsel: e.target.tussenvoegsel.value || undefined,
+            Email: e.target.email.value,
+            Address: e.target.adres.value,
+            PostalCode: e.target.postcode.value,
+            PhoneNumber: e.target.telefoonnummer.value,
+            Password: e.target.password.value,
         };
     
+        console.log("Sending request to backend...");
+        console.log("Request URL:", "https://localhost:7265/api/Individual/register");
+        console.log("Request Body:", JSON.stringify(formData));
+    
         try {
-            
-            const response = await fetch("https://localhost:5001/api/customer", {
+            const response = await fetch("https://localhost:7265/api/Individual/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -38,19 +40,23 @@ function SignUpParticular() {
                 body: JSON.stringify(formData),
             });
     
+            console.log("Response Status:", response.status);
+            console.log("Response Headers:", response.headers);
+    
             if (response.ok) {
-            
                 alert("Account created successfully!");
             } else {
-                const error = await response.json();
-                alert(`Error: ${error.message}`);
+                const error = await response.json(); // Capture JSON response error
+                console.error("Error Response:", error);
+                alert(`Error: ${error?.message || "Unknown error occurred."}`);
             }
         } catch (err) {
-            console.error("Failed to create account:", err);
+            console.error("Request failed:", err);
             alert("An error occurred. Please try again.");
         }
     };
-
+    
+    
     return (
         <>
             <header></header>

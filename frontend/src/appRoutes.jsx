@@ -12,6 +12,8 @@ import SignUpBusiness from './pages/signup-business';
 import SignupSelectionScreen from './pages/signup-select';
 import RentSelect from './pages/rent-screen';
 
+import AccountSettings from './pages/account-settings';
+
 function AppRoutes() {
   return (
     <Router>
@@ -27,6 +29,7 @@ function AppRoutes() {
             <Route path="/signup-business" element={<SignUpBusiness />} />
             <Route path="/signup-select" element={<SignupSelectionScreen />} />
             <Route path="/rent-screen" element={ <RentSelect/>}/>
+            <Route path="/account-settings" element= {<AccountSettings/>}/>
           </Routes>
         </main>
 

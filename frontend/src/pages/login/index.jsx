@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';  // Correctly import useNavigate
+import { useNavigate } from 'react-router-dom';  
 
 import "./styles.scss";
 
@@ -17,21 +17,32 @@ function Login() {
             headers: {
                 "Content-Type": "application/json",
             },
-            
             body: JSON.stringify({
                 email: email,
                 password: password,
             }),
-            credentials: "include", 
+            credentials: "include",  // Include credentials like cookies for the token
         });
 
         if (response.ok) {
-            const data = await response.json();
-            console.log("Logged in successfully:", data);
-            navigate('/rent-screen');  
+            try {
+                const data = await response.json();
+                console.log("Logged in successfully:", data);
+                // Save the token or do any further processing
+                localStorage.setItem("access_token", data.Token); // Example, if you want to save the token
+                navigate("/rent-screen");  // Navigate to the next screen
+            } catch (error) {
+                console.error("Error parsing the response JSON", error);
+                setError("Something went wrong while processing the login.");
+            }
         } else {
-            const errorData = await response.json();
-            setError(errorData.message || "Login failed. Please try again.");
+            try {
+                const errorData = await response.json();
+                setError(errorData.Message || "Login failed. Please try again.");
+            } catch (error) {
+                console.error("Error parsing the error response JSON", error);
+                setError("Login failed. Please try again.");
+            }
         }
     };
 

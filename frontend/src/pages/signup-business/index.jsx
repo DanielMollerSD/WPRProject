@@ -17,6 +17,47 @@ function SignUpBusiness() {
 
   }
 
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = {
+        Email: e.target.email.value,
+        BusinessName: e.target.naam.value,
+        BusinessAddress: e.target.adres.value,
+        BusinessPostalCode: e.target.postcode.value,
+        Kvk: e.target.kvk.value,
+        Password: e.target.password.value
+    };
+
+    console.log("Sending request to backend...");
+    console.log("Request URL:", "https://localhost:7265/api/Business/register");
+    console.log("Request Body:", JSON.stringify(formData));
+
+    try {
+        const response = await fetch("https://localhost:7265/api/Business/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+        });
+
+        console.log("Response Status:", response.status);
+        console.log("Response Headers:", response.headers);
+
+        if (response.ok) {
+            alert("Account created successfully!");
+        } else {
+            const error = await response.json(); // Capture JSON response error
+            console.error("Error Response:", error);
+            alert(`Error: ${error?.message || "Unknown error occurred."}`);
+        }
+    } catch (err) {
+        console.error("Request failed:", err);
+        alert("An error occurred. Please try again.");
+    }
+};
+
     return (
         <>
         <header>
@@ -27,45 +68,14 @@ function SignUpBusiness() {
             <main className="SignUpMain">
                 <section className="signup-container">
                     <b id="title-signup-bus"> Zakelijk Account Registreren</b>
-                    <form action="/signupBussines" method="POST">
-                        <div className="form-group">
-                            <div>
-                                <label  className="nameLabel">Voornaam</label>
-                                <input
-                                    type="text"
-                                    className="SignUpInput"
-                                    
-                                    placeholder="Voer uw voornaam in"
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label  className="nameLabel">Achternaam</label>
-                                <input
-                                    type="text"
-                                    className="SignUpInput"
-                                   
-                                    placeholder="Voer uw achternaam in"
-                                    required
-                                />
-                            </div>
-                           
-                        </div>
-                        <div>
-                            <label  className="nameLabel">Tussenvoegsel</label>
-                            <input
-                                type="text"
-                                className="SignUpInput"
-                              
-                                placeholder="Voer uw tussenvoegsel in"
-                            />
-                        </div>
+                    <form onSubmit={handleFormSubmit}>
+                       
                         <div>
                             <label  className="nameLabel" >Email</label>
                             <input
                                 type="email"
                                 className="LargeInput"
-                            
+                                name="email"
                                 placeholder="Voer uw email in"
                                 required
                             />
@@ -74,6 +84,7 @@ function SignUpBusiness() {
                             <label  className="nameLabel" >Bedrijfsnaam</label>
                             <input
                                 type="text"
+                                name="naam"
                                 className="LargeInput"
                                 placeholder="Voer uw bedrijfsnaam in"
                                 required
@@ -84,7 +95,7 @@ function SignUpBusiness() {
                             <input
                                 type="adres"
                                 className="LargeInput"
-                             
+                                name="adres"
                                 placeholder="Voer uw straatnaam + huisnummer in"
                                 required
                             />
@@ -95,7 +106,7 @@ function SignUpBusiness() {
                                 <input
                                     type="text"
                                     className="SignUpInput"
-                               
+                                    name="postcode"
                                     placeholder="Voer uw postcode in"
                                     required
                                 />
@@ -105,7 +116,7 @@ function SignUpBusiness() {
                                 <input
                                     type="text"
                                     className="SignUpInput"
-                                 
+                                    name="kvk"
                                     placeholder="Voer het KVK-nummer in"
                 
                                     required
@@ -120,6 +131,7 @@ function SignUpBusiness() {
                                     placeholder="Voer uw wachtwoord in"
                                     ref={password1Ref}
                                     pattern="\w{3,16}"
+                                    name="password"
                                     required
                                     
                                 />
