@@ -48,42 +48,42 @@ namespace WPRProject.Controllers
         }
 
         [HttpPost("register")]
-public async Task<IActionResult> Register([FromBody] IndividualRegisterDto registerDto)
-{
-    try
-    {
-        var existingCustomer = await _context.Customer
-            .FirstOrDefaultAsync(c => c.Email == registerDto.Email);
-
-        if (existingCustomer != null)
+        public async Task<IActionResult> Register([FromBody] IndividualRegisterDto registerDto)
         {
-            return BadRequest(new { message = "Email is al in gebruik" });
+            try
+            {
+                var existingCustomer = await _context.Customer
+                    .FirstOrDefaultAsync(c => c.Email == registerDto.Email);
+
+                if (existingCustomer != null)
+                {
+                    return BadRequest(new { message = "Email is al in gebruik" });
+                }
+
+                var hashedPassword = BCrypt.Net.BCrypt.HashPassword(registerDto.Password);
+
+                var newIndividual = new Individual
+                {
+                    Email = registerDto.Email,
+                    Password = hashedPassword,
+                    FirstName = registerDto.FirstName,
+                    LastName = registerDto.LastName,
+                    TussenVoegsel = registerDto.TussenVoegsel,
+                    PhoneNumber = registerDto.PhoneNumber,
+                    Address = registerDto.Address,
+                    PostalCode = registerDto.PostalCode,
+                };
+
+                _context.Customer.Add(newIndividual);
+                await _context.SaveChangesAsync();
+
+                return Ok(new { individual = newIndividual }); 
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred", details = ex.Message });
+            }
         }
-
-        var hashedPassword = BCrypt.Net.BCrypt.HashPassword(registerDto.Password);
-
-        var newIndividual = new Individual
-        {
-            Email = registerDto.Email,
-            Password = hashedPassword,
-            FirstName = registerDto.FirstName,
-            LastName = registerDto.LastName,
-            TussenVoegsel = registerDto.TussenVoegsel,
-            PhoneNumber = registerDto.PhoneNumber,
-            Address = registerDto.Address,
-            PostalCode = registerDto.PostalCode,
-        };
-
-        _context.Customer.Add(newIndividual);
-        await _context.SaveChangesAsync();
-
-        return Ok(new { individual = newIndividual }); 
-    }
-    catch (Exception ex)
-    {
-        return StatusCode(500, new { message = "An error occurred", details = ex.Message });
-    }
-}
 
     }
 }

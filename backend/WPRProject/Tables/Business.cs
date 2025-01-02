@@ -7,13 +7,13 @@ namespace WPRProject.Tables
     public class Business
     {
         [Key] public int Id { get; set; }
+        public string BusinessName { get; set; }
 
-       
-        public string Name { get; set; }
-        
-        [StringLength(8, MinimumLength = 8, ErrorMessage = "KVK nummer moet uit 8 cijfers bestaan")]
+        [Range(8,int.MaxValue ,ErrorMessage="Voer een geldig KVK-nummer in.")]
         public int Kvk { get; set; }
-      
-        public string Adress { get; set; }
+        public string Email {get; set; }
+        public string Password { get; set; }
+        public string BusinessAddress { get; set; }
+        public string BusinessPostalCode {get; set;}
     }
 }
