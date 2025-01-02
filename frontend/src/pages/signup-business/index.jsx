@@ -21,9 +21,9 @@ function SignUpBusiness() {
     e.preventDefault();
 
     const formData = {
-        Voornaam: e.target.voornaam.value,
-        Achternaam : e.target.achternaam.value,
-        Tussenvoegsel: e.target.tussenvoegsel.value,
+        FirstName: e.target.voornaam.value,
+        LastName: e.target.achternaam.value,
+        TussenVoegsel: e.target.tussenvoegsel.value || undefined,
         Email: e.target.email.value,
         BusinessName: e.target.naam.value,
         BusinessAddress: e.target.adres.value,
