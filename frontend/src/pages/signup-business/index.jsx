@@ -21,6 +21,9 @@ function SignUpBusiness() {
     e.preventDefault();
 
     const formData = {
+        Voornaam: e.target.voornaam.value,
+        Achternaam : e.target.achternaam.value,
+        Tussenvoegsel: e.target.tussenvoegsel.value,
         Email: e.target.email.value,
         BusinessName: e.target.naam.value,
         BusinessAddress: e.target.adres.value,
@@ -69,7 +72,35 @@ function SignUpBusiness() {
                 <section className="signup-container">
                     <b id="title-signup-bus"> Zakelijk Account Registreren</b>
                     <form onSubmit={handleFormSubmit}>
-                       
+                    <div>
+                            <label  className="nameLabel" >Voornaam</label>
+                            <input
+                                type="text"
+                                className="LargeInput"
+                                name="voornaam"
+                                placeholder="Voer uw voornaam"
+                                required
+                            />
+                        </div>
+                    <div>
+                            <label  className="nameLabel" >Achternaam</label>
+                            <input
+                                type="text"
+                                className="LargeInput"
+                                name="achternaam"
+                                placeholder="Voer uw achternaam in"
+                                required
+                            />
+                        </div>
+                        <div>
+                                    <label className="nameLabel">Tussenvoegsel</label>
+                                    <input
+                                        type="text"
+                                        className="SignUpInput"
+                                        name="tussenvoegsel"
+                                        placeholder="Voer uw tussenvoegsel in"
+                                    />
+                                </div>
                         <div>
                             <label  className="nameLabel" >Email</label>
                             <input
@@ -176,7 +207,6 @@ function SignUpBusiness() {
 
             </main>
         </div>
-        
     </div>
     <footer>
      
