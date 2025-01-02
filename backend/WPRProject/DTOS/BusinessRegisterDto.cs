@@ -2,8 +2,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WPRProject.DTOS
 {
-    public class BusinessRegister{
-
+    public class BusinessRegisterDto{
+        public string FirstName {get; set;}
+        public string LastName {get; set;}
+        public string? TussenVoegsel {get; set;}
         public string Email {get; set; }
         public string Password { get; set; }
         public string BusinessName { get; set; }
@@ -13,7 +15,4 @@ namespace WPRProject.DTOS
         public string BusinessAddress { get; set; }
         public string BusinessPostalCode {get; set;}
     }
-
-
-
 }

@@ -44,7 +44,7 @@ namespace WPRProject.Controllers
 
        
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] BusinessRegister registerDto)
+        public async Task<IActionResult> Register([FromBody] BusinessRegisterDto registerDto)
         {
             try
             {
@@ -60,6 +60,9 @@ namespace WPRProject.Controllers
 
                 var newBusiness = new Business
                 {
+                    FirstName = registerDto.FirstName,
+                    LastName = registerDto.LastName,
+                    TussenVoegsel = registerDto.TussenVoegsel,
                     Email = registerDto.Email,
                     Password = hashedPassword,
                     BusinessName = registerDto.BusinessName,
@@ -75,7 +78,10 @@ namespace WPRProject.Controllers
             }
             catch (Exception ex)
             {
+                
                 return StatusCode(500, new { message = "An error occurred", details = ex.Message });
+
+
             }
         }
     }

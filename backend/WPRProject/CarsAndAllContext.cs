@@ -30,12 +30,13 @@ namespace WPRProject
 
             protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
-                modelBuilder.Entity<Customer>()
-                    .HasDiscriminator<string>("Discriminator")
-                    .HasValue<Individual>("Individual")
-                    .HasValue<BusinessEmployee>("BusinessEmployee");
-            }
+              modelBuilder.Entity<Customer>()
+            .HasDiscriminator<string>("Discriminator")
+            .HasValue<Customer>("Customer")
+            .HasValue<BusinessEmployee>("BusinessEmployee")
+            .HasValue<Business>("Business");
 
 
         }
     }
+}
