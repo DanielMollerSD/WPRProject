@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WPRProject.Migrations
 {
     /// <inheritdoc />
-    public partial class IntialCreate : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -47,7 +47,9 @@ namespace WPRProject.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    TussenVoegsel = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -109,31 +111,6 @@ namespace WPRProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Rent",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Verified = table.Column<bool>(type: "bit", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Adress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LicenseNumber = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
-                    TravelPurpose = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FurthestDestination = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ExpectedDistance = table.Column<int>(type: "int", nullable: false),
-                    PickupLocation = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PickupTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    SafetyInstructions = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Rent", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Subscription",
                 columns: table => new
                 {
@@ -154,7 +131,7 @@ namespace WPRProject.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DailyRentCoverage = table.Column<int>(type: "int", nullable: false)
+                    DailyRentCoverage = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -167,7 +144,7 @@ namespace WPRProject.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Discount = table.Column<int>(type: "int", nullable: false)
+                    Discount = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -209,6 +186,42 @@ namespace WPRProject.Migrations
                 {
                     table.PrimaryKey("PK_Vehicle", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Rent",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Verified = table.Column<bool>(type: "bit", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Adress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TravelPurpose = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FurthestDestination = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ExpectedDistance = table.Column<int>(type: "int", nullable: false),
+                    PickupLocation = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PickupTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SafetyInstructions = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VehicleId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rent", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Rent_Vehicle_VehicleId",
+                        column: x => x.VehicleId,
+                        principalTable: "Vehicle",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rent_VehicleId",
+                table: "Rent",
+                column: "VehicleId");
         }
 
         /// <inheritdoc />

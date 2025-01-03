@@ -22,5 +22,8 @@ namespace WPRProject.Tables
         public int PurchaseYear {  get; set; }
         public string VehicleType {  get; set; }
 
+        // Navigation property to link rents (one-to-many)
+        public ICollection<Rent> Rents { get; set; }
+
     }
 }

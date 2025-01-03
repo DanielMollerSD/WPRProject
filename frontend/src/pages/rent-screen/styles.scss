@@ -10,45 +10,108 @@
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
-        .vehicle-select {
-            margin-bottom: 10px;
-            position: relative;
-            display: inline-block;
-          
-            select {
-                
-            border-radius: 10px;
-              appearance: none;
-              -webkit-appearance: none;
-              -moz-appearance: none;
-              position: relative;
-              z-index: 1;
-              text-indent: 50px; /* Ensure text doesn't overlap with the pseudo-element */
-              padding-left: 20px;
-              padding-right: 20px;
-              box-sizing: content-box; /* Let width be based only on content */
-              min-width: calc(100% + 20px); /* Adds 50px for the ::before pseudo-element */
+        .vehicle-filters {
+            display: flex;
+            padding-top: 10px;
+            padding-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+
+            .filter-item {
+                .filter-title {
+                    color: #3f3f3f;
+                    font-size: 12px;
+                }
+
+                select {
+                    height: 30px;
+                    width: 200px;
+                    border: 1px solid black;
+                    border-radius: 12px;
+                    appearance: none;
+                    -moz-appearance: none;
+                    -webkit-appearance: none;
+                    padding: 0 10px;
+                }
+
+                input {
+                    height: 30px;
+                    width: 200px;
+                    border: 1px solid black;
+                    border-radius: 12px;
+                    appearance: none;
+                    -moz-appearance: none;
+                    -webkit-appearance: none;
+                    padding: 0 10px;
+                }
             }
-          
-            &::before {
-              content: "Type: ";
-              position: absolute;
-              left: 20px;
-              top: 50%;
-              transform: translateY(-50%);
-              font-size: 1rem;
-              color: #333;
-              font-weight: bold;
-              z-index: 2;
-              pointer-events: none;
+            .search-button {
+                flex-grow: 1;
+                margin-top: auto;
+                height: 30px;
+                min-width: 100px;
+                max-width: 200px;
+                color: white;
+                background-color: $secondary-button-color;
+                border: none;
+                border-radius: 12px;
             }
-          }
-          
-        
+        }
+
+        // .vehicle-filters {
+            
+        //     // display: flex;
+        //     // flex-direction: row;
+
+        //     // .vehicle-select {
+        //     //     margin-bottom: 10px;
+        //     //     position: relative;
+        //     //     display: inline-block;
+    
+        //     //     select {
+    
+        //     //         border-radius: 10px;
+        //     //         appearance: none;
+        //     //         -webkit-appearance: none;
+        //     //         -moz-appearance: none;
+        //     //         z-index: 1;
+        //     //         text-indent: 50px;
+        //     //         padding-left: 20px;
+        //     //         padding-right: 20px;
+        //     //         box-sizing: content-box;
+        //     //         min-width: 160px;
+        //     //         max-width: 400px; /* Optional: limit the maximum width */
+        //     //     }
+    
+        //     //     &::before {
+        //     //         content: "Type: ";
+        //     //         position: absolute;
+        //     //         left: 20px;
+        //     //         top: 50%;
+        //     //         transform: translateY(-50%);
+        //     //         font-size: 1rem;
+        //     //         color: #333;
+        //     //         font-weight: bold;
+        //     //         z-index: 2;
+        //     //         pointer-events: none;
+        //     //     }
+        //     // }
+
+        //     // .vehicle-input {
+        //     //     input {
+        //     //         border-radius: 10px;
+        //     //         border: solid black 1px;
+        //     //         appearance: none;
+        //     //         -webkit-appearance: none;
+        //     //         -moz-appearance: none;
+        //     //     }
+        //     // }
+        // }
 
         .cards-container {
             a {
                 text-decoration: none;
+
                 .card {
                     margin-bottom: 20px;
                     border-radius: 20px;
@@ -97,7 +160,7 @@
                                 font-weight: 400;
                             }
                         }
-                    } 
+                    }
                 }
             }
         }
