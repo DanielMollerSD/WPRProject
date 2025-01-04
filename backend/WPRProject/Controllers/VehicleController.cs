@@ -22,8 +22,21 @@ namespace WPRProject.Controllers
         public async Task<ActionResult<IEnumerable<Vehicle>>> GetVehicles()
         {
 
-            var vehicles = await _context.Vehicles.ToListAsync();
+            var vehicles = await _context.Vehicle.ToListAsync();
             return Ok(vehicles);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Vehicle>> GetVehicleById(int id)
+        {
+            var vehicle = await _context.Vehicle.FindAsync(id);
+
+            if (vehicle == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(vehicle);
         }
         
     }

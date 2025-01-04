@@ -14,10 +14,7 @@ namespace WPRProject.Tables
    
         public string LastName { get; set; }
      
-        public string Adress {  get; set; }
-
-        [StringLength(8, MinimumLength = 8, ErrorMessage = "Voer een geldig kenteken in")]
-        public string LicenseNumber { get; set; }
+        public string Address {  get; set; }
 
         public string TravelPurpose {get; set; }
   
@@ -29,5 +26,12 @@ namespace WPRProject.Tables
         public DateTime PickupTime { get; set; }
    
         public string SafetyInstructions { get; set; }
+
+        [Required]
+        public int VehicleId { get; set; }
+
+        public Vehicle? Vehicle { get; set; }
+
+
     }
 }
