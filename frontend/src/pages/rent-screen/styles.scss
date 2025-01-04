@@ -1,105 +1,90 @@
-.page.page-rent-screen {
-    position: relative;
-    background-color: #d6d1c7;
-    padding-top: 100px;
-    padding-bottom: 100px;
-
-    .rent-screen-content {
-        background-color: white;
-        padding: 20px 30px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
-        .vehicle-select {
-            margin-bottom: 10px;
-            position: relative;
-            display: inline-block;
-          
-            select {
-                
-            border-radius: 10px;
-              appearance: none;
-              -webkit-appearance: none;
-              -moz-appearance: none;
-              position: relative;
-              z-index: 1;
-              text-indent: 50px; /* Ensure text doesn't overlap with the pseudo-element */
-              padding-left: 20px;
-              padding-right: 20px;
-              box-sizing: content-box; /* Let width be based only on content */
-              min-width: calc(100% + 20px); /* Adds 50px for the ::before pseudo-element */
-            }
-          
-            &::before {
-              content: "Type: ";
-              position: absolute;
-              left: 20px;
-              top: 50%;
-              transform: translateY(-50%);
-              font-size: 1rem;
-              color: #333;
-              font-weight: bold;
-              z-index: 2;
-              pointer-events: none;
-            }
-          }
-          
-        
-
-        .cards-container {
-            a {
-                text-decoration: none;
-                .card {
-                    margin-bottom: 20px;
-                    border-radius: 20px;
-                    overflow: hidden;
-
-                    .card-img-top {
-                        background-color: gray;
-                        height: 200px;
-                    }
-
-                    .card-body {
-
-                        .card-title {
-                            margin-bottom: 5px;
-                        }
-
-                        .card-description {
-                            margin-bottom: 10px;
-                        }
-
-                        .tags {
-                            display: flex;
-                            flex-wrap: wrap;
-                            position: relative;
-                            gap: 3px;
-                            padding-bottom: 10px;
-
-                            .tag {
-                                font-size: 13px;
-                                white-space: nowrap;
-                                background-color: #dadada;
-                                border-radius: 50px;
-                                padding-top: 2px;
-                                padding-bottom: 2px;
-                                padding-left: 15px;
-                                padding-right: 15px;
-                            }
-                        }
-
-                        .price {
-                            font-size: 25px;
-                            font-weight: bold;
-
-                            span {
-                                font-size: 15px;
-                                font-weight: 400;
-                            }
-                        }
-                    } 
-                }
-            }
-        }
+.rent-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    padding: 20px;
+  }
+  
+  .form-container {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+    color: #555;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  .submit-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  @media (max-width: 768px) {
+    .form-container {
+      padding: 20px;
     }
-}
+  
+    h1 {
+      font-size: 20px;
+    }
+  
+    .form-group input,
+    .form-group textarea {
+      font-size: 14px;
+    }
+  
+    .submit-btn {
+      font-size: 14px;
+      padding: 8px;
+    }
+  }
+  

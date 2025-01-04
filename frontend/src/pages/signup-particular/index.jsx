@@ -170,7 +170,7 @@ function SignUpParticular() {
                                 </div>
                             </form>
 
-                            <Link to="/rent-screen">
+                            <Link to="/vehicle-overview">
                                 <button>next page</button>
                             </Link>
                         </section>

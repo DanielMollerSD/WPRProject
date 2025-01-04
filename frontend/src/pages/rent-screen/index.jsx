@@ -1,94 +1,150 @@
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import './styles.scss';
-import React, { useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
 
 function RentScreen() {
-    const [vehicles, setVehicles] = useState([]);
-    const [vehicleTypes, setVehicleTypes] = useState([]);
-    const [filteredVehicles, setFilteredVehicles] = useState([]);
-    const [selectedType, setSelectedType] = useState("");
-    const [error, setError] = useState(null);
+  const { id } = useParams();
+  const [vehicle, setVehicle] = useState(null);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    address: "",
+    travelPurpose: "",
+    furthestDestination: "",
+    expectedDistance: "",
+    pickupLocation: "",
+    pickupTime: "",
+    safetyInstructions: "",
+    startDate: "",
+    endDate: "",
+  });
 
-    useEffect(() => {
-        async function fetchVehicles() {
-            try {
-                const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/Vehicle`);
-                if (!response.ok) throw new Error("Failed to fetch vehicles");
-                console.log(response)
-                
-                const data = await response.json();
-                setVehicles(data);
+  useEffect(() => {
+    // Fetch
+    async function fetchVehicle() {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/Vehicle/${id}`);
+        if (!response.ok) throw new Error("Vehicle not found");
+        const data = await response.json();
+        setVehicle(data);
+      } catch (error) {
+        console.error("Error fetching vehicle:", error.message);
+      }
+    }
 
-                const types = Array.from(new Set(data.map(vehicle => vehicle.vehicleType)));
-                setVehicleTypes(types);
+    fetchVehicle();
+  }, [id]);
 
-                setFilteredVehicles(data);
-            } catch (e) {
-                console.error(e.message);
-                setError("Failed to load vehicles");
-            }
-        }
-        fetchVehicles();
-    }, []);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-    const handleTypeChange = (event) => {
-        const selected = event.target.value;
-        setSelectedType(selected);
-
-        // Filter vehicles based on the selected type
-        if (selected === "all") {
-            setFilteredVehicles(vehicles); // Show all vehicles if "all" is selected
-        } else {
-            setFilteredVehicles(vehicles.filter(vehicle => vehicle.vehicleType === selected));
-        }
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const rentData = {
+      ...formData,
+      vehicleId: parseInt(id, 10),
+      expectedDistance: parseFloat(formData.expectedDistance),
+      //pickupTime: new Date(formData.pickupTime).toISOString(),
+      startDate: new Date(formData.startDate).toISOString(),
+      endDate: new Date(formData.endDate).toISOString(),
     };
+    console.log("Rent data being sent:", rentData);
 
-    return (
-        <div className="page page-rent-screen">
-            <div className="container">
-                <div className="rent-screen-content">
-                    <div className="vehicle-select">
-                        <select name="vehicleType" id="vehicleType" value={selectedType} onChange={handleTypeChange}>
-                            <option value="all">Alle Voertuigen</option>
-                            {vehicleTypes.map((type, index) => (
-                                <option key={index} value={type}>
-                                    {type}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    
-                    {error && <p className="error-message">{error}</p>}
+    try {
+      const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/Rent`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(rentData),
+      });
+      
+      if (response.ok) {
+        alert("Rental successfully created!");
+      } else {
+        const errorDetails = await response.json();
+        console.error("Server error details:", errorDetails);
+        alert(`Error creating rental: ${errorDetails.message || "Check the payload"}`);
+      }
+    } catch (error) {
+      console.error("Request error:", error);
+      alert("Error creating rental!");
+    }
+  };
 
-                    <div className="cards-container">
-                        <div className="row">
-                        {filteredVehicles.map((vehicle, index) => (
-                                <div className="col-md-6 col-lg-4" key={index}>
-                                    <a href="#">
-                                        <div className="card">
-                                            <img className="card-img-top" src="https://via.placeholder.com/500x300" alt="Card image" />
-                                            <div className="card-body">
-                                                <h5 className="card-title">{vehicle.brand} {vehicle.model}</h5>
-                                                <p className="card-description">{vehicle.note}</p>
-                                                <div className="tags">
-                                                    <div className="tag"><strong>Type:</strong> {vehicle.vehicleType}</div>
-                                                    <div className="tag"><strong>Merk:</strong> {vehicle.brand}</div>
-                                                    <div className="tag"><strong>Model:</strong> {vehicle.model}</div>
-                                                    <div className="tag"><strong>Koop Jaar:</strong> {vehicle.purchaseYear}</div>
-                                                    <div className="tag"><strong>Status:</strong> {vehicle.status}</div>
-                                                </div>
-                                                <div className="price">€{vehicle.price} <span> /dag</span></div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
+  return (
+    <div className="rent-screen">
+      <div className="form-container">
+        {vehicle ? (
+          <>
+            <h1>Rent {vehicle.brand} {vehicle.model}</h1>
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label>First Name:</label>
+                <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} required />
+              </div>
+              <div className="form-group">
+                <label>Last Name:</label>
+                <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} required />
+              </div>
+              <div className="form-group">
+                <label>Address:</label>
+                <input type="text" name="address" value={formData.address} onChange={handleChange} required />
+              </div>
+              <div className="form-group">
+                <label>Travel Purpose:</label>
+                <input type="text" name="travelPurpose" value={formData.travelPurpose} onChange={handleChange} required />
+              </div>
+              <div className="form-group">
+                <label>Furthest Destination:</label>
+                <input type="text" name="furthestDestination" value={formData.furthestDestination} onChange={handleChange} required />
+              </div>
+              <div className="form-group">
+                <label>Expected Distance (km):</label>
+                <input type="number" name="expectedDistance" value={formData.expectedDistance} onChange={handleChange} required />
+              </div>
+              <div className="form-group">
+                <label>Pickup Location:</label>
+                <input type="text" name="pickupLocation" value={formData.pickupLocation} onChange={handleChange} required />
+              </div>
+              <div className="form-group">
+                <label>Pickup Time:</label>
+                <input type="datetime-local" name="pickupTime" value={formData.pickupTime} onChange={handleChange} required />
+              </div>
+              <div className="form-group">
+                <label>Safety Instructions:</label>
+                <textarea name="safetyInstructions" value={formData.safetyInstructions} onChange={handleChange}></textarea>
+              </div>
+              <div className="form-group">
+                <label>Start Date:</label>
+                <input
+                  type="datetime-local"
+                  name="startDate"
+                  value={formData.startDate}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>End Date:</label>
+                <input
+                  type="datetime-local"
+                  name="endDate"
+                  value={formData.endDate}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <button type="submit" className="submit-btn">Rent</button>
+            </form>
+          </>
+        ) : (
+          <p>Loading vehicle details...</p>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default RentScreen;

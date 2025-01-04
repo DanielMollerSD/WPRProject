@@ -158,7 +158,7 @@ function SignUpBusiness() {
                     <script src="togglePassword.js"></script>
                  
                 </section>
-                         <Link to="/rent-screen">
+                         <Link to="/vehicle-overview">
                             <button>next page</button>
                         </Link>
 
