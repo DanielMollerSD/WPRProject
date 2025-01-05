@@ -74,6 +74,21 @@ namespace WPRProject.Controllers
                 });
             }
         }
+        [HttpPut("{id}/verify")]
+        public async Task<IActionResult> UpdateVerificationStatus(int id, [FromBody] bool isApproved)
+        {
+            var rent = await _context.Rent.FindAsync(id);
+
+            if (rent == null)
+            {
+                return NotFound();
+            }
+
+            rent.Verified = isApproved; 
+            await _context.SaveChangesAsync(); 
+
+            return Ok(rent); 
+        }
 
     }
 }
