@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
-
 using WPRProject.Tables;
 
 namespace WPRProject

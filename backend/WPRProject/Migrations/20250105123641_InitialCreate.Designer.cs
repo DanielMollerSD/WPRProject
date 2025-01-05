@@ -12,8 +12,8 @@ using WPRProject;
 namespace WPRProject.Migrations
 {
     [DbContext(typeof(CarsAndAllContext))]
-    [Migration("20241209152455_InitialUpdate")]
-    partial class InitialUpdate
+    [Migration("20250105123641_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -185,7 +185,7 @@ namespace WPRProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Adress")
+                    b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -207,11 +207,6 @@ namespace WPRProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LicenseNumber")
-                        .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
-
                     b.Property<string>("PickupLocation")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -230,10 +225,15 @@ namespace WPRProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("VehicleId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Verified")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("VehicleId");
 
                     b.ToTable("Rent");
                 });
@@ -361,7 +361,23 @@ namespace WPRProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Vehicles");
+                    b.ToTable("Vehicle");
+                });
+
+            modelBuilder.Entity("WPRProject.Tables.Rent", b =>
+                {
+                    b.HasOne("WPRProject.Tables.Vehicle", "Vehicle")
+                        .WithMany("Rents")
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Vehicle");
+                });
+
+            modelBuilder.Entity("WPRProject.Tables.Vehicle", b =>
+                {
+                    b.Navigation("Rents");
                 });
 #pragma warning restore 612, 618
         }

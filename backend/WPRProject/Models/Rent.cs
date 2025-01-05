@@ -5,9 +5,13 @@ namespace WPRProject.Tables
 {
     public class Rent
     {
-        [Key] public int Id { get; set; }
+        [Key] 
+        public int Id { get; set; }
+
         public bool Verified { get; set; }
+
         public DateTime StartDate {  get; set; }
+
         public DateTime EndDate { get; set; }
       
         public string FirstName {  get; set; }
@@ -19,6 +23,7 @@ namespace WPRProject.Tables
         public string TravelPurpose {get; set; }
   
         public string FurthestDestination {  get; set; }
+
         public int ExpectedDistance {  get; set; }
   
         public string PickupLocation {  get; set; }
@@ -30,8 +35,7 @@ namespace WPRProject.Tables
         [Required]
         public int VehicleId { get; set; }
 
+        // Navigation property to Vehicle
         public Vehicle? Vehicle { get; set; }
-
-
     }
 }
