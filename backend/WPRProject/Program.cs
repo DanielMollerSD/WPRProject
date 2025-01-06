@@ -9,7 +9,10 @@ using System.Text;
 
 using WPRProject;
 
-public class Program
+namespace WPRProject
+{
+
+public static class Program
 {
     public static void Main(string[] args)
     {
@@ -34,7 +37,7 @@ public class Program
                 policy.WithOrigins("http://localhost:5173")  // Replace with your frontend's origin
                     .AllowAnyMethod()
                     .AllowAnyHeader()
-                    .AllowCredentials();  // Allow credentials (cookies, authorization headers)
+                    .AllowCredentials();  
             });
         });
 
@@ -52,6 +55,8 @@ public class Program
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
                 };
             });
+
+
 
         var app = builder.Build();
 
@@ -72,4 +77,5 @@ public class Program
 
         app.Run();
     }
+}
 }

@@ -13,6 +13,8 @@ import SignupSelectionScreen from './pages/signup-select';
 import VehicleOverview from './pages/vehicle-overview';
 import RentScreen from './pages/rent-screen';
 
+import AccountSettings from './pages/account-settings';
+
 function AppRoutes() {
   return (
     <Router>
@@ -29,6 +31,7 @@ function AppRoutes() {
             <Route path="/signup-select" element={<SignupSelectionScreen />} />
             <Route path="/vehicle-overview" element={ <VehicleOverview/>}/>
             <Route path="/rent/:id" element={<RentScreen />} />
+            <Route path="/account-settings" element= {<AccountSettings/>}/>
           </Routes>
         </main>
 

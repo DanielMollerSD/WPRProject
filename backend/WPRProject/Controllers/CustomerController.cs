@@ -9,8 +9,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
-
-
+using BCrypt.Net;
 
 namespace WPRProject.Controllers
 
@@ -21,7 +20,7 @@ namespace WPRProject.Controllers
     {
 
         private readonly CarsAndAllContext _context;
-         private readonly IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
         public CustomerController(CarsAndAllContext context, IConfiguration configuration)
             {
@@ -50,7 +49,7 @@ namespace WPRProject.Controllers
 
             return customer;
         }
-        [HttpPost]
+    [HttpPost]
     public async Task<ActionResult<Customer>> CreateCustomer(Customer customer)
     {
      if (customer == null)
@@ -106,15 +105,17 @@ namespace WPRProject.Controllers
         }
 
     [HttpPost("login")]
-    public async Task<ActionResult> Login(CustomerLoginDTO loginDto)
+    public async Task<ActionResult> Login(CustomerLoginDto loginDto)
     {
         var customer = await _context.Customer
-            .FirstOrDefaultAsync(c => c.Email == loginDto.Email && c.Password == loginDto.Password);
+        .FirstOrDefaultAsync(c => c.Email == loginDto.Email);
 
-        if (customer == null)
-        {
-            return Unauthorized("Invalid credentials");
-        }
+    if (customer == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, customer.Password))
+    {
+        return Unauthorized(new { Message = "Invalid credentials" });
+    }
+
+
 
         var secretKey = _configuration["Jwt:Key"];
         var issuer = _configuration["Jwt:Issuer"];

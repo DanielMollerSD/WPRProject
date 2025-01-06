@@ -20,23 +20,28 @@ namespace WPRProject
         public DbSet<Vehicle> Vehicle { get; set; }
 
 
-      
-            public CarsAndAllContext(DbContextOptions<CarsAndAllContext> options)
-                : base(options)
-            {
-            }
 
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
-                // Configure the foreign key relationship between Rent and Vehicle
-                modelBuilder.Entity<Rent>()
-                    .HasOne(r => r.Vehicle)             // One Rent has one Vehicle
-                    .WithMany(v => v.Rents)             // One Vehicle can have many Rents
-                    .HasForeignKey(r => r.VehicleId)    // Foreign key in Rent pointing to Vehicle
-                    .OnDelete(DeleteBehavior.Cascade);
+        public CarsAndAllContext(DbContextOptions<CarsAndAllContext> options)
+            : base(options)
+        {
+        }
 
-                base.OnModelCreating(modelBuilder);
-            }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Configure the foreign key relationship between Rent and Vehicle
+            modelBuilder.Entity<Rent>()
+                .HasOne(r => r.Vehicle)             // One Rent has one Vehicle
+                .WithMany(v => v.Rents)             // One Vehicle can have many Rents
+                .HasForeignKey(r => r.VehicleId)    // Foreign key in Rent pointing to Vehicle
+                .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<Customer>()
+                .HasDiscriminator<string>("Discriminator")
+                .HasValue<Customer>("Customer")
+                .HasValue<BusinessEmployee>("BusinessEmployee")
+                .HasValue<Business>("Business");
+
+            base.OnModelCreating(modelBuilder);
         }
     }
+}

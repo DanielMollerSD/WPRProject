@@ -11,6 +11,7 @@
     font-size: 20px;
     color:#003366;
     
+    
 
     }
     #SignUpBody {
@@ -44,14 +45,15 @@
     }
     
     .signup-container {
+        margin-top: 5px;
         background: #fff;
         padding: 20px 30px;
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         text-align: center;
-        width: 100%; 
-        max-width: 400px; 
-        height: 800px;
+        width: auto; 
+        max-width: 400px;
+        height: auto;
     }
     
     
@@ -72,7 +74,7 @@
     
     .nameLabel {
         display: flex;
-        margin-bottom: 5px;
+        margin-top: 5px;
         font-weight: bold;
         margin: 0, auto;
         
