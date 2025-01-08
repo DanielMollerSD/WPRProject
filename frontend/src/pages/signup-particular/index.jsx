@@ -173,6 +173,9 @@ function SignUpParticular() {
                             <Link to="/vehicle-overview">
                                 <button>next page</button>
                             </Link>
+                            <Link to="/vehicle-crud">
+                                <button>crud page</button>
+                            </Link>
                         </section>
                     </main>
                 </div>
