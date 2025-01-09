@@ -157,5 +157,21 @@ namespace WPRProject.Controllers
         return Ok(new { Token = tokenString });
     }
 
+     [HttpPut("{id}/verify")]
+        public async Task<IActionResult> UpdateVerificationStatus(int id, [FromBody] bool isApproved)
+        {
+            var customer = await _context.Customer.FindAsync(id);
+
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            Customer.Verified = isApproved; // Update the Verified status
+            await _context.SaveChangesAsync(); // Save changes to the database
+
+            return Ok(customer); // Return the updated rent object
+        }
+
     }
 }

@@ -43,9 +43,14 @@ namespace WPRProject.Controllers
         }
 
        
-        [HttpPost("register")]
+      [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] BusinessRegisterDto registerDto)
         {
+            if (registerDto == null)
+            {
+                return BadRequest(new { message = "Invalid data." });
+            }
+
             try
             {
                 var existingBusiness = await _context.Business
@@ -78,11 +83,9 @@ namespace WPRProject.Controllers
             }
             catch (Exception ex)
             {
-                
                 return StatusCode(500, new { message = "An error occurred", details = ex.Message });
-
-
             }
         }
+
     }
 }
