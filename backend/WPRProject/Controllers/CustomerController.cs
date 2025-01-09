@@ -129,7 +129,7 @@ namespace WPRProject.Controllers
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.Name, (customer.FirstName ?? "") + " " + (customer.LastName ?? "")),
-            new Claim(ClaimTypes.Email, customer.Email)
+            new Claim(ClaimTypes.Email, customer.Email),
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
@@ -156,6 +156,60 @@ namespace WPRProject.Controllers
 
         return Ok(new { Token = tokenString });
     }
+
+    [Authorize]
+    [HttpGet("account-details")]
+    public async Task<IActionResult> GetAccountDetails()
+    {
+        var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+
+        Console.WriteLine(email);
+        if (string.IsNullOrEmpty(email))
+        {
+            return Unauthorized();
+        }
+
+        var customer = await _context.Individual.FirstOrDefaultAsync(c => c.Email == email);
+
+        Console.WriteLine(customer);
+        if (customer == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(new
+        {
+            PostalCode = customer.PostalCode,
+            Address = customer.Address,
+            Email = customer.Email,
+        });
+    }
+    [Authorize]
+    [HttpPut("update-account")]
+    public async Task<IActionResult> UpdateAccount(UpdateCustomerDto updateDto)
+    {
+        var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+
+        if (string.IsNullOrEmpty(email))
+        {
+            return Unauthorized();
+        }
+
+        var customer = await _context.Individual.FirstOrDefaultAsync(c => c.Email == email);
+        if (customer == null)
+        {
+            return NotFound();
+        }
+
+        customer.PostalCode = updateDto.PostalCode;
+        customer.Address = updateDto.Address;
+        customer.Password = updateDto.Password;
+        customer.Email = updateDto.Email;
+
+        await _context.SaveChangesAsync();
+
+        return Ok(new { Message = "Account updated successfully" });
+     }
 
     }
 }

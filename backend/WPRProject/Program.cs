@@ -30,16 +30,17 @@ public static class Program
         builder.Services.AddEndpointsApiExplorer();
         
         builder.Services.AddSwaggerGen();
-        builder.Services.AddCors(options =>
+            builder.Services.AddCors(options =>
         {
             options.AddPolicy("AllowSpecificOrigin", policy =>
             {
-                policy.WithOrigins("http://localhost:5173")  // Replace with your frontend's origin
+                policy.WithOrigins("http://localhost:5173") // Replace with your frontend's URL
                     .AllowAnyMethod()
                     .AllowAnyHeader()
-                    .AllowCredentials();  
+                    .AllowCredentials(); // Required for cookies or authorization headers
             });
         });
+
 
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
@@ -56,7 +57,7 @@ public static class Program
                 };
             });
 
-
+        builder.Services.AddAuthorization();
 
         var app = builder.Build();
 
@@ -69,13 +70,13 @@ public static class Program
         app.UseHttpsRedirection();
 
         app.UseCors("AllowSpecificOrigin");
-
+        app.UseMiddleware<CookieAuthenticationMiddleware>(); 
         app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllers();
 
         app.Run();
+     }
     }
-}
 }

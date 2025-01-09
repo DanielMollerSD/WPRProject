@@ -24,11 +24,16 @@ function Login() {
             credentials: "include",  // Include credentials like cookies for the token
         });
 
+        if (response.status === 401) {
+            navigate("/login"); // Redirect to login page
+        }
+        
+
         if (response.ok) {
             try {
                 const data = await response.json();
                 console.log("Logged in successfully:", data);
-                // Save the token or do any further processing
+            
                 localStorage.setItem("access_token", data.Token); // Example, if you want to save the token
                 navigate('/vehicle-overview');  
             } catch (error) {
