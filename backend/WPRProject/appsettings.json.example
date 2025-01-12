@@ -6,12 +6,20 @@
     }
   },
   "AllowedHosts": "*",
-"Jwt": {
-  "Key": "a2L6kVm6dGe9PjLp3Fs4RwGfA9tXYb2z0v4ZtIoOm50IqE5Zt7H3Vv3Ve9FcAe2d",
-  "Issuer": "CarsAndAll",
-  "Audience": "CarsAndAll"
-},
+  "Jwt": {
+    "Key": "a2L6kVm6dGe9PjLp3Fs4RwGfA9tXYb2z0v4ZtIoOm50IqE5Zt7H3Vv3Ve9FcAe2d",
+    "Issuer": "CarsAndAll",
+    "Audience": "CarsAndAll"
+  },
   "ConnectionStrings": {
     "DefaultConnection": "Server=YOURDATABASENAME;Database=CarsAndAllDB;Trusted_Connection=True;Encrypt=True;TrustServerCertificate=True"
+  },
+  "SmtpSettings": {
+    "Server": "smtp.gmail.com",
+    "Port": 587,
+    "SenderName": "CarsAndAll",
+    "SenderEmail": "CarsAndAllRental@gmail.com",
+    "Username": "CarsAndAllRental@gmail.com",
+    "Password": "zgpxdsoqjemiqtjc"
   }
 }
