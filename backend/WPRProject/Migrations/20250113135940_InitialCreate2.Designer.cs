@@ -12,8 +12,8 @@ using WPRProject;
 namespace WPRProject.Migrations
 {
     [DbContext(typeof(CarsAndAllContext))]
-    [Migration("20250106114446_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250113135940_InitialCreate2")]
+    partial class InitialCreate2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -292,7 +292,6 @@ namespace WPRProject.Migrations
                         .HasColumnType("float");
 
                     b.Property<int>("PurchaseYear")
-                        .HasMaxLength(4)
                         .HasColumnType("int");
 
                     b.Property<string>("Status")

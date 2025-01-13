@@ -21,7 +21,7 @@ namespace WPRProject.Tables
     public string Note { get; set; }
 
     [Range(1, int.MaxValue, ErrorMessage = "Prijs moet een positief nummer zijn.")]
-    public decimal Price { get; set; }
+    public double Price { get; set; }
 
     [Range(1900, 2100, ErrorMessage = "Voer een geldig jaar in.")]
     public int PurchaseYear { get; set; }

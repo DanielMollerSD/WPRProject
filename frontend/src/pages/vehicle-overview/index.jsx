@@ -2,7 +2,7 @@ import './styles.scss';
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 
-function RentScreen() {
+function VehicleOverview() {
     const [vehicles, setVehicles] = useState([]);
     const [vehicleTypes, setVehicleTypes] = useState([]);
     const [vehicleBrands, setVehicleBrands] = useState([]);
@@ -175,4 +175,4 @@ function RentScreen() {
     );
 }
 
-export default RentScreen;
+export default VehicleOverview;
