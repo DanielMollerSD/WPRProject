@@ -70,6 +70,8 @@ public static class Program
 
         app.UseCors("AllowSpecificOrigin");
 
+        app.UseMiddleware<JwtMiddleware>();
+
         app.UseAuthentication();
         app.UseAuthorization();
 
