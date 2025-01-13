@@ -28,5 +28,8 @@ namespace WPRProject.Tables
 
     [Required]
     public string VehicleType { get; set; }
+    [JsonIgnore]
+        // Navigation property to link rents (one-to-many)
+        public ICollection<Rent>? Rents { get; set; }
 }
 }
