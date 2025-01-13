@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WPRProject;
 
@@ -11,9 +12,11 @@ using WPRProject;
 namespace WPRProject.Migrations
 {
     [DbContext(typeof(CarsAndAllContext))]
-    partial class CarsAndAllContextModelSnapshot : ModelSnapshot
+    [Migration("20250113101009_vehicle_rents")]
+    partial class vehicle_rents
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,7 @@ namespace WPRProject.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("WPRProject.Tables.Customer", b =>
+            modelBuilder.Entity("WPRProject.Tables.Business", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -30,10 +33,47 @@ namespace WPRProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Discriminator")
+                    b.Property<string>("Adress")
                         .IsRequired()
-                        .HasMaxLength(21)
-                        .HasColumnType("nvarchar(21)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Kvk")
+                        .HasMaxLength(8)
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Business");
+                });
+
+            modelBuilder.Entity("WPRProject.Tables.BusinessEmployee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BusinessEmployee");
+                });
+
+            modelBuilder.Entity("WPRProject.Tables.Customer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -49,18 +89,16 @@ namespace WPRProject.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
 
                     b.Property<string>("TussenVoegsel")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Customer");
-
-                    b.HasDiscriminator().HasValue("Customer");
-
-                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("WPRProject.Tables.Damage", b =>
@@ -95,6 +133,27 @@ namespace WPRProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Employee");
+                });
+
+            modelBuilder.Entity("WPRProject.Tables.Individual", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Adress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PhoneNumber")
+                        .HasMaxLength(10)
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Individual");
                 });
 
             modelBuilder.Entity("WPRProject.Tables.Mail", b =>
@@ -302,60 +361,6 @@ namespace WPRProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Vehicle");
-                });
-
-            modelBuilder.Entity("WPRProject.Tables.BusinessEmployee", b =>
-                {
-                    b.HasBaseType("WPRProject.Tables.Customer");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasDiscriminator().HasValue("BusinessEmployee");
-                });
-
-            modelBuilder.Entity("WPRProject.Tables.Individual", b =>
-                {
-                    b.HasBaseType("WPRProject.Tables.Customer");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("PostalCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasDiscriminator().HasValue("Individual");
-                });
-
-            modelBuilder.Entity("WPRProject.Tables.Business", b =>
-                {
-                    b.HasBaseType("WPRProject.Tables.BusinessEmployee");
-
-                    b.Property<string>("BusinessAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BusinessName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BusinessPostalCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Kvk")
-                        .HasColumnType("int");
-
-                    b.HasDiscriminator().HasValue("Business");
                 });
 
             modelBuilder.Entity("WPRProject.Tables.Rent", b =>

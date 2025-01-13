@@ -2,6 +2,7 @@ import './styles.scss';
 import React, {useRef} from "react";
 import { Link } from 'react-router-dom';
 
+
 function SignUpBusiness() {
 
     const password1Ref = useRef(null);
@@ -204,6 +205,7 @@ function SignUpBusiness() {
                          <Link to="/vehicle-overview">
                             <button>next page</button>
                         </Link>
+                        
 
             </main>
         </div>
