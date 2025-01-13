@@ -115,8 +115,6 @@ namespace WPRProject.Controllers
         return Unauthorized(new { Message = "Invalid credentials" });
     }
 
-
-
         var secretKey = _configuration["Jwt:Key"];
         var issuer = _configuration["Jwt:Issuer"];
         var audience = _configuration["Jwt:Audience"];
