@@ -15,7 +15,8 @@ function AccountSettings() {
         address: '',
         postalCode: '',
         firstName: '',
-        lastName: ''
+        lastName: '',
+        password: ''
     });
 
     const togglePassword = () => {
@@ -44,6 +45,8 @@ function AccountSettings() {
                     setLoading(false);
                 });
         };
+
+        console.log(error)
         fetchData();
     }, []);
 
@@ -73,13 +76,13 @@ function AccountSettings() {
             postalCode: userData.postalCode,
             firstName: userData.firstName,
             lastName: userData.lastName,
-           
+            password: userData.password
         };
 
-        // Send a PUT request to update the user data
+     
         axios.put('https://localhost:7265/api/Customer', updatedUserData, { withCredentials: true })
             .then(response => {
-                // If successful, you may want to display a success message or reload data
+                
                 console.log('User data updated:', response.data);
                 setLoading(false);
             })

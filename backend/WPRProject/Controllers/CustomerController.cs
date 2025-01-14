@@ -28,6 +28,8 @@ namespace WPRProject.Controllers
             _configuration = configuration;
         }
 
+        
+
         [Authorize]
         [HttpGet]
         public async Task<ActionResult<Customer>> GetCustomers()
@@ -87,31 +89,52 @@ namespace WPRProject.Controllers
             return CreatedAtAction(nameof(GetOneCustomer), new { id = customer.Id }, customer);
         }
         [HttpPut]
-        public async Task<IActionResult> UpdateCustomer(int id, Customer customer)
+        public async Task<ActionResult> UpdateCustomer([FromBody] UpdateIndividualDto customerUpdateDto)
         {
-            if (id != customer.Id)
+            var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+
+            // Fetch the current customer based on the logged-in user's email (or ID)
+            var customer = await _context.Individual.FirstOrDefaultAsync(c => c.Email == userEmail);
+
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(customerUpdateDto.Password);
+
+            if (customer == null)
             {
-                return BadRequest("Customer ID mismatch.");
+                return NotFound("Customer not found.");
+            }
+            // Only update fields that are provided in the DTO
+            if (!string.IsNullOrEmpty(customerUpdateDto.Email))
+            {
+                customer.Email = customerUpdateDto.Email;
+            }
+            if (!string.IsNullOrEmpty(customerUpdateDto.Address))
+            {
+                customer.Address = customerUpdateDto.Address;
+            }
+            if (!string.IsNullOrEmpty(customerUpdateDto.PostalCode))
+            {
+                customer.PostalCode = customerUpdateDto.PostalCode;
+            }
+            if (!string.IsNullOrEmpty(customerUpdateDto.FirstName))
+            {
+                customer.FirstName = customerUpdateDto.FirstName;
+            }
+            if (!string.IsNullOrEmpty(customerUpdateDto.LastName))
+            {
+                customer.LastName = customerUpdateDto.LastName;
+            }
+            if (!string.IsNullOrEmpty(customerUpdateDto.Password))
+            {
+                // You should hash the password before saving it
+                customer.Password = customerUpdateDto.Password;
+
             }
 
-            _context.Entry(customer).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_context.Customer.Any(e => e.Id == id))
-                {
-                    return NotFound("Customer not found.");
-                }
-
-                throw;
-            }
-
-            return NoContent();
+            return Ok(customer);  // Return the updated customer data
         }
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomer(int id)
