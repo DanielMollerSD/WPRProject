@@ -172,7 +172,7 @@ function SignUpBusiness() {
                                 <input
                                     type="password"
                                     className="LargeInput"
-                                    name="password"
+                                    name="password-repeat"
                                     placeholder="Herhaal uw wachtwoord"
                                     ref={password2Ref}
                                     pattern="\w{3,16}"

@@ -1,18 +1,18 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // Components
-import Header from './components/header';
-import Footer from './components/footer';
+import Header from "./components/header";
+import Footer from "./components/footer";
 
 // Pages
-import Home from './pages/home';
-import Login from './pages/login';
-import SignUpParticular from './pages/signup-particular';
-import SignUpBusiness from './pages/signup-business';
-import SignupSelectionScreen from './pages/signup-select';
-import RentSelect from './pages/rent-screen';
-
-import AccountSettings from './pages/account-settings';
+import Home from "./pages/home";
+import Login from "./pages/login";
+import SignUpParticular from "./pages/signup-particular";
+import SignUpBusiness from "./pages/signup-business";
+import SignupSelectionScreen from "./pages/signup-select";
+import RentSelect from "./pages/rent-screen";
+import BusinessSettings from "./pages/business-settings";
+import AccountSettings from "./pages/account-settings";
 
 function AppRoutes() {
   return (
@@ -28,8 +28,9 @@ function AppRoutes() {
             <Route path="/signup-particular" element={<SignUpParticular />} />
             <Route path="/signup-business" element={<SignUpBusiness />} />
             <Route path="/signup-select" element={<SignupSelectionScreen />} />
-            <Route path="/rent-screen" element={ <RentSelect/>}/>
-            <Route path="/account-settings" element= {<AccountSettings/>}/>
+            <Route path="/rent-screen" element={<RentSelect />} />
+            <Route path="/account-settings" element={<AccountSettings />} />
+            <Route path="/business-settings" element={<BusinessSettings />} />
           </Routes>
         </main>
 
@@ -37,6 +38,5 @@ function AppRoutes() {
       </div>
     </Router>
   );
-
 }
-export default AppRoutes
+export default AppRoutes;

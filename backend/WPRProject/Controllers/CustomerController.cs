@@ -88,7 +88,7 @@ namespace WPRProject.Controllers
 
             return CreatedAtAction(nameof(GetOneCustomer), new { id = customer.Id }, customer);
         }
-            [HttpPut]
+        [HttpPut("updateIndividual")]
         public async Task<ActionResult> UpdateCustomer([FromBody] UpdateIndividualDto customerUpdateDto)
         {
             Console.WriteLine($"Received Password: {customerUpdateDto.Password}");
@@ -102,7 +102,6 @@ namespace WPRProject.Controllers
             {
                 return NotFound("Customer not found.");
             }
-
             // Only update fields that are provided in the DTO
             if (!string.IsNullOrEmpty(customerUpdateDto.Email))
             {
@@ -116,14 +115,12 @@ namespace WPRProject.Controllers
             {
                 customer.PostalCode = customerUpdateDto.PostalCode;
             }
-            if (!string.IsNullOrEmpty(customerUpdateDto.FirstName))
+
+             if (!string.IsNullOrEmpty(customerUpdateDto.PhoneNumber))
             {
-                customer.FirstName = customerUpdateDto.FirstName;
+                customer.PhoneNumber = customerUpdateDto.PhoneNumber;
             }
-            if (!string.IsNullOrEmpty(customerUpdateDto.LastName))
-            {
-                customer.LastName = customerUpdateDto.LastName;
-            }
+            
             if (!string.IsNullOrEmpty(customerUpdateDto.Password))
             {
                 // Hash the password before saving it
@@ -132,6 +129,55 @@ namespace WPRProject.Controllers
             }
 
             await _context.SaveChangesAsync();
+            
+            Console.WriteLine(customerUpdateDto.PhoneNumber);
+
+            return Ok(customer); // Return the updated customer data
+        }
+
+        [HttpPut("updateBusiness")]
+        public async Task<ActionResult> UpdateCustomer([FromBody] UpdateBusinessDto customerUpdateDto)
+        {
+            Console.WriteLine($"Received Password: {customerUpdateDto.Password}");
+
+            var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+
+            // Fetch the current customer based on the logged-in user's email (or ID)
+            var customer = await _context.Business.FirstOrDefaultAsync(c => c.Email == userEmail);
+
+            if (customer == null)
+            {
+                return NotFound("Customer not found.");
+            }
+            // Only update fields that are provided in the DTO
+            if (!string.IsNullOrEmpty(customerUpdateDto.Email))
+            {
+                customer.Email = customerUpdateDto.Email;
+            }
+            if (!string.IsNullOrEmpty(customerUpdateDto.BusinessAddress))
+            {
+                customer.BusinessAddress = customerUpdateDto.BusinessAddress;
+            }
+            if (!string.IsNullOrEmpty(customerUpdateDto.BusinessPostalCode))
+            {
+                customer.BusinessPostalCode = customerUpdateDto.BusinessPostalCode;
+            }
+
+             if (!string.IsNullOrEmpty(customerUpdateDto.BusinessName))
+            {
+                customer.BusinessName = customerUpdateDto.BusinessName;
+            }
+            
+            if (!string.IsNullOrEmpty(customerUpdateDto.Password))
+            {
+                // Hash the password before saving it
+                var hashedPassword = BCrypt.Net.BCrypt.HashPassword(customerUpdateDto.Password);
+                customer.Password = hashedPassword;
+            }
+
+            await _context.SaveChangesAsync();
+            
+    
 
             return Ok(customer); // Return the updated customer data
         }
