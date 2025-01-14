@@ -84,6 +84,7 @@ namespace WPRProject.Controllers
                 return StatusCode(500, new { message = "An error occurred", details = ex.Message });
             }
         }
+        
 
     }
 }

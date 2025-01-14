@@ -147,6 +147,7 @@ function SignUpParticular() {
                                         name="password"
                                         placeholder="Voer uw wachtwoord in"
                                         ref={password1Ref}
+                                        pattern="(?=.[!@#$%^&(),.?:{}|<>-+=;'/~`\[\]^])[A-Za-z\d!@#$%^&*(),.?:{}|<>-+=;'/~`\[\]^]"
                                         required
                                     />
                                 </div>
@@ -158,6 +159,7 @@ function SignUpParticular() {
                                         name="password-repeat"
                                         placeholder="Herhaal uw wachtwoord in"
                                         ref={password2Ref}
+                                        pattern="(?=.[!@#$%^&(),.?:{}|<>-+=;'/~`\[\]^])[A-Za-z\d!@#$%^&*(),.?:{}|<>-+=;'/~`\[\]^]"
                                         required
                                     />
                                 </div>

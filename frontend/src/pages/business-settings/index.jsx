@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import "./styles.scss";
 
-function AccountSettings() {
+function BusinessSettings() {
   const password1Ref = useRef(null);
   const password2Ref = useRef(null);
   const [data, setData] = useState(null);
@@ -11,9 +11,9 @@ function AccountSettings() {
   const [validationError, setValidationError] = useState(""); // Validation error state
   const [userData, setUserData] = useState({
     email: "",
-    address: "",
-    postalCode: "",
-    phoneNumber: "",
+    businessAddress: "",
+    businessPostalCode: "",
+    businessName: "",
     password: "",
     repeatPassword: "", // Add repeat password to state
   });
@@ -38,13 +38,13 @@ function AccountSettings() {
         })
         .then((response) => {
           setData(response.data); // Set the fetched data
-          console.log(response.data);
+          console.log(response.data); // Check if the data is structured as expected
           setLoading(false);
         })
         .catch((error) => {
+          console.log(error);
           setError(error.message); // Handle the error
           setLoading(false);
-          console.log(error)
         });
     };
 
@@ -67,15 +67,15 @@ function AccountSettings() {
     // Prepare updated user data
     const updatedUserData = {
       email: userData.email,
-      address: userData.address,
-      postalCode: userData.postalCode,
-      phoneNumber: userData.phoneNumber,
+      businessAddress: userData.businessAddress,
+      businessPostalCode: userData.businessPostalCode,
+      businessName: userData.businessName,
       password: userData.password,
     };
 
     axios
       .put(
-        "https://localhost:7265/api/Customer/updateIndividual",
+        "https://localhost:7265/api/Customer/updateBusiness",
         updatedUserData,
         {
           withCredentials: true,
@@ -120,7 +120,7 @@ function AccountSettings() {
       <header></header>
       <div className="accountsettings-box">
         <section className="as-container">
-          <h2> Account Bewerken Individueel </h2>
+          <h2> Account Bewerken Bedrijf </h2>
           <form onSubmit={handleSubmit}>
             <div className="as-group">
               <div>
@@ -137,16 +137,19 @@ function AccountSettings() {
                 />
               </div>
               <div>
-                <label>Woonadres:</label>
+                <label>BedrijfsAdres:</label>
                 <input
                   type="text"
                   className="as-adress"
-                  placeholder={data.address}
+                  placeholder={data?.businessAddress || ""}
                   name="adres"
-                  value={userData.address} // Controlled input
+                  value={userData.businessAddress}
                   onChange={(e) =>
-                    setUserData({ ...userData, address: e.target.value })
-                  } // Update on change
+                    setUserData({
+                      ...userData,
+                      businessAddress: e.target.value,
+                    })
+                  }
                 />
               </div>
               <div>
@@ -154,24 +157,27 @@ function AccountSettings() {
                 <input
                   type="text"
                   className="as-postalcode"
-                  placeholder={data.postalCode}
+                  placeholder={data.businessPostalCode}
                   name="postcode"
-                  value={userData.postalCode} // Controlled input
+                  value={userData.businessPostalCode} // Controlled input
                   onChange={(e) =>
-                    setUserData({ ...userData, postalCode: e.target.value })
+                    setUserData({
+                      ...userData,
+                      businessPostalCode: e.target.value,
+                    })
                   } // Update on change
                 />
               </div>
               <div>
-                <label>Telefoonnummer:</label>
+                <label>Bedrijfsnaam:</label>
                 <input
                   type="text"
                   className="as-phonenumber"
-                  placeholder={data.phoneNumber}
+                  placeholder={data.businessName}
                   name="phoneNumber"
-                  value={userData.phoneNumber} // Controlled input
+                  value={userData.businessName} // Controlled input
                   onChange={(e) =>
-                    setUserData({ ...userData, phoneNumber: e.target.value })
+                    setUserData({ ...userData, businessName: e.target.value })
                   } // Update on change
                 />
               </div>
@@ -230,4 +236,4 @@ function AccountSettings() {
   );
 }
 
-export default AccountSettings;
+export default BusinessSettings;

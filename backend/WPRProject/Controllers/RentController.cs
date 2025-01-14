@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WPRProject.Tables;
+using System.Threading.Tasks;
 
 namespace WPRProject.Controllers
 {
@@ -9,10 +10,12 @@ namespace WPRProject.Controllers
     public class RentController : ControllerBase
     {
         private readonly CarsAndAllContext _context;
+        private readonly EmailService _emailService;
 
-        public RentController(CarsAndAllContext context)
+        public RentController(CarsAndAllContext context, EmailService emailService)
         {
             _context = context;
+            _emailService = emailService;
         }
 
         [HttpGet]
@@ -63,6 +66,15 @@ namespace WPRProject.Controllers
             {
                 _context.Rent.Add(rent);
                 await _context.SaveChangesAsync();
+
+                var subject = "Rental Confirmation";
+                var message = $"<h1>Your rental has been confirmed</h1>" +
+                              $"<p>Vehicle: {vehicle.Model}</p>" +
+                              $"<p>Rental Period: {rent.StartDate:yyyy-MM-dd} to {rent.EndDate:yyyy-MM-dd}</p>";
+
+                // TODO: Change email adress later!!!
+                await _emailService.SendEmailAsync("daniel.moller2003@gmail.com", subject, message);
+
                 return CreatedAtAction("GetRent", new { id = rent.Id }, rent);
             }
             catch (Exception ex)

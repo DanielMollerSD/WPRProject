@@ -12,7 +12,7 @@ using WPRProject;
 namespace WPRProject.Migrations
 {
     [DbContext(typeof(CarsAndAllContext))]
-    [Migration("20250113134006_InitialCreate")]
+    [Migration("20250114144611_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -288,8 +288,8 @@ namespace WPRProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.Property<int>("PurchaseYear")
                         .HasColumnType("int");
