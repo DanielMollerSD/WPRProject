@@ -21,7 +21,7 @@ function Login() {
                 email: email,
                 password: password,
             }),
-            credentials: "include",  // Include credentials like cookies for the token
+            credentials: "include", 
         });
 
         if (response.ok) {

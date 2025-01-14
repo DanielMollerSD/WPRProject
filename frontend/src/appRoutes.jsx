@@ -1,8 +1,8 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // Components
-import Header from './components/header';
-import Footer from './components/footer';
+import Header from "./components/header";
+import Footer from "./components/footer";
 
 // Pages
 import Home from './pages/home';
@@ -12,8 +12,8 @@ import SignUpBusiness from './pages/signup-business';
 import SignupSelectionScreen from './pages/signup-select';
 import VehicleOverview from './pages/vehicle-overview';
 import RentScreen from './pages/rent-screen';
-import VehicleCRUD from './pages/vehicle-crud'; // <== Voeg deze import toe
-
+import VehicleCRUD from './pages/vehicle-crud';
+import BusinessSettings from "./pages/business-settings";
 import AccountSettings from './pages/account-settings';
 
 function AppRoutes() {
@@ -31,9 +31,10 @@ function AppRoutes() {
             <Route path="/signup-business" element={<SignUpBusiness />} />
             <Route path="/signup-select" element={<SignupSelectionScreen />} />
             <Route path="/vehicle-overview" element={<VehicleOverview />} />
-            <Route path="/vehicle-crud" element={<VehicleCRUD />} /> {/* Nieuwe route */}
+            <Route path="/vehicle-crud" element={<VehicleCRUD />} />
             <Route path="/rent/:id" element={<RentScreen />} />
             <Route path="/account-settings" element= {<AccountSettings/>}/>
+            <Route path="/business-settings" element={<BusinessSettings />} />
           </Routes>
         </main>
 

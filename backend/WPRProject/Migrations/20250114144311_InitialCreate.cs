@@ -145,7 +145,7 @@ namespace WPRProject.Migrations
                     Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false),
                     PurchaseYear = table.Column<int>(type: "int", nullable: false),
                     VehicleType = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
