@@ -16,6 +16,7 @@ import VehicleCRUD from './pages/vehicle-crud';
 import FrontOfficeVehicleOverview from './pages/frontoffice-vehicle-overview';
 import BusinessSettings from "./pages/business-settings";
 import AccountSettings from './pages/account-settings';
+import VehicleDamage from './pages/frontoffice-vehicle-damage';
 
 function AppRoutes() {
   return (
@@ -37,6 +38,7 @@ function AppRoutes() {
             <Route path="/account-settings" element= {<AccountSettings/>}/>
             <Route path="/frontoffice-vehicle-overview" element= {<FrontOfficeVehicleOverview/>}/>
             <Route path="/business-settings" element={<BusinessSettings />} />
+            <Route path="/damage/:id" element={<VehicleDamage />} />
           </Routes>
         </main>
 

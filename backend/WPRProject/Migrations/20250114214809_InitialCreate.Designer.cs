@@ -12,7 +12,7 @@ using WPRProject;
 namespace WPRProject.Migrations
 {
     [DbContext(typeof(CarsAndAllContext))]
-    [Migration("20250114144611_InitialCreate")]
+    [Migration("20250114214809_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -78,7 +78,12 @@ namespace WPRProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("VehicleId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("VehicleId");
 
                     b.ToTable("Damage");
                 });
@@ -361,6 +366,17 @@ namespace WPRProject.Migrations
                     b.HasDiscriminator().HasValue("Business");
                 });
 
+            modelBuilder.Entity("WPRProject.Tables.Damage", b =>
+                {
+                    b.HasOne("WPRProject.Tables.Vehicle", "Vehicle")
+                        .WithMany("Damages")
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Vehicle");
+                });
+
             modelBuilder.Entity("WPRProject.Tables.Rent", b =>
                 {
                     b.HasOne("WPRProject.Tables.Vehicle", "Vehicle")
@@ -374,6 +390,8 @@ namespace WPRProject.Migrations
 
             modelBuilder.Entity("WPRProject.Tables.Vehicle", b =>
                 {
+                    b.Navigation("Damages");
+
                     b.Navigation("Rents");
                 });
 #pragma warning restore 612, 618

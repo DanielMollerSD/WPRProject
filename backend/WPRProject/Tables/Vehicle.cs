@@ -31,5 +31,9 @@ namespace WPRProject.Tables
     [JsonIgnore]
         // Navigation property to link rents (one-to-many)
         public ICollection<Rent>? Rents { get; set; }
+
+    [JsonIgnore]
+    // Navigation property to link damages (one-to-many)
+    public ICollection<Damage>? Damages { get; set; }
 }
 }

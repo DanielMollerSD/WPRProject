@@ -28,6 +28,12 @@ namespace WPRProject
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Damage>()
+                .HasOne(d => d.Vehicle)             // One Damage has one Vehicle
+                .WithMany(v => v.Damages)           // One Vehicle can have many Damages
+                .HasForeignKey(d => d.VehicleId)    // Foreign key in Damage pointing to Vehicle
+                .OnDelete(DeleteBehavior.Cascade);  // Delete damages when the vehicle is deleted
+
             // Configure the foreign key relationship between Rent and Vehicle
             modelBuilder.Entity<Rent>()
                 .HasOne(r => r.Vehicle)             // One Rent has one Vehicle
