@@ -88,20 +88,21 @@ namespace WPRProject.Controllers
 
             return CreatedAtAction(nameof(GetOneCustomer), new { id = customer.Id }, customer);
         }
-        [HttpPut]
+            [HttpPut]
         public async Task<ActionResult> UpdateCustomer([FromBody] UpdateIndividualDto customerUpdateDto)
         {
+            Console.WriteLine($"Received Password: {customerUpdateDto.Password}");
+
             var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 
             // Fetch the current customer based on the logged-in user's email (or ID)
             var customer = await _context.Individual.FirstOrDefaultAsync(c => c.Email == userEmail);
 
-            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(customerUpdateDto.Password);
-
             if (customer == null)
             {
                 return NotFound("Customer not found.");
             }
+
             // Only update fields that are provided in the DTO
             if (!string.IsNullOrEmpty(customerUpdateDto.Email))
             {
@@ -125,15 +126,16 @@ namespace WPRProject.Controllers
             }
             if (!string.IsNullOrEmpty(customerUpdateDto.Password))
             {
-                // You should hash the password before saving it
-                customer.Password = customerUpdateDto.Password;
-
+                // Hash the password before saving it
+                var hashedPassword = BCrypt.Net.BCrypt.HashPassword(customerUpdateDto.Password);
+                customer.Password = hashedPassword;
             }
 
             await _context.SaveChangesAsync();
 
-            return Ok(customer);  // Return the updated customer data
+            return Ok(customer); // Return the updated customer data
         }
+
 
 
         [HttpDelete("{id}")]
