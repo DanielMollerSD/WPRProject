@@ -1,4 +1,4 @@
-namespace WebApplication.Options
+namespace WPRProject.Settings
 {
     public class SmtpSettings
     {

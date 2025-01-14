@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Options;
-using WebApplication.Options;
+using WPRProject.Settings;
 using MailKit.Net.Smtp;
 using MimeKit;
 
