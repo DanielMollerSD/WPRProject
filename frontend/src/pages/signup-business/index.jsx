@@ -162,7 +162,7 @@ function SignUpBusiness() {
                                     className="LargeInput"
                                     placeholder="Voer uw wachtwoord in"
                                     ref={password1Ref}
-                                    pattern="\w{3,16}"
+                                    pattern="(?=.[!@#$%^&(),.?:{}|<>-+=;'/~`\[\]^])[A-Za-z\d!@#$%^&*(),.?:{}|<>-+=;'/~`\[\]^]"
                                     name="password"
                                     required
                                     
@@ -176,7 +176,7 @@ function SignUpBusiness() {
                                     name="password-repeat"
                                     placeholder="Herhaal uw wachtwoord"
                                     ref={password2Ref}
-                                    pattern="\w{3,16}"
+                                    pattern="(?=.[!@#$%^&(),.?:{}|<>-+=;'/~`\[\]^])[A-Za-z\d!@#$%^&*(),.?:{}|<>-+=;'/~`\[\]^]"
                                     required 
                                 />
                             </div>
