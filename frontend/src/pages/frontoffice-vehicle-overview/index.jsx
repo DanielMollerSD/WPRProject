@@ -30,16 +30,6 @@ function VehicleOverview() {
             const data = await response.json();
             setVehicles(data);
 
-            if (vehicleTypes.length === 0) {
-                const types = Array.from(new Set(data.map(vehicle => vehicle.vehicleType)));
-                setVehicleTypes([...types]);
-            }
-
-            if (vehicleBrands.length === 0) {
-                const brands = Array.from(new Set(data.map(vehicle => vehicle.brand)));
-                setVehicleBrands([...brands]);
-            }
-
         } catch (e) {
             console.error(e.message);
             setError("Failed to load vehicles");
@@ -50,124 +40,53 @@ function VehicleOverview() {
         fetchVehicles();
     }, []);
 
-    const handleTypeChange = (event) => {
-        const selected = event.target.value;
-        setSelectedVehicleType(selected);
-    };
-
-    const handleBrandChange = (event) => {
-        const selected = event.target.value;
-        setSelectedVehicleBrand(selected);
-    };
-
-    const handleMinPriceChange = (event) => {
-        const price = Math.max(0, Number(event.target.value));
-        setMinPrice(price || undefined);
-    };
-
-    const handleMaxPriceChange = (event) => {
-        const price = Math.max(0, Number(event.target.value));
-        setMaxPrice(price || undefined);
-    };
-
-    const handleStartDateChange = (event) => {
-        const startDate = event.target.value;
-        setStartDate(startDate);
-    };
-
-    const handleEndDateChange = (event) => {
-        const endDate = event.target.value;
-        setEndDate(endDate);
-    };
-
-    const handleSearchButton = (event) => {
-        fetchVehicles();
-    }
-
     if (error) {
-        return <p className="error-message">{error}</p>
+        return <p className="error-message">{error}</p>;
     }
 
     return (
         <div className="page page-rent-screen">
             <div className="container">
                 <div className="rent-screen-content">
-
-                    <div className="vehicle-filters">
-
-                        <div className="filter-item">
-                            <div className="filter-title">Voertuigcategorieën:</div>
-                            <select name="vehicleType" id="vehicleType" value={selectedVehicleType} onChange={handleTypeChange}>
-                                <option value="all">Alle Voertuigen</option>
-                                {vehicleTypes.map((type, index) => (
-                                    <option key={index} value={type}>
-                                        {type}
-                                    </option>
+                    <div className="vehicle-list">
+                        <table className="vehicle-table">
+                            <thead>
+                                <tr>
+                                    <th>Merk</th>
+                                    <th>Model</th>
+                                    <th>Type</th>
+                                    <th>Koop Jaar</th>
+                                    <th>Status</th>
+                                    <th>Note</th>
+                                    <th>Prijs</th>
+                                    <th>Schade</th>
+                                    <th>Note</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {vehicles.map((vehicle, index) => (
+                                    <tr key={index}>
+                                        <td>{vehicle.brand}</td>
+                                        <td>{vehicle.model}</td>
+                                        <td>{vehicle.vehicleType}</td>
+                                        <td>{vehicle.purchaseYear}</td>
+                                        <td>{vehicle.status}</td>
+                                        <td>{vehicle.note}</td>
+                                        <td>€{vehicle.price} /dag</td>
+                                        <td>
+                                            <Link to={`/damage/${vehicle.id}`}>Bekijk</Link>
+                                        </td>
+                                        <td>
+                                            <Link to={`/note/${vehicle.id}`}>Bekijk</Link>
+                                        </td>
+                                        <td>
+                                            <Link to={`/status/${vehicle.id}`}>Bekijk</Link>
+                                        </td>
+                                    </tr>
                                 ))}
-                            </select>
-                        </div>
-
-                        <div className="filter-item">
-                            <div className="filter-title">Merk:</div>
-                            <select name="vehicleBrand" id="vehicleBrand" value={selectedVehicleBrand} onChange={handleBrandChange}>
-                                <option value="all">Alle Merken</option>
-                                {vehicleBrands.map((brand, index) => (
-                                    <option key={index} value={brand}>
-                                        {brand}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
-
-
-                        <div className="filter-item">
-                            <div className="filter-title">Laagste prijs:</div>
-                            <input type="number" name="minPrice" id="minPrice" placeholder="Min Price" value={minPrice || ""} onChange={handleMinPriceChange} />
-                        </div>
-
-                        <div className="filter-item">
-                            <div className="filter-title">Hoogste prijs:</div>
-                            <input type="number" name="maxPrice" id="maxPrice" placeholder="Max Price" value={maxPrice || ""} onChange={handleMaxPriceChange} />
-                        </div>
-
-                        <div className="filter-item">
-                            <div className="filter-title">Start datum:</div>
-                            <input type="date" name="startDate" id="startDate" placeholder="Start datum" value={startDate || ""} onChange={handleStartDateChange} />
-                        </div>
-
-                        <div className="filter-item">
-                            <div className="filter-title">Eind datum:</div>
-                            <input type="date" name="endDate" id="endDate" placeholder="Eind datum" value={endDate || ""} onChange={handleEndDateChange} />
-                        </div>
-
-                        <button className='search-button' onClick={handleSearchButton}>Zoek</button>
-                    </div>
-
-                    <div className="cards-container">
-                        <div className="row">
-                            {vehicles.map((vehicle, index) => (
-                                <div className="col-md-6 col-lg-4" key={index}>
-                                    <Link to={`/damage/${vehicle.id}`}>
-                                        <div className="card">
-                                            <img className="card-img-top" src="https://via.placeholder.com/500x300" alt="Card image" />
-                                            <div className="card-body">
-                                                <h5 className="card-title">{vehicle.brand} {vehicle.model}</h5>
-                                                <p className="card-description">{vehicle.note}</p>
-                                                <div className="tags">
-                                                    <div className="tag"><strong>Type:</strong> {vehicle.vehicleType}</div>
-                                                    <div className="tag"><strong>Merk:</strong> {vehicle.brand}</div>
-                                                    <div className="tag"><strong>Model:</strong> {vehicle.model}</div>
-                                                    <div className="tag"><strong>Koop Jaar:</strong> {vehicle.purchaseYear}</div>
-                                                    <div className="tag"><strong>Status:</strong> {vehicle.status}</div>
-                                                </div>
-                                                <div className="price">€{vehicle.price} <span> /dag</span></div>
-                                            </div>
-                                        </div>
-                                    </Link>
-                                </div>
-                            ))}
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

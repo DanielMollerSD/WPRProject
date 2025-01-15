@@ -10,104 +10,44 @@
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
-        .vehicle-filters {
-            display: flex;
-            padding-top: 10px;
-            padding-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 10px;
+        .vehicle-list {
+            margin-top: 20px;
 
-            .filter-item {
-                .filter-title {
-                    color: #3f3f3f;
-                    font-size: 12px;
-                }
+            .vehicle-table {
+                width: 100%;
+                border-collapse: collapse;
 
-                select {
-                    height: 30px;
-                    width: 200px;
-                    border: 1px solid black;
-                    border-radius: 12px;
-                    appearance: none;
-                    -moz-appearance: none;
-                    -webkit-appearance: none;
-                    padding: 0 10px;
-                }
+                thead {
+                    tr {
+                        background-color: #f4f4f4;
 
-                input {
-                    height: 30px;
-                    width: 200px;
-                    border: 1px solid black;
-                    border-radius: 12px;
-                    appearance: none;
-                    -moz-appearance: none;
-                    -webkit-appearance: none;
-                    padding: 0 10px;
-                }
-            }
-            .search-button {
-                flex-grow: 1;
-                margin-top: auto;
-                height: 30px;
-                min-width: 100px;
-                max-width: 200px;
-                color: white;
-                background-color: $secondary-button-color;
-                border: none;
-                border-radius: 12px;
-            }
-        }
-
-        .cards-container {
-            a {
-                text-decoration: none;
-
-                .card {
-                    margin-bottom: 20px;
-                    border-radius: 20px;
-                    overflow: hidden;
-
-                    .card-img-top {
-                        background-color: gray;
-                        height: 200px;
+                        th {
+                            text-align: left;
+                            padding: 12px 15px;
+                            font-size: 14px;
+                            color: #3f3f3f;
+                            border-bottom: 2px solid #ccc;
+                        }
                     }
+                }
 
-                    .card-body {
-
-                        .card-title {
-                            margin-bottom: 5px;
+                tbody {
+                    tr {
+                        &:nth-child(even) {
+                            background-color: #fafafa;
+                        }
+                        &:hover {
+                            background-color: #f0f0f0;
                         }
 
-                        .card-description {
-                            margin-bottom: 10px;
-                        }
+                        td {
+                            padding: 12px 15px;
+                            font-size: 14px;
+                            color: #333;
+                            border-bottom: 1px solid #eee;
 
-                        .tags {
-                            display: flex;
-                            flex-wrap: wrap;
-                            position: relative;
-                            gap: 3px;
-                            padding-bottom: 10px;
-
-                            .tag {
-                                font-size: 13px;
-                                white-space: nowrap;
-                                background-color: #dadada;
-                                border-radius: 50px;
-                                padding-top: 2px;
-                                padding-bottom: 2px;
-                                padding-left: 15px;
-                                padding-right: 15px;
-                            }
-                        }
-
-                        .price {
-                            font-size: 25px;
-                            font-weight: bold;
-
-                            span {
-                                font-size: 15px;
-                                font-weight: 400;
+                            &:last-child {
+                                text-align: center;
                             }
                         }
                     }
