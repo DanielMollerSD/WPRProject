@@ -1,27 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WPRProject.Tables;
+using Serilog;
 using System.Threading.Tasks;
 
 namespace WPRProject.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class RentController : ControllerBase
     {
         private readonly CarsAndAllContext _context;
         private readonly EmailService _emailService;
+        private readonly ILogger<RentController> _logger;
 
-        public RentController(CarsAndAllContext context, EmailService emailService)
+        public RentController(CarsAndAllContext context, EmailService emailService, ILogger<RentController> logger)
         {
             _context = context;
             _emailService = emailService;
+            _logger = logger;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Rent>>> GetAllRents()
         {
+            _logger.LogInformation("GetAllRents method called");
             var rents = await _context.Rent.ToListAsync();
+            _logger.LogInformation("Retrieved {Count} rent records", rents.Count);
             return Ok(rents);
         }
 
@@ -29,11 +34,14 @@ namespace WPRProject.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRent(int id)
         {
+             _logger.LogInformation("GetRent method called for RentId {RentId}", id);
             var rent = await _context.Rent.FindAsync(id);
             if (rent == null)
             {
+                _logger.LogWarning("Rent with ID {RentId} not found", id);
                 return NotFound();
             }
+            _logger.LogInformation("Rent record with ID {RentId} retrieved successfully", id);
             return Ok(rent);
         }
 
@@ -41,14 +49,18 @@ namespace WPRProject.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateRent([FromBody] Rent rent)
         {
+            _logger.LogInformation("CreateRent method called for VehicleId {VehicleId}", rent.VehicleId);
+
             if (!ModelState.IsValid)
             {
+                _logger.LogWarning("Invalid ModelState in CreateRent");
                 return BadRequest(ModelState);
             }
 
             var vehicle = await _context.Vehicle.FindAsync(rent.VehicleId);
             if (vehicle == null)
             {
+                _logger.LogWarning("Vehicle with ID {VehicleId} not found", rent.VehicleId);
                 return BadRequest(new { errors = new { VehicleId = "The specified vehicle does not exist." } });
             }
 
@@ -59,6 +71,7 @@ namespace WPRProject.Controllers
 
             if (isRented)
             {
+                _logger.LogInformation("Vehicle with ID {VehicleId} is already rented for the specified period", rent.VehicleId);
                 return Conflict("The vehicle is already rented for the specified period.");
             }
 
@@ -66,6 +79,8 @@ namespace WPRProject.Controllers
             {
                 _context.Rent.Add(rent);
                 await _context.SaveChangesAsync();
+
+                _logger.LogInformation("Successfully created rent entry for VehicleId {VehicleId}, RentId {RentId}", rent.VehicleId, rent.Id);
 
                 var subject = "Rental Confirmation";
                 var message = $"<h1>Your rental has been confirmed</h1>" +
@@ -75,10 +90,12 @@ namespace WPRProject.Controllers
                 // TODO: Change email adress later!!!
                 await _emailService.SendEmailAsync("daniel.moller2003@gmail.com", subject, message);
 
+                _logger.LogInformation("Rental confirmation email sent for RentId {RentId}", rent.Id);
                 return CreatedAtAction("GetRent", new { id = rent.Id }, rent);
             }
             catch (Exception ex)
             {
+                 _logger.LogError(ex, "An error occurred while creating the rent entry for VehicleId {VehicleId}", rent.VehicleId);
                 return StatusCode(500, new
                 {
                     message = "An error occurred while creating the rent entry.",
@@ -89,16 +106,20 @@ namespace WPRProject.Controllers
         [HttpPut("{id}/verify")]
         public async Task<IActionResult> UpdateVerificationStatus(int id, [FromBody] bool isApproved)
         {
+            _logger.LogInformation("UpdateVerificationStatus method called for RentId {RentId} with status {IsApproved}", id, isApproved);
+
             var rent = await _context.Rent.FindAsync(id);
 
             if (rent == null)
             {
+                _logger.LogWarning("Rent with ID {RentId} not found", id);
                 return NotFound();
             }
 
             rent.Verified = isApproved; 
             await _context.SaveChangesAsync(); 
 
+            _logger.LogInformation("Updated verification status for RentId {RentId} to {IsApproved}", id, isApproved);
             return Ok(rent); 
         }
 
