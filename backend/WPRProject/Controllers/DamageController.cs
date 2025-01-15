@@ -63,5 +63,37 @@ namespace WPRProject.Controllers
 
             return CreatedAtAction(nameof(GetOneDamage), new { id = damage.Id }, damage);
         }
+
+        [HttpPut("{id}/approve")]
+        public async Task<IActionResult> ApproveDamage(int id)
+        {
+            var damage = await _context.Damage.FindAsync(id);
+
+            if (damage == null)
+            {
+                return NotFound(new { Message = "Damage not found" });
+            }
+
+            damage.Status = "Accepted";
+            await _context.SaveChangesAsync();
+
+            return Ok(damage);
+        }
+
+        [HttpPut("{id}/pending")]
+        public async Task<IActionResult> SetDamageToPending(int id)
+        {
+            var damage = await _context.Damage.FindAsync(id);
+
+            if (damage == null)
+            {
+                return NotFound(new { Message = "Damage not found" });
+            }
+
+            damage.Status = "Pending";
+            await _context.SaveChangesAsync();
+
+            return Ok(damage);
+        }
     }
 }

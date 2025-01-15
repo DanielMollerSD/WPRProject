@@ -1,5 +1,6 @@
 import './styles.scss';
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 function VehicleCRUD() {
     const [vehicles, setVehicles] = useState([]);
@@ -173,6 +174,11 @@ function VehicleCRUD() {
                                             <button className="delete-button" onClick={() => handleDelete(vehicle.id)}>
                                                 Verwijder
                                             </button>
+                                        
+                                            <Link to={`/backoffice-damage/${vehicle.id}`} >
+                                                <button className="btn btn-primary">Bekijk</button>
+                                            </Link>
+
                                         </div>
                                     </div>
                                 </div>
