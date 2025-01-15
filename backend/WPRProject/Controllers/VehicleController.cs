@@ -136,5 +136,52 @@ namespace WPRProject.Controllers
 
             return NoContent();
         }
+
+        [HttpPatch("{id}/status")]
+        public async Task<IActionResult> UpdateVehicleStatus(int id, [FromBody] string newStatus)
+        {
+            var existingVehicle = await _context.Vehicle.FindAsync(id);
+            if (existingVehicle == null)
+            {
+                return NotFound($"Vehicle with ID {id} not found.");
+            }
+
+            existingVehicle.Status = newStatus;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+
+            return NoContent();
+        }
+
+        [HttpPatch("{id}/note")]
+        public async Task<IActionResult> UpdateVehicleNote(int id, [FromBody] string newNote)
+        {
+            var existingVehicle = await _context.Vehicle.FindAsync(id);
+            if (existingVehicle == null)
+            {
+                return NotFound($"Vehicle with ID {id} not found.");
+            }
+
+            existingVehicle.Note = newNote;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+
+            return NoContent();
+        }
+
     }
 }
