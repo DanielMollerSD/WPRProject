@@ -5,24 +5,22 @@ import './styles.scss';
 function VehicleDamage() {
   const { id } = useParams();
   const [vehicle, setVehicle] = useState(null);
-  const [damages, setDamages] = useState([]);
+  const [damages, setDamages] = useState([]); 
   const [damageDescription, setDamageDescription] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchVehicleAndDamages() {
       try {
-        // Fetch vehicledata
+        // Fetch vehicle data
         const vehicleResponse = await fetch(`${import.meta.env.VITE_APP_API_URL}/Vehicle/${id}`);
         const vehicleData = await vehicleResponse.json();
-        console.log("Vehicle Data:", vehicleData);
         setVehicle(vehicleData);
 
         // Fetch damages for the specific vehicle
         const damageResponse = await fetch(`${import.meta.env.VITE_APP_API_URL}/Damage/vehicle/${id}`);
         const damageData = await damageResponse.json();
-        console.log("Damage Data:", damageData);
-        setDamages(damageData);
+        setDamages(Array.isArray(damageData) ? damageData : []); //initialize
       } catch (error) {
         console.error("Error fetching data:", error.message);
       } finally {
@@ -43,13 +41,7 @@ function VehicleDamage() {
       });
       if (response.ok) {
         const newDamage = await response.json();
-        setDamages((prevDamages) => {
-          if (Array.isArray(prevDamages)) {
-            return [...prevDamages, newDamage];
-          } else {
-            return [newDamage]; 
-          }
-        });
+        setDamages((prevDamages) => Array.isArray(prevDamages) ? [...prevDamages, newDamage] : [newDamage]); // Ensure prevDamages is an array
         setDamageDescription(""); // Clear input field
         alert("Damage pending for approval!");
       } else {
@@ -89,7 +81,9 @@ function VehicleDamage() {
             {damages.length > 0 ? (
               <ul>
                 {damages.map((damage) => (
-                  <li key={damage.id}>{damage.description}</li>
+                  <li key={damage.id}>
+                    {damage.description} - <strong>{damage.status}</strong>
+                  </li>
                 ))}
               </ul>
             ) : (

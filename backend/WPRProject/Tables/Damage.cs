@@ -8,6 +8,8 @@ namespace WPRProject.Tables
         
         public string Description {  get; set; }
 
+        public string Status {  get; set; } = "Pending";
+
         [Required]
         public int VehicleId { get; set; }
 
