@@ -14,5 +14,6 @@ namespace WPRProject.DTOS
         public int Kvk { get; set; }
         public string BusinessAddress { get; set; }
         public string BusinessPostalCode {get; set;}
+        public string? Role {get; set;}
     }
 }
