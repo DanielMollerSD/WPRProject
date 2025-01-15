@@ -2,47 +2,64 @@ import './styles.scss';
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 
-function VehicleOverview() {
+function FrontOfficeVehicleOverview() {
     const [vehicles, setVehicles] = useState([]);
-    const [vehicleTypes, setVehicleTypes] = useState([]);
-    const [vehicleBrands, setVehicleBrands] = useState([]);
-    const [selectedVehicleType, setSelectedVehicleType] = useState("all");
-    const [selectedVehicleBrand, setSelectedVehicleBrand] = useState("all");
-    const [minPrice, setMinPrice] = useState();
-    const [maxPrice, setMaxPrice] = useState();
-    const [startDate, setStartDate] = useState();
-    const [endDate, setEndDate] = useState();
-    const [error, setError] = useState(null);
+    const [editingStatusId, setEditingStatusId] = useState(null);
+    const [statusInput, setStatusInput] = useState("");
+    const [editingNoteId, setEditingNoteId] = useState(null);
+    const [noteInput, setNoteInput] = useState("");
 
     async function fetchVehicles() {
         try {
-            const params = new URLSearchParams();
-            if (selectedVehicleType !== "all") params.append("vehicleType", selectedVehicleType);
-            if (selectedVehicleBrand !== "all") params.append("brand", selectedVehicleBrand);
-            if (minPrice) params.append("minPrice", minPrice);
-            if (maxPrice) params.append("maxPrice", maxPrice);
-            if (startDate) params.append("startDate", startDate);
-            if (endDate) params.append("endDate", endDate);
-
-            const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/Vehicle?${params.toString()}`);
+            const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/Vehicle`);
             if (!response.ok) throw new Error("Failed to fetch vehicles");
-
             const data = await response.json();
             setVehicles(data);
-
         } catch (e) {
             console.error(e.message);
-            setError("Failed to load vehicles");
         }
     }
+
+    async function updateVehicleStatus(id, newStatus) {
+        try {
+            const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/Vehicle/${id}/status`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(newStatus),
+            });
+    
+            if (!response.ok) throw new Error("Failed to update status");
+            await fetchVehicles();
+            setEditingStatusId(null);
+        } catch (e) {
+            console.error(e.message);
+        }
+    }
+    
+    async function updateVehicleNote(id, newNote) {
+        try {
+            const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/Vehicle/${id}/note`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(newNote),
+            });
+    
+            if (!response.ok) throw new Error("Failed to update note");
+            await fetchVehicles(); 
+            setEditingNoteId(null);
+        } catch (e) {
+            console.error(e.message);
+        }
+    }
+    
 
     useEffect(() => {
         fetchVehicles();
     }, []);
-
-    if (error) {
-        return <p className="error-message">{error}</p>;
-    }
 
     return (
         <div className="page page-rent-screen">
@@ -60,28 +77,78 @@ function VehicleOverview() {
                                     <th>Note</th>
                                     <th>Prijs</th>
                                     <th>Schade</th>
-                                    <th>Note</th>
-                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {vehicles.map((vehicle, index) => (
-                                    <tr key={index}>
+                                {vehicles.map((vehicle) => (
+                                    <tr key={vehicle.id}>
                                         <td>{vehicle.brand}</td>
                                         <td>{vehicle.model}</td>
                                         <td>{vehicle.vehicleType}</td>
                                         <td>{vehicle.purchaseYear}</td>
-                                        <td>{vehicle.status}</td>
-                                        <td>{vehicle.note}</td>
+                                        <td>
+                                            {editingStatusId === vehicle.id ? (
+                                                <div>
+                                                    <input
+                                                        type="text"
+                                                        value={statusInput}
+                                                        onChange={(e) => setStatusInput(e.target.value)}
+                                                        placeholder="Update Status"
+                                                    />
+                                                    <button
+                                                        onClick={() => updateVehicleStatus(vehicle.id, statusInput)}
+                                                    >
+                                                        Save
+                                                    </button>
+                                                    <button onClick={() => setEditingStatusId(null)}>Cancel</button>
+                                                </div>
+                                            ) : (
+                                                <div>
+                                                    {vehicle.status}{" "}
+                                                    <button
+                                                        onClick={() => {
+                                                            setEditingStatusId(vehicle.id);
+                                                            setStatusInput(vehicle.status);
+                                                        }}
+                                                    >
+                                                        Edit
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </td>
+                                        <td>
+                                            {editingNoteId === vehicle.id ? (
+                                                <div>
+                                                    <input
+                                                        type="text"
+                                                        value={noteInput}
+                                                        onChange={(e) => setNoteInput(e.target.value)}
+                                                        placeholder="Update Note"
+                                                    />
+                                                    <button
+                                                        onClick={() => updateVehicleNote(vehicle.id, noteInput)}
+                                                    >
+                                                        Save
+                                                    </button>
+                                                    <button onClick={() => setEditingNoteId(null)}>Cancel</button>
+                                                </div>
+                                            ) : (
+                                                <div>
+                                                    {vehicle.note}{" "}
+                                                    <button
+                                                        onClick={() => {
+                                                            setEditingNoteId(vehicle.id);
+                                                            setNoteInput(vehicle.note);
+                                                        }}
+                                                    >
+                                                        Edit
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </td>
                                         <td>€{vehicle.price} /dag</td>
                                         <td>
                                             <Link to={`/damage/${vehicle.id}`}>Bekijk</Link>
-                                        </td>
-                                        <td>
-                                            <Link to={`/note/${vehicle.id}`}>Bekijk</Link>
-                                        </td>
-                                        <td>
-                                            <Link to={`/status/${vehicle.id}`}>Bekijk</Link>
                                         </td>
                                     </tr>
                                 ))}
@@ -94,4 +161,4 @@ function VehicleOverview() {
     );
 }
 
-export default VehicleOverview;
+export default FrontOfficeVehicleOverview;
