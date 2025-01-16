@@ -39,7 +39,21 @@ namespace WPRProject.Controllers
 
             return employee;
         }
-        [HttpPost("register-backoffice")]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteFrontoficeAccount(int id)
+        {
+            var account = await _context.Employee.FindAsync(id);
+            if (account == null)
+            {
+                return NotFound(new { message = "Account not found" });
+            }
+            _context.Employee.Remove(account);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Account deleted successfully" });
+        }
+
+        [HttpPost("register-carsandall")]
         public async Task<IActionResult> Register([FromBody] EmployeeRegisterDto registerDto)
         {
             try
@@ -58,7 +72,7 @@ namespace WPRProject.Controllers
                 {
                     Email = registerDto.Email,
                     Password = hashedPassword,
-                    Role = "backoffice"
+                    Role = registerDto.Role
                 };
 
                 _context.Employee.Add(newEmployee);

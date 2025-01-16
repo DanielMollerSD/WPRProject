@@ -21,18 +21,19 @@ function SignUpBackoffice() {
     const formData = {
       Email: e.target.email.value,
       Password: e.target.password.value,
+      Role: "Backoffice",
     };
 
     console.log("Sending request to backend...");
     console.log(
       "Request URL:",
-      "https://localhost:7265/api/Employee/register-backoffice"
+      "https://localhost:7265/api/Employee/register-carsandall"
     );
     console.log("Request Body:", JSON.stringify(formData));
 
     try {
       const response = await fetch(
-        "https://localhost:7265/api/Employee/register-backoffice",
+        "https://localhost:7265/api/Employee/register-carsandall",
         {
           method: "POST",
           headers: {

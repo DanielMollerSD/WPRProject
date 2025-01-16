@@ -20,6 +20,7 @@ import VehicleDamage from "./pages/frontoffice-vehicle-damage";
 import BackofficeVehicleDamage from "./pages/backoffice-vehicle-damage";
 import SignUpBackoffice from "./pages/signup-backoffice";
 import BusinessCRUD from "./pages/business-account-crud";
+import FrontofficeCRUD from "./pages/frontoffice-crud";
 
 function AppRoutes() {
   return (
@@ -51,6 +52,7 @@ function AppRoutes() {
               element={<BackofficeVehicleDamage />}
             />
             <Route path="/business-account-crud" element={<BusinessCRUD />} />
+            <Route path="/frontoffice-crud" element={<FrontofficeCRUD />} />
           </Routes>
         </main>
 
