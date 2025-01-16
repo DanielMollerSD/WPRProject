@@ -31,7 +31,7 @@ const RentOverview = () => {
   const updateStatus = async (rentId, newStatus) => {
     try {
       const response = await fetch(`${apiBaseUrl}/${rentId}/status`, {
-        method: "PUT",
+        method: "PATCH", // Gebruik PATCH in plaats van PUT
         headers: {
           "Content-Type": "application/json",
         },

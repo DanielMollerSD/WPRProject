@@ -74,26 +74,26 @@ namespace WPRProject.Controllers
             }
         }
 
-        [HttpPut("{id}/status")]
-        public async Task<IActionResult> UpdateStatus(int id, [FromBody] string newStatus)
-        {
-            var rent = await _context.Rent.FindAsync(id);
+        [HttpPatch("{id}/status")]
+public async Task<IActionResult> UpdateStatus(int id, [FromBody] string newStatus)
+{
+    var rent = await _context.Rent.FindAsync(id);
 
-            if (rent == null)
-            {
-                return NotFound();
-            }
+    if (rent == null)
+    {
+        return NotFound();
+    }
 
-            // Validate the new status value
-            if (newStatus != Rent.Pending && newStatus != Rent.Accepted && newStatus != Rent.Declined)
-            {
-                return BadRequest("Invalid status value. Allowed values are: 'pending', 'accepted', 'declined'.");
-            }
+    // Validate the new status value
+    if (newStatus != Rent.Pending && newStatus != Rent.Accepted && newStatus != Rent.Declined)
+    {
+        return BadRequest("Invalid status value. Allowed values are: 'pending', 'accepted', 'declined'.");
+    }
 
-            rent.Status = newStatus;
-            await _context.SaveChangesAsync();
+    rent.Status = newStatus;
+    await _context.SaveChangesAsync();
 
-            return Ok(rent);
-        }
+    return Ok(rent);
+}
     }
 }
