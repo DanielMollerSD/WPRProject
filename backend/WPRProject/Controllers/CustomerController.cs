@@ -34,8 +34,6 @@ namespace WPRProject.Controllers
         [HttpGet]
         public async Task<ActionResult<Customer>> GetCustomers()
         {
-            Console.WriteLine("Inside GET");
-
             // Access user information from claims
             var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 
@@ -52,10 +50,6 @@ namespace WPRProject.Controllers
             {
                 return NotFound(new { Message = "Customer not found." });
             }
-
-            // Log user info
-            Console.WriteLine($"User: {customer.FirstName} {customer.LastName}, Email: {customer.Email}");
-
 
             return Ok(customer); // Return the logged-in user data
         }
@@ -91,8 +85,6 @@ namespace WPRProject.Controllers
         [HttpPut("updateIndividual")]
         public async Task<ActionResult> UpdateCustomer([FromBody] UpdateIndividualDto customerUpdateDto)
         {
-            Console.WriteLine($"Received Password: {customerUpdateDto.Password}");
-
             var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 
             // Fetch the current customer based on the logged-in user's email (or ID)
@@ -129,8 +121,6 @@ namespace WPRProject.Controllers
             }
 
             await _context.SaveChangesAsync();
-            
-            Console.WriteLine(customerUpdateDto.PhoneNumber);
 
             return Ok(customer); // Return the updated customer data
         }
@@ -138,10 +128,8 @@ namespace WPRProject.Controllers
         [HttpPut("updateBusiness")]
 public async Task<ActionResult> UpdateCustomer([FromBody] UpdateBusinessDto customerUpdateDto)
 {
-    Console.WriteLine($"Received Name: {customerUpdateDto.FirstName}");
 
     var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-    Console.WriteLine($"User email from claims: {userEmail}");
 
     // Fetch the current customer based on the logged-in user's email
     var customer = await _context.Business.FirstOrDefaultAsync(c => c.Email == userEmail);

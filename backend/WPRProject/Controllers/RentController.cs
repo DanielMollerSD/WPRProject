@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WPRProject.Tables;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 using Serilog;
 using System.Threading.Tasks;
 
@@ -45,11 +47,18 @@ namespace WPRProject.Controllers
             return Ok(rent);
         }
 
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateRent([FromBody] Rent rent)
         {
             _logger.LogInformation("CreateRent method called for VehicleId {VehicleId}", rent.VehicleId);
+
+            var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                return Unauthorized(new { Message = "User is not authenticated." });
+            }
 
             if (!ModelState.IsValid)
             {
@@ -88,7 +97,7 @@ namespace WPRProject.Controllers
                               $"<p>Rental Period: {rent.StartDate:yyyy-MM-dd} to {rent.EndDate:yyyy-MM-dd}</p>";
 
                 // TODO: Change email adress later!!!
-                await _emailService.SendEmailAsync("daniel.moller2003@gmail.com", subject, message);
+                await _emailService.SendEmailAsync(userEmail, subject, message);
 
                 _logger.LogInformation("Rental confirmation email sent for RentId {RentId}", rent.Id);
                 return CreatedAtAction("GetRent", new { id = rent.Id }, rent);

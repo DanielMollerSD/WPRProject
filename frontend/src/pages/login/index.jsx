@@ -28,8 +28,7 @@ function Login() {
             try {
                 const data = await response.json();
                 console.log("Logged in successfully:", data);
-                // Save the token or do any further processing
-                localStorage.setItem("access_token", data.Token); // Example, if you want to save the token
+                localStorage.setItem("access_token", data.Token);
                 navigate('/vehicle-overview');  
             } catch (error) {
                 console.error("Error parsing the response JSON", error);

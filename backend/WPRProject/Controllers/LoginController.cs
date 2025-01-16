@@ -16,7 +16,7 @@ namespace WPRProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LoginController: ControllerBase
+    public class LoginController : ControllerBase
     {
 
         private readonly CarsAndAllContext _context;
@@ -40,11 +40,11 @@ namespace WPRProject.Controllers
 
             if (customer == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, customer.Password))
             {
-                if(employee == null|| !BCrypt.Net.BCrypt.Verify(loginDto.Password, employee.Password))
+                if (employee == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, employee.Password))
                 {
-                     return Unauthorized(new { Message = "Invalid credentials" });
+                    return Unauthorized(new { Message = "Invalid credentials" });
                 }
-              } 
+            }
 
             var secretKey = _configuration["Jwt:Key"];
             var issuer = _configuration["Jwt:Issuer"];
@@ -58,15 +58,17 @@ namespace WPRProject.Controllers
 
             List<Claim> claims = null;
 
-            if(customer != null){
-                 claims = new List<Claim>
+            if (customer != null)
+            {
+                claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, (customer.FirstName ?? "") + " " + (customer.LastName ?? "")),
                 new Claim(ClaimTypes.Email, customer.Email)
             };
-            } else if (employee != null)
+            }
+            else if (employee != null)
             {
-                 claims = new List<Claim>
+                claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Role, employee.Role),
                 new Claim(ClaimTypes.Email, employee.Email)
@@ -85,13 +87,12 @@ namespace WPRProject.Controllers
 
             var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
-
             Response.Cookies.Append("access_token", tokenString, new CookieOptions
             {
                 HttpOnly = true,
-                Secure = false,
-                SameSite = SameSiteMode.Strict,
-                Expires = DateTime.Now.AddMinutes(30)
+                Secure = Request.IsHttps,
+                SameSite = SameSiteMode.None,
+                Expires = DateTime.Now.AddMinutes(60 * 24 * 7)
             });
 
 

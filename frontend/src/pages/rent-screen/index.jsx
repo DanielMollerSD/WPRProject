@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 import './styles.scss';
 
 function RentScreen() {
@@ -54,22 +55,29 @@ function RentScreen() {
     console.log("Rent data being sent:", rentData);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/Rent`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(rentData),
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_APP_API_URL}/Rent`,
+        rentData,
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
       
-      if (response.ok) {
+      if (response.status === 200 || response.status === 201) {
         alert("Rental successfully created!");
       } else {
-        const errorDetails = await response.json();
-        console.error("Server error details:", errorDetails);
-        alert(`Error creating rental: ${errorDetails.message || "Check the payload"}`);
+        console.error("Server error details:", response.data);
+        alert(`Error creating rental: ${response.data.message || "Check the payload"}`);
       }
     } catch (error) {
-      console.error("Request error:", error);
-      alert("Error creating rental!");
+      if (error.response) {
+        console.error("Server error details:", error.response.data);
+        alert(`Error creating rental: ${error.response.data.message || "Check the payload"}`);
+      } else {
+        console.error("Request error:", error);
+        alert("Error creating rental!");
+      }
     }
   };
 
