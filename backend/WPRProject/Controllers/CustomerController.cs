@@ -136,51 +136,75 @@ namespace WPRProject.Controllers
         }
 
         [HttpPut("updateBusiness")]
-        public async Task<ActionResult> UpdateCustomer([FromBody] UpdateBusinessDto customerUpdateDto)
-        {
-            Console.WriteLine($"Received Password: {customerUpdateDto.Password}");
+public async Task<ActionResult> UpdateCustomer([FromBody] UpdateBusinessDto customerUpdateDto)
+{
+    Console.WriteLine($"Received Name: {customerUpdateDto.FirstName}");
 
-            var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+    var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+    Console.WriteLine($"User email from claims: {userEmail}");
 
-            // Fetch the current customer based on the logged-in user's email (or ID)
-            var customer = await _context.Business.FirstOrDefaultAsync(c => c.Email == userEmail);
+    // Fetch the current customer based on the logged-in user's email
+    var customer = await _context.Business.FirstOrDefaultAsync(c => c.Email == userEmail);
 
-            if (customer == null)
-            {
-                return NotFound("Customer not found.");
-            }
-            // Only update fields that are provided in the DTO
-            if (!string.IsNullOrEmpty(customerUpdateDto.Email))
-            {
-                customer.Email = customerUpdateDto.Email;
-            }
-            if (!string.IsNullOrEmpty(customerUpdateDto.BusinessAddress))
-            {
-                customer.BusinessAddress = customerUpdateDto.BusinessAddress;
-            }
-            if (!string.IsNullOrEmpty(customerUpdateDto.BusinessPostalCode))
-            {
-                customer.BusinessPostalCode = customerUpdateDto.BusinessPostalCode;
-            }
+    if (customer == null)
+    {
+        return NotFound("Customer not found.");
+    }
 
-             if (!string.IsNullOrEmpty(customerUpdateDto.BusinessName))
-            {
-                customer.BusinessName = customerUpdateDto.BusinessName;
-            }
-            
-            if (!string.IsNullOrEmpty(customerUpdateDto.Password))
-            {
-                // Hash the password before saving it
-                var hashedPassword = BCrypt.Net.BCrypt.HashPassword(customerUpdateDto.Password);
-                customer.Password = hashedPassword;
-            }
+    // Only update fields that are provided in the DTO
+    if (!string.IsNullOrEmpty(customerUpdateDto.FirstName))
+    {
+        customer.FirstName = customerUpdateDto.FirstName;
+    }
 
-            await _context.SaveChangesAsync();
-            
-    
+    if (!string.IsNullOrEmpty(customerUpdateDto.LastName))
+    {
+        customer.LastName = customerUpdateDto.LastName;
+    }
 
-            return Ok(customer); // Return the updated customer data
-        }
+    if (!string.IsNullOrEmpty(customerUpdateDto.Email))
+    {
+        customer.Email = customerUpdateDto.Email;
+    }
+
+    if (!string.IsNullOrEmpty(customerUpdateDto.BusinessAddress))
+    {
+        customer.BusinessAddress = customerUpdateDto.BusinessAddress;
+    }
+
+    if (!string.IsNullOrEmpty(customerUpdateDto.BusinessPostalCode))
+    {
+        customer.BusinessPostalCode = customerUpdateDto.BusinessPostalCode;
+    }
+
+    if (!string.IsNullOrEmpty(customerUpdateDto.BusinessName))
+    {
+        customer.BusinessName = customerUpdateDto.BusinessName;
+    }
+
+    if (!string.IsNullOrEmpty(customerUpdateDto.TussenVoegsel))
+    {
+        customer.TussenVoegsel = customerUpdateDto.TussenVoegsel;
+    }
+
+    if (customerUpdateDto.Kvk.HasValue)
+    {
+        customer.Kvk = customerUpdateDto.Kvk.Value;
+    }
+
+    if (!string.IsNullOrEmpty(customerUpdateDto.Password))
+    {
+        // Hash the password before saving it
+        var hashedPassword = BCrypt.Net.BCrypt.HashPassword(customerUpdateDto.Password);
+        customer.Password = hashedPassword;
+    }
+
+    // Save changes to the database
+    await _context.SaveChangesAsync();
+
+    return Ok(customer); // Return the updated customer data
+}
+
 
 
 
@@ -199,56 +223,64 @@ namespace WPRProject.Controllers
             return NoContent();
         }
 
-        [HttpPost("login")]
-        public async Task<ActionResult> Login(CustomerLoginDto loginDto)
-        {
-            var customer = await _context.Customer
-            .FirstOrDefaultAsync(c => c.Email == loginDto.Email);
+        // [HttpPost("login")]
+        // public async Task<ActionResult> Login(CustomerLoginDto loginDto)
+        // {
+        //     var employee = await _context.Employee
+        //     .FirstOrDefaultAsync(c => c.Email == loginDto.Email);
+        //     var customer = await _context.Customer
+        //     .FirstOrDefaultAsync(c => c.Email == loginDto.Email);
 
-            if (customer == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, customer.Password))
-            {
-                return Unauthorized(new { Message = "Invalid credentials" });
-            }
+        //     if (customer == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, customer.Password))
+        //     {
+        //         if(employee == null|| !BCrypt.Net.BCrypt.Verify(loginDto.Password, employee.Password))
+        //         {
+        //              return Unauthorized(new { Message = "Invalid credentials" });
+        //         } else
+        //         {
+        //          customer = await _context.Employee;
+        //         } 
+        //     } 
 
-            var secretKey = _configuration["Jwt:Key"];
-            var issuer = _configuration["Jwt:Issuer"];
-            var audience = _configuration["Jwt:Audience"];
+        //     var secretKey = _configuration["Jwt:Key"];
+        //     var issuer = _configuration["Jwt:Issuer"];
+        //     var audience = _configuration["Jwt:Audience"];
 
-            if (string.IsNullOrEmpty(secretKey))
-            {
-                throw new ArgumentNullException("The JWT secret key is missing from configuration.");
-            }
+        //     if (string.IsNullOrEmpty(secretKey))
+        //     {
+        //         throw new ArgumentNullException("The JWT secret key is missing from configuration.");
+        //     }
 
-            var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.Name, (customer.FirstName ?? "") + " " + (customer.LastName ?? "")),
-            new Claim(ClaimTypes.Email, customer.Email)
-        };
+        //     var claims = new List<Claim>
+        // {
+        //     new Claim(ClaimTypes.Name, (customer.FirstName ?? "") + " " + (customer.LastName ?? "")),
+        //     new Claim(ClaimTypes.Email, customer.Email)
+        // };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var token = new JwtSecurityToken(
-                issuer: issuer,
-                audience: audience,
-                claims: claims,
-                expires: DateTime.Now.AddMinutes(60 * 24 * 7),
-                signingCredentials: creds
-            );
+        //     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+        //     var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        //     var token = new JwtSecurityToken(
+        //         issuer: issuer,
+        //         audience: audience,
+        //         claims: claims,
+        //         expires: DateTime.Now.AddMinutes(60 * 24 * 7),
+        //         signingCredentials: creds
+        //     );
 
-            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-
-
-            Response.Cookies.Append("access_token", tokenString, new CookieOptions
-            {
-                HttpOnly = true,
-                Secure = false,
-                SameSite = SameSiteMode.Strict,
-                Expires = DateTime.Now.AddMinutes(30)
-            });
+        //     var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
 
-            return Ok(new { Token = tokenString });
-        }
+        //     Response.Cookies.Append("access_token", tokenString, new CookieOptions
+        //     {
+        //         HttpOnly = true,
+        //         Secure = false,
+        //         SameSite = SameSiteMode.Strict,
+        //         Expires = DateTime.Now.AddMinutes(30)
+        //     });
+
+
+        //     return Ok(new { Token = tokenString });
+        // }
 
     }
 }

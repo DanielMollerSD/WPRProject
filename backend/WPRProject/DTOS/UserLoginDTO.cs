@@ -2,7 +2,7 @@
 
 namespace WPRProject.DTOS
 {
-    public class CustomerLoginDto
+    public class UserLoginDto
     {
       
     [Required(ErrorMessage = "Email is required.")]

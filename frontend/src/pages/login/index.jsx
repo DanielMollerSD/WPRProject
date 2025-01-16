@@ -12,7 +12,7 @@ function Login() {
     const handleLogin = async (event) => {
         event.preventDefault(); 
 
-        const response = await fetch("https://localhost:7265/api/Customer/login", {
+        const response = await fetch("https://localhost:7265/api/Login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

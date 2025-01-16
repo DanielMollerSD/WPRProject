@@ -60,7 +60,7 @@ function SignUpParticular() {
     return (
         <>
             <header></header>
-            <div className="page page-signup">
+            <div className="page page-signup-particular">
                 <div className="SignUpBody">
                     <main className="SignUpMain">
                         <section className="signup-container">
@@ -159,7 +159,9 @@ function SignUpParticular() {
                                         name="password-repeat"
                                         placeholder="Herhaal uw wachtwoord in"
                                         ref={password2Ref}
+
                                         pattern="(?=.[!@#$%^&(),.?:{}|<>-+=;'/~`\[\]^])[A-Za-z\d!@#$%^&*(),.?:{}|<>-+=;'/~`\[\]^]"
+
                                         required
                                     />
                                 </div>

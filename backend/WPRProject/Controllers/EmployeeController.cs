@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WPRProject.Tables;
+using WPRProject.DTOS;
 
 namespace WPRProject.Controllers
 
@@ -37,6 +38,38 @@ namespace WPRProject.Controllers
             }
 
             return employee;
+        }
+        [HttpPost("register-backoffice")]
+        public async Task<IActionResult> Register([FromBody] EmployeeRegisterDto registerDto)
+        {
+            try
+            {
+                var existingEmployee = await _context.Employee
+                    .FirstOrDefaultAsync(c => c.Email == registerDto.Email);
+
+                if (existingEmployee != null)
+                {
+                    return BadRequest(new { message = "Email is al in gebruik" });
+                }
+
+                var hashedPassword = BCrypt.Net.BCrypt.HashPassword(registerDto.Password);
+
+                var newEmployee = new Employee
+                {
+                    Email = registerDto.Email,
+                    Password = hashedPassword,
+                    Role = "backoffice"
+                };
+
+                _context.Employee.Add(newEmployee);
+                await _context.SaveChangesAsync();
+
+                return Ok(new { employee = newEmployee }); 
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred", details = ex.Message });
+            }
         }
     }
 }

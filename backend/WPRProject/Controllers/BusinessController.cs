@@ -41,6 +41,20 @@ namespace WPRProject.Controllers
 
             return business;
         }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteBusinessAccount(int id)
+        {
+            var businessAccount = await _context.Business.FindAsync(id);
+            if (businessAccount == null)
+            {
+                return NotFound(new { message = "Account not found" });
+            }
+
+            _context.Business.Remove(businessAccount);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Account deleted successfully" });
+        }
 
        
         [HttpPost("register")]
@@ -68,7 +82,8 @@ namespace WPRProject.Controllers
                     BusinessName = registerDto.BusinessName,
                     BusinessAddress = registerDto.BusinessAddress,
                     Kvk = registerDto.Kvk,
-                    BusinessPostalCode = registerDto.BusinessPostalCode
+                    BusinessPostalCode = registerDto.BusinessPostalCode,
+                    Role = registerDto.Role,
                 };
 
                 _context.Business.Add(newBusiness);
@@ -82,8 +97,6 @@ namespace WPRProject.Controllers
             {
                 
                 return StatusCode(500, new { message = "An error occurred", details = ex.Message });
-
-
             }
         }
     }

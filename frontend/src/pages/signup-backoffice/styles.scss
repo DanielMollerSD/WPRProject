@@ -1,4 +1,4 @@
-.page.page-signup-business {
+.page.page-signup-carsandall {
 
     html,
     body {
@@ -7,18 +7,8 @@
         height: 100%;
     }
 
-    #title-signup-bus {
-
-        font-size: 20px;
-        color: #003366;
-
-
-
-    }
-
-    #SignUpBody {
+    .SignUpBody {
         font-family: Arial, sans-serif;
-        font-size: 15px;
         margin: 0;
         padding: 0;
         background-color: #d6d1c7;
@@ -27,7 +17,7 @@
         justify-content: center;
         align-items: center;
         height: calc(100vh - 70px);
-        background-image: url(../../assets/img/businessignup.jpg);
+        background-image: url(../../assets/img/tuktuk.jpg);
         background-repeat: no-repeat;
         background-position: 50% 60%;
         background-size: cover;
@@ -43,27 +33,20 @@
         max-width: 500px;
         padding: 20px;
         box-sizing: border-box;
-        size: 10;
     }
 
     .signup-container {
-        margin-top: 5px;
         background: #fff;
         padding: 20px 30px;
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 95%;
         text-align: center;
-        width: auto;
-        max-width: 400px;
-        height: auto;
     }
-
 
     .signup-container h2 {
         margin-bottom: 20px;
         color: #003366;
-        padding: 15px 20px;
-        /* Slightly reduced padding */
     }
 
     .form-group {
@@ -77,10 +60,9 @@
 
     .nameLabel {
         display: flex;
-        margin-top: 5px;
+        margin-bottom: 5px;
         font-weight: bold;
         margin: 0, auto;
-
 
     }
 
@@ -93,31 +75,25 @@
 
     }
 
-
     .SignUpInput {
         width: 100%;
-        max-width: 140px;
-        /* Reduced from 180px */
-        padding: 8px;
-        /* Reduced from 10px */
+        max-width: 180px;
+        padding: 10px;
         border: 1px solid #ccc;
         border-radius: 4px;
-        font-size: 0.9rem;
-        /* Reduced font size */
+        font-size: 1rem;
         display: block;
         margin-bottom: 5px;
+
     }
 
     .LargeInput {
         width: 100%;
-        max-width: 350px;
-        /* Reduced from 415px */
-        padding: 8px;
-        /* Reduced from 10px */
+        max-width: 415px;
+        padding: 10px;
         border: 1px solid #ccc;
         border-radius: 4px;
-        font-size: 0.9rem;
-        /* Reduced font size */
+        font-size: 1rem;
         display: block;
         margin-bottom: 5px;
     }

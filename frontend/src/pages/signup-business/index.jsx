@@ -1,36 +1,35 @@
-import './styles.scss';
-import React, {useRef} from "react";
-import { Link } from 'react-router-dom';
-
+import "./styles.scss";
+import React, { useRef } from "react";
+import { Link } from "react-router-dom";
 
 function SignUpBusiness() {
+  const password1Ref = useRef(null);
+  const password2Ref = useRef(null);
 
-    const password1Ref = useRef(null);
-    const password2Ref = useRef(null);
-
-  const togglePassword = () =>{
-
-    const type1 = password1Ref.current.type === "password" ? "text" : "password";
-    const type2 = password2Ref.current.type === "password" ? "text": "password";
+  const togglePassword = () => {
+    const type1 =
+      password1Ref.current.type === "password" ? "text" : "password";
+    const type2 =
+      password2Ref.current.type === "password" ? "text" : "password";
 
     password1Ref.current.type = type1;
     password2Ref.current.type = type2;
-
-  }
+  };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     const formData = {
-        FirstName: e.target.voornaam.value,
-        LastName: e.target.achternaam.value,
-        TussenVoegsel: e.target.tussenvoegsel.value || undefined,
-        Email: e.target.email.value,
-        BusinessName: e.target.naam.value,
-        BusinessAddress: e.target.adres.value,
-        BusinessPostalCode: e.target.postcode.value,
-        Kvk: e.target.kvk.value,
-        Password: e.target.password.value
+      FirstName: e.target.voornaam.value,
+      LastName: e.target.achternaam.value,
+      TussenVoegsel: e.target.tussenvoegsel.value || undefined,
+      Email: e.target.email.value,
+      BusinessName: e.target.naam.value,
+      BusinessAddress: e.target.adres.value,
+      BusinessPostalCode: e.target.postcode.value,
+      Kvk: e.target.kvk.value,
+      Password: e.target.password.value,
+      Role: "owner",
     };
 
     console.log("Sending request to backend...");
@@ -38,36 +37,37 @@ function SignUpBusiness() {
     console.log("Request Body:", JSON.stringify(formData));
 
     try {
-        const response = await fetch("https://localhost:7265/api/Business/register", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
-        });
-
-        console.log("Response Status:", response.status);
-        console.log("Response Headers:", response.headers);
-
-        if (response.ok) {
-            alert("Account created successfully!");
-        } else {
-            const error = await response.json(); // Capture JSON response error
-            console.error("Error Response:", error);
-            alert(`Error: ${error?.message || "Unknown error occurred."}`);
+      const response = await fetch(
+        "https://localhost:7265/api/Business/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
         }
-    } catch (err) {
-        console.error("Request failed:", err);
-        alert("An error occurred. Please try again.");
-    }
-};
+      );
 
-    return (
-        <>
-        <header>
-            
-        </header>
-    <div className="page page-signup">
+      console.log("Response Status:", response.status);
+      console.log("Response Headers:", response.headers);
+
+      if (response.ok) {
+        alert("Account created successfully!");
+      } else {
+        const error = await response.json(); // Capture JSON response error
+        console.error("Error Response:", error);
+        alert(`Error: ${error?.message || "Unknown error occurred."}`);
+      }
+    } catch (err) {
+      console.error("Request failed:", err);
+      alert("An error occurred. Please try again.");
+    }
+  };
+
+  return (
+    <>
+      <header></header>
+      <div className="page page-signup-business">
         <div id="SignUpBody">
             <main className="SignUpMain">
                 <section className="signup-container">
@@ -162,7 +162,7 @@ function SignUpBusiness() {
                                     className="LargeInput"
                                     placeholder="Voer uw wachtwoord in"
                                     ref={password1Ref}
-                                    pattern="(?=.[!@#$%^&(),.?:{}|<>-+=;'/~`\[\]^])[A-Za-z\d!@#$%^&*(),.?:{}|<>-+=;'/~`\[\]^]"
+                                    pattern="\w{3,16}"
                                     name="password"
                                     required
                                     
@@ -176,46 +176,42 @@ function SignUpBusiness() {
                                     name="password-repeat"
                                     placeholder="Herhaal uw wachtwoord"
                                     ref={password2Ref}
-                                    pattern="(?=.[!@#$%^&(),.?:{}|<>-+=;'/~`\[\]^])[A-Za-z\d!@#$%^&*(),.?:{}|<>-+=;'/~`\[\]^]"
+                                    pattern="\w{3,16}"
                                     required 
                                 />
                             </div>
 
-                            <div className="nameLabel">
+                <div className="nameLabel">
+                  <input
+                    type="checkbox"
+                    className="chkbx"
+                    onClick={togglePassword}
+                  />
+                  Toon wachtwoord
+                </div>
 
-                                
-                            <input type="checkbox" className="chkbx" onClick= {togglePassword}
+                <div>
+                  <button
+                    htmlFor="signup button"
+                    className="SignupButton"
+                    type="submit"
+                  >
+                    Registreren
+                  </button>
+                </div>
+              </form>
 
-                            />Toon wachtwoord
-                            </div>
-    
-                            <div >
-                                <button htmlFor="signup button" className="SignupButton" type="submit">
-
-                                Registreren
-
-                                </button>
-
-                            </div>
-                    </form>
-
-                    <script src="togglePassword.js"></script>
-                 
-                </section>
-                         <Link to="/vehicle-overview">
-                            <button>next page</button>
-                        </Link>
-                        
-
-            </main>
+              <script src="togglePassword.js"></script>
+            </section>
+            <Link to="/vehicle-overview">
+              <button>next page</button>
+            </Link>
+          </main>
         </div>
-    </div>
-    <footer>
-     
-       
-    </footer>
+      </div>
+      <footer></footer>
     </>
-    )
+  );
 }
 
-export default SignUpBusiness
+export default SignUpBusiness;
