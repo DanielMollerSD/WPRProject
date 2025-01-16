@@ -16,7 +16,6 @@ function SignUpParticular() {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
     
-       
         const formData = {
             voornaam: e.target.voornaam.value,
             achternaam: e.target.achternaam.value,
@@ -29,7 +28,6 @@ function SignUpParticular() {
         };
     
         try {
-            
             const response = await fetch("https://localhost:5001/api/customer", {
                 method: "POST",
                 headers: {
@@ -39,7 +37,6 @@ function SignUpParticular() {
             });
     
             if (response.ok) {
-            
                 alert("Account created successfully!");
             } else {
                 const error = await response.json();
@@ -166,12 +163,18 @@ function SignUpParticular() {
                                 </div>
 
                                 <div>
-                                <button type="submit" className="SignupButton">Registreren</button>
+                                    <button type="submit" className="SignupButton">Registreren</button>
                                 </div>
                             </form>
 
+                            {/* Voeg hier een nieuwe Link-knop toe */}
+                            <Link to="/rent-overview">
+                                <button className="btn-go-to-rent-overview">Go to Rent Overview</button>
+                            </Link>
+
+                            {/* Je kunt ook de "next page" knop gebruiken zoals eerder */}
                             <Link to="/vehicle-overview">
-                                <button>next page</button>
+                                <button>Next Page</button>
                             </Link>
                         </section>
                     </main>

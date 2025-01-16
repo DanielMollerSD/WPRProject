@@ -18,10 +18,9 @@ namespace WPRProject.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Rent>>> GetAllRents()
         {
-            var rents = await _context.Rent.ToListAsync();
+            var rents = await _context.Rent.Include(r => r.Vehicle).ToListAsync();
             return Ok(rents);
         }
-
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRent(int id)
@@ -33,7 +32,6 @@ namespace WPRProject.Controllers
             }
             return Ok(rent);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> CreateRent([FromBody] Rent rent)
@@ -61,6 +59,7 @@ namespace WPRProject.Controllers
 
             try
             {
+                rent.Status = Rent.Pending; // Set default status
                 _context.Rent.Add(rent);
                 await _context.SaveChangesAsync();
                 return CreatedAtAction("GetRent", new { id = rent.Id }, rent);
@@ -74,8 +73,9 @@ namespace WPRProject.Controllers
                 });
             }
         }
-        [HttpPut("{id}/verify")]
-        public async Task<IActionResult> UpdateVerificationStatus(int id, [FromBody] bool isApproved)
+
+        [HttpPut("{id}/status")]
+        public async Task<IActionResult> UpdateStatus(int id, [FromBody] string newStatus)
         {
             var rent = await _context.Rent.FindAsync(id);
 
@@ -84,11 +84,16 @@ namespace WPRProject.Controllers
                 return NotFound();
             }
 
-            rent.Verified = isApproved; 
-            await _context.SaveChangesAsync(); 
+            // Validate the new status value
+            if (newStatus != Rent.Pending && newStatus != Rent.Accepted && newStatus != Rent.Declined)
+            {
+                return BadRequest("Invalid status value. Allowed values are: 'pending', 'accepted', 'declined'.");
+            }
 
-            return Ok(rent); 
+            rent.Status = newStatus;
+            await _context.SaveChangesAsync();
+
+            return Ok(rent);
         }
-
     }
 }

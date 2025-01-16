@@ -12,6 +12,7 @@ import SignUpBusiness from './pages/signup-business';
 import SignupSelectionScreen from './pages/signup-select';
 import VehicleOverview from './pages/vehicle-overview';
 import RentScreen from './pages/rent-screen';
+import RentOverview from './pages/rent-overview';  // Importeer de nieuwe RentOverview component
 
 function AppRoutes() {
   return (
@@ -29,6 +30,7 @@ function AppRoutes() {
             <Route path="/signup-select" element={<SignupSelectionScreen />} />
             <Route path="/vehicle-overview" element={ <VehicleOverview/>}/>
             <Route path="/rent/:id" element={<RentScreen />} />
+            <Route path="/rent-overview" element={<RentOverview />} /> 
           </Routes>
         </main>
 
@@ -36,6 +38,6 @@ function AppRoutes() {
       </div>
     </Router>
   );
-
 }
-export default AppRoutes
+
+export default AppRoutes;
