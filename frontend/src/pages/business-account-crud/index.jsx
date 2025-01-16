@@ -26,7 +26,6 @@ function BusinessCRUD() {
     const type1 =
       password1Ref.current.type === "password" ? "text" : "password";
     password1Ref.current.type = type1;
-
   };
 
   // Fetch the current account data
@@ -79,84 +78,85 @@ function BusinessCRUD() {
 
   // Handle form submission
   // Handle Create or Update Employee
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  // Ensure the account data is fetched before proceeding
-  if (!currentAccount) {
-    alert("Accountgegevens laden nog. Probeer het opnieuw.");
-    return;
-  }
-
-  
-  const filledForm = {
-    businessName: currentAccount.businessName,
-    businessAddress: currentAccount.businessAddress,
-    businessPostalCode: currentAccount.businessPostalCode,
-    kvk: currentAccount.kvk,
-    firstName: form.firstName,
-    lastName: form.lastName,
-    tussenVoegsel: form.tussenVoegsel,
-    role: form.role,
-    email: form.email,
-    password: form.password,
-  };
-  console.log("currentAccount:", currentAccount);
-  console.log("form:", form);
-  
-
-  if (!filledForm.firstName || !filledForm.lastName || !filledForm.email || !filledForm.password) {
-    alert("Alle velden zijn verplicht!");
-    return;
-  }
-
-  try {
-    setLoading(true);
-    setError(null);
-
-    if (isEditing) {
-      // Update Employee (PUT request)
-      const response = await axios.put(
-        "https://localhost:7265/api/Customer/updateBusiness",
-        filledForm,
-        {
-          withCredentials: true,
-        }
-      );
-      
-      console.log("User data updated:", response.data);
-    } else {
-      // Create Employee (POST request)
-      const response = await axios.post(
-        `${import.meta.env.VITE_APP_API_URL}/Business/register`,
-        filledForm,
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      console.log("Employee created:", response.data);
+    // Ensure the account data is fetched before proceeding
+    if (!currentAccount) {
+      alert("Accountgegevens laden nog. Probeer het opnieuw.");
+      return;
     }
 
-   
-    setForm({
-      firstName: "",
-      lastName: "",
-      tussenVoegsel: "",
-      email: "",
-      password: "",
-      role: "",
-    });
-    setIsEditing(false);
-    setIsFormVisible(false);
-    fetchEmployees(); // Refresh the employee list after successful operation
-  } catch (error) {
-    console.error(error);
-    alert("Er is iets misgegaan bij het opslaan van de medewerker");
-  } finally {
-    setLoading(false);
-  }
-};
+    const filledForm = {
+      businessName: currentAccount.businessName,
+      businessAddress: currentAccount.businessAddress,
+      businessPostalCode: currentAccount.businessPostalCode,
+      kvk: currentAccount.kvk,
+      firstName: form.firstName,
+      lastName: form.lastName,
+      tussenVoegsel: form.tussenVoegsel,
+      role: form.role,
+      email: form.email,
+      password: form.password,
+    };
+    console.log("currentAccount:", currentAccount);
+    console.log("form:", form);
 
+    if (
+      !filledForm.firstName ||
+      !filledForm.lastName ||
+      !filledForm.email ||
+      !filledForm.password
+    ) {
+      alert("Alle velden zijn verplicht!");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError(null);
+
+      if (isEditing) {
+        // Update Employee (PUT request)
+        const response = await axios.put(
+          "https://localhost:7265/api/Customer/updateBusiness",
+          filledForm,
+          {
+            withCredentials: true,
+          }
+        );
+
+        console.log("User data updated:", response.data);
+      } else {
+        // Create Employee (POST request)
+        const response = await axios.post(
+          `${import.meta.env.VITE_APP_API_URL}/Business/register`,
+          filledForm,
+          {
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        console.log("Employee created:", response.data);
+      }
+
+      setForm({
+        firstName: "",
+        lastName: "",
+        tussenVoegsel: "",
+        email: "",
+        password: "",
+        role: "",
+      });
+      setIsEditing(false);
+      setIsFormVisible(false);
+      fetchEmployees(); // Refresh the employee list after successful operation
+    } catch (error) {
+      console.error(error);
+      alert("Er is iets misgegaan bij het opslaan van de medewerker");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Edit employee
   const handleEdit = (employee) => {
@@ -196,7 +196,7 @@ const handleSubmit = async (e) => {
       tussenVoegsel: "",
       email: "",
       password: "",
-      role: "owner",
+      role: "",
     });
   };
 
@@ -209,7 +209,7 @@ const handleSubmit = async (e) => {
       tussenVoegsel: "",
       email: "",
       password: "",
-      role: "owner",
+      role: "",
     });
   };
 
@@ -265,6 +265,15 @@ const handleSubmit = async (e) => {
                   onChange={handleChange}
                   required
                 />
+                <select
+                  name="role"
+                  className="role-select"
+                  onChange={handleChange}
+                  value={form.role}
+                >
+                  <option value="Medewerker">Medewerker</option>
+                  <option value="Wagenparkbeheerder">Wagenparkbeheerder</option>
+                </select>
                 <input
                   type="password"
                   name="password"

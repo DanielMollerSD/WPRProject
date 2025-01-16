@@ -41,6 +41,20 @@ namespace WPRProject.Controllers
 
             return business;
         }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteBusinessAccount(int id)
+        {
+            var businessAccount = await _context.Business.FindAsync(id);
+            if (businessAccount == null)
+            {
+                return NotFound(new { message = "Account not found" });
+            }
+
+            _context.Business.Remove(businessAccount);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Account deleted successfully" });
+        }
 
        
         [HttpPost("register")]
