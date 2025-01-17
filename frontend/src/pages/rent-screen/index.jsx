@@ -127,7 +127,7 @@ function RentScreen() {
               <div className="form-group">
                 <label>Start Date:</label>
                 <input
-                  type="datetime-local"
+                  type="date"
                   name="startDate"
                   value={formData.startDate}
                   onChange={handleChange}
@@ -137,7 +137,7 @@ function RentScreen() {
               <div className="form-group">
                 <label>End Date:</label>
                 <input
-                  type="datetime-local"
+                  type="date"
                   name="endDate"
                   value={formData.endDate}
                   onChange={handleChange}
