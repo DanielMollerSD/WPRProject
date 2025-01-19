@@ -56,25 +56,28 @@ namespace WPRProject.Controllers
             }
 
 
-            List<Claim> claims = null;
+            List<Claim> claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, (customer?.FirstName ?? "") + " " + (customer?.LastName ?? "")),
+                new Claim(ClaimTypes.Email, customer?.Email ?? employee?.Email)
+            };
 
             if (customer != null)
             {
-                claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, (customer.FirstName ?? "") + " " + (customer.LastName ?? "")),
-                new Claim(ClaimTypes.Email, customer.Email)
-            };
+                if (customer is Business businessCustomer && !string.IsNullOrEmpty(businessCustomer.Role))
+                {
+                    claims.Add(new Claim("role", businessCustomer.Role));
+                }
+                else if (customer is Individual)
+                {
+                    claims.Add(new Claim("role", "Individual"));
+                }
             }
             else if (employee != null)
             {
-                claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Role, employee.Role),
-                new Claim(ClaimTypes.Email, employee.Email)
-            };
-
+                claims.Add(new Claim("role", employee.Role));
             }
+
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
