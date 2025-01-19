@@ -46,6 +46,7 @@ namespace WPRProject.Controllers
                 }
               } 
 
+
             var secretKey = _configuration["Jwt:Key"];
             var issuer = _configuration["Jwt:Issuer"];
             var audience = _configuration["Jwt:Audience"];
@@ -91,7 +92,7 @@ namespace WPRProject.Controllers
                 HttpOnly = true,
                 Secure = false,
                 SameSite = SameSiteMode.Strict,
-                Expires = DateTime.Now.AddMinutes(30)
+                Expires = DateTime.Now.AddMinutes(60 * 24 * 7)
             });
 
 

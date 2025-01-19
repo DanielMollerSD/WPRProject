@@ -1,14 +1,14 @@
 import "./styles.scss";
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom"; // Make sure you import useNavigate
 import axios from "axios";
 
 function FrontofficeCRUD() {
+  const navigate = useNavigate(); // Call useNavigate to get navigate function
   const password1Ref = useRef(null);
-  const password2Ref = useRef(null);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [validationError, setValidationError] = useState("");
   const [employees, setEmployees] = useState([]);
   const [currentAccount, setCurrentAccount] = useState(null); // To store logged-in account info
   const [form, setForm] = useState({
@@ -53,13 +53,17 @@ function FrontofficeCRUD() {
   // Fetch all employees
   async function fetchEmployees() {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_APP_API_URL}/Employee`
+      const response = await axios.get(
+        `${import.meta.env.VITE_APP_API_URL}/Employee`,
+        {
+          withCredentials: true, // Ensure cookies are sent with the request
+        }
       );
-      const data = await response.json();
-      setEmployees(data);
+      setEmployees(response.data);
     } catch (error) {
       console.error("Failed to fetch employees", error);
+      alert("Je hebt geen toegang tot deze pagina!");
+      navigate("/login");
     }
   }
 
@@ -258,6 +262,7 @@ function FrontofficeCRUD() {
                       >
                         Verwijderen
                       </button>
+                      
                     </div>
                   </div>
                 </div>
@@ -267,6 +272,8 @@ function FrontofficeCRUD() {
         </div>
       </div>
     </div>
+    
+
   );
 }
 

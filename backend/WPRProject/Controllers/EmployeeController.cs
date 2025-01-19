@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using WPRProject.Tables;
 using WPRProject.DTOS;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace WPRProject.Controllers
 
@@ -18,6 +20,8 @@ namespace WPRProject.Controllers
             _context = context;
         }
 
+
+        [Authorize(Roles = "Backoffice")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
         {
