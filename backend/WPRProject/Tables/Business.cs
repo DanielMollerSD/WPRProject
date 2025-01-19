@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace WPRProject.Tables
 {
@@ -12,5 +13,8 @@ namespace WPRProject.Tables
         public string BusinessAddress { get; set; }
 
         public string BusinessPostalCode { get; set; }
+
+        [JsonIgnore]
+        public ICollection<SubscriptionOrder>? SubscriptionOrders { get; set; }
     }
 }
