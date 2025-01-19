@@ -182,7 +182,7 @@ namespace WPRProject.Migrations
                     PickupLocation = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PickupTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SafetyInstructions = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    VehicleId = table.Column<int>(type: "int", nullable: false)
+                    VehicleId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -192,7 +192,7 @@ namespace WPRProject.Migrations
                         column: x => x.VehicleId,
                         principalTable: "Vehicle",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateIndex(

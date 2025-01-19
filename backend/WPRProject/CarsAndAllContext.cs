@@ -39,7 +39,7 @@ namespace WPRProject
                 .HasOne(r => r.Vehicle)             // One Rent has one Vehicle
                 .WithMany(v => v.Rents)             // One Vehicle can have many Rents
                 .HasForeignKey(r => r.VehicleId)    // Foreign key in Rent pointing to Vehicle
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<Customer>()
                 .HasDiscriminator<string>("Discriminator")

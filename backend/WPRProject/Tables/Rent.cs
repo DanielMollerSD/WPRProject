@@ -32,8 +32,8 @@ namespace WPRProject.Tables
    
         public string SafetyInstructions { get; set; }
 
-        [Required]
-        public int VehicleId { get; set; }
+    
+        public int? VehicleId { get; set; }
 
         // Navigation property to Vehicle
         public Vehicle? Vehicle { get; set; }
