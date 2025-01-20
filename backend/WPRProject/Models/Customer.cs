@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using System.Text.Json.Serialization;
 using System.ComponentModel.DataAnnotations;
 
 namespace WPRProject.Tables
@@ -18,5 +19,8 @@ namespace WPRProject.Tables
 
         [StringLength(16), MinLength(3)]
         public string Password { get; set; }
+
+        [JsonIgnore]
+        public ICollection<Rent>? Rents { get; set; }
     }
 }

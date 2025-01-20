@@ -4,33 +4,40 @@ namespace WPRProject.Tables
 {
     public class Rent
     {
-        [Key] 
+        [Key]
         public int Id { get; set; }
 
         public DateTime StartDate { get; set; }
 
         public DateTime EndDate { get; set; }
-      
+
         public string FirstName { get; set; }
-   
+
         public string LastName { get; set; }
-     
+
         public string Address { get; set; }
 
         public string TravelPurpose { get; set; }
-  
+
         public string FurthestDestination { get; set; }
 
         public int ExpectedDistance { get; set; }
-  
+
         public string PickupLocation { get; set; }
-  
+
         public DateTime PickupTime { get; set; }
-   
+
         public string SafetyInstructions { get; set; }
 
         [Required]
         public int VehicleId { get; set; }
+
+        // Foreign key to Customer
+        [Required] // Zorg ervoor dat een Rent altijd een Customer heeft
+        public int CustomerId { get; set; }
+
+        // Navigation property to Customer
+        public Customer? Customer { get; set; }
 
         // Navigation property to Vehicle
         public Vehicle? Vehicle { get; set; }
