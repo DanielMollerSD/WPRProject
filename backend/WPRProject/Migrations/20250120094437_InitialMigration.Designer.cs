@@ -12,8 +12,8 @@ using WPRProject;
 namespace WPRProject.Migrations
 {
     [DbContext(typeof(CarsAndAllContext))]
-    [Migration("20250119141452_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250120094437_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -218,41 +218,18 @@ namespace WPRProject.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
+                    b.Property<string>("SubscriptionType")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Subscription");
-                });
 
-            modelBuilder.Entity("WPRProject.Tables.SubscriptionCoverage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.HasDiscriminator<string>("SubscriptionType").HasValue("Base");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<double>("DailyRentCoverage")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SubscriptionCoverage");
-                });
-
-            modelBuilder.Entity("WPRProject.Tables.SubscriptionDiscount", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<double>("Discount")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SubscriptionDiscount");
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("WPRProject.Tables.SubscriptionOrder", b =>
@@ -263,16 +240,26 @@ namespace WPRProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("BusinessId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("SubscriptionId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Verified")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BusinessId");
+
+                    b.HasIndex("SubscriptionId");
 
                     b.ToTable("SubscriptionOrder");
                 });
@@ -356,6 +343,26 @@ namespace WPRProject.Migrations
                     b.HasDiscriminator().HasValue("Individual");
                 });
 
+            modelBuilder.Entity("WPRProject.Tables.SubscriptionCoverage", b =>
+                {
+                    b.HasBaseType("WPRProject.Tables.Subscription");
+
+                    b.Property<double>("DailyRentCoverage")
+                        .HasColumnType("float");
+
+                    b.HasDiscriminator().HasValue("Coverage");
+                });
+
+            modelBuilder.Entity("WPRProject.Tables.SubscriptionDiscount", b =>
+                {
+                    b.HasBaseType("WPRProject.Tables.Subscription");
+
+                    b.Property<double>("Discount")
+                        .HasColumnType("float");
+
+                    b.HasDiscriminator().HasValue("Discount");
+                });
+
             modelBuilder.Entity("WPRProject.Tables.Business", b =>
                 {
                     b.HasBaseType("WPRProject.Tables.BusinessEmployee");
@@ -399,11 +406,40 @@ namespace WPRProject.Migrations
                     b.Navigation("Vehicle");
                 });
 
+            modelBuilder.Entity("WPRProject.Tables.SubscriptionOrder", b =>
+                {
+                    b.HasOne("WPRProject.Tables.Business", "Business")
+                        .WithMany("SubscriptionOrders")
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WPRProject.Tables.Subscription", "Subscription")
+                        .WithMany("SubscriptionOrders")
+                        .HasForeignKey("SubscriptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Business");
+
+                    b.Navigation("Subscription");
+                });
+
+            modelBuilder.Entity("WPRProject.Tables.Subscription", b =>
+                {
+                    b.Navigation("SubscriptionOrders");
+                });
+
             modelBuilder.Entity("WPRProject.Tables.Vehicle", b =>
                 {
                     b.Navigation("Damages");
 
                     b.Navigation("Rents");
+                });
+
+            modelBuilder.Entity("WPRProject.Tables.Business", b =>
+                {
+                    b.Navigation("SubscriptionOrders");
                 });
 #pragma warning restore 612, 618
         }

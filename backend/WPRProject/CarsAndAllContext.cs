@@ -28,6 +28,18 @@ namespace WPRProject
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<SubscriptionOrder>()
+                .HasOne(so => so.Business)               // One SubscriptionOrder has one Business
+                .WithMany(b => b.SubscriptionOrders)     // One Business can have many SubscriptionOrders
+                .HasForeignKey(so => so.BusinessId)      // Foreign key in SubscriptionOrder pointing to Business
+                .OnDelete(DeleteBehavior.Cascade);       // Delete SubscriptionOrders when the Business is deleted
+
+            modelBuilder.Entity<SubscriptionOrder>()
+                .HasOne(so => so.Subscription)           // One SubscriptionOrder has one Subscription
+                .WithMany(s => s.SubscriptionOrders)     // One Subscription can have many SubscriptionOrders
+                .HasForeignKey(so => so.SubscriptionId)  // Foreign key in SubscriptionOrder pointing to Subscription
+                .OnDelete(DeleteBehavior.Cascade);       // Delete SubscriptionOrders when the Subscription is deleted
+
             modelBuilder.Entity<Damage>()
                 .HasOne(d => d.Vehicle)             // One Damage has one Vehicle
                 .WithMany(v => v.Damages)           // One Vehicle can have many Damages
@@ -40,6 +52,12 @@ namespace WPRProject
                 .WithMany(v => v.Rents)             // One Vehicle can have many Rents
                 .HasForeignKey(r => r.VehicleId)    // Foreign key in Rent pointing to Vehicle
                 .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Subscription>()
+                .HasDiscriminator<string>("SubscriptionType")
+                .HasValue<Subscription>("Base")
+                .HasValue<SubscriptionCoverage>("Coverage")
+                .HasValue<SubscriptionDiscount>("Discount");
 
             modelBuilder.Entity<Customer>()
                 .HasDiscriminator<string>("Discriminator")
