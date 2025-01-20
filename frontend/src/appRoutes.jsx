@@ -21,6 +21,7 @@ import BackofficeVehicleDamage from "./pages/backoffice-vehicle-damage";
 import SignUpBackoffice from "./pages/signup-backoffice";
 import BusinessCRUD from "./pages/business-account-crud";
 import SubscriptionSelect from "./pages/subscription-select";
+import PrivacyPage from "./pages/privacy-page";
 
 function AppRoutes() {
   return (
@@ -53,6 +54,7 @@ function AppRoutes() {
             />
             <Route path="/business-account-crud" element={<BusinessCRUD />} />
             <Route path="/subscription-select" element={<SubscriptionSelect />} />
+            <Route path="/privacy-page" element={<PrivacyPage />} />
           </Routes>
         </main>
 
