@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WPRProject;
 
@@ -11,9 +12,11 @@ using WPRProject;
 namespace WPRProject.Migrations
 {
     [DbContext(typeof(CarsAndAllContext))]
-    partial class CarsAndAllContextModelSnapshot : ModelSnapshot
+    [Migration("20250120203535_InitialCreate2")]
+    partial class InitialCreate2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -427,7 +430,7 @@ namespace WPRProject.Migrations
             modelBuilder.Entity("WPRProject.Tables.SubscriptionOrder", b =>
                 {
                     b.HasOne("WPRProject.Tables.Business", "Business")
-                        .WithMany("SubscriptionOrders")
+                        .WithMany()
                         .HasForeignKey("BusinessId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -446,19 +449,12 @@ namespace WPRProject.Migrations
             modelBuilder.Entity("WPRProject.Tables.BusinessEmployee", b =>
                 {
                     b.HasOne("WPRProject.Tables.Business", "Business")
-                        .WithMany("BusinessEmployees")
+                        .WithMany()
                         .HasForeignKey("BusinessId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Business");
-                });
-
-            modelBuilder.Entity("WPRProject.Tables.Business", b =>
-                {
-                    b.Navigation("BusinessEmployees");
-
-                    b.Navigation("SubscriptionOrders");
                 });
 
             modelBuilder.Entity("WPRProject.Tables.Customer", b =>

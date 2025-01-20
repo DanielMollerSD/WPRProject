@@ -79,17 +79,6 @@ namespace WPRProject.Controllers
                 // Hash passwords
                 var employeePassword = BCrypt.Net.BCrypt.HashPassword(registerDto.businessEmployee.Password);
 
-                // Create the business employee
-                var newBusinessEmployee = new BusinessEmployee
-                {
-                    FirstName = registerDto.businessEmployee.FirstName,
-                    LastName = registerDto.businessEmployee.LastName,
-                    TussenVoegsel = registerDto.businessEmployee.TussenVoegsel,
-                    Email = registerDto.businessEmployee.Email,
-                    Password = employeePassword,
-                    Role = registerDto.businessEmployee.Role
-                };
-
                 // Create the business
                 var newBusiness = new Business
                 {
@@ -99,8 +88,23 @@ namespace WPRProject.Controllers
                     BusinessPostalCode = registerDto.BusinessPostalCode,
                 };
 
-                Console.WriteLine($"Received Business Employee: {registerDto.businessEmployee}");
+                // Add and save the business to generate BusinessId
                 _context.Business.Add(newBusiness);
+                await _context.SaveChangesAsync();
+
+                // Create the business employee
+                var newBusinessEmployee = new BusinessEmployee
+                {
+                    FirstName = registerDto.businessEmployee.FirstName,
+                    LastName = registerDto.businessEmployee.LastName,
+                    TussenVoegsel = registerDto.businessEmployee.TussenVoegsel,
+                    Email = registerDto.businessEmployee.Email,
+                    Password = employeePassword,
+                    Role = registerDto.businessEmployee.Role,
+                    BusinessId = newBusiness.BusinessId // Assign the generated BusinessId
+                };
+
+                // Add and save the business employee
                 _context.Customer.Add(newBusinessEmployee);
                 await _context.SaveChangesAsync();
 
@@ -111,6 +115,7 @@ namespace WPRProject.Controllers
                 return StatusCode(500, new { message = "An error occurred", details = ex.Message });
             }
         }
+
 
     }
 }

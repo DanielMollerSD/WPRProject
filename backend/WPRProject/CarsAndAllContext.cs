@@ -27,11 +27,17 @@ namespace WPRProject
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // modelBuilder.Entity<SubscriptionOrder>()
-            //     .HasOne(so => so.Business)               // One SubscriptionOrder has one Business
-            //     .WithMany(b => b.SubscriptionOrders)     // One Business can have many SubscriptionOrders
-            //     .HasForeignKey(so => so.BusinessId)      // Foreign key in SubscriptionOrder pointing to Business
-            //     .OnDelete(DeleteBehavior.Cascade);       // Delete SubscriptionOrders when the Business is deleted
+            modelBuilder.Entity<BusinessEmployee>()
+                 .HasOne(be => be.Business)               // One BusinessEmployee has one Business
+                 .WithMany(b => b.BusinessEmployees)      // One Business can have many BusinessEmployees
+                 .HasForeignKey(be => be.BusinessId)      // Foreign key in BusinessEmployee pointing to Business
+                 .OnDelete(DeleteBehavior.Cascade);       // Delete BusinessEmployees when the Business is deleted
+
+             modelBuilder.Entity<SubscriptionOrder>()
+                 .HasOne(so => so.Business)               // One SubscriptionOrder has one Business
+                 .WithMany(b => b.SubscriptionOrders)     // One Business can have many SubscriptionOrders
+                 .HasForeignKey(so => so.BusinessId)      // Foreign key in SubscriptionOrder pointing to Business
+                 .OnDelete(DeleteBehavior.Cascade);       // Delete SubscriptionOrders when the Business is deleted
 
             modelBuilder.Entity<SubscriptionOrder>()
                 .HasOne(so => so.Subscription)           // One SubscriptionOrder has one Subscription
