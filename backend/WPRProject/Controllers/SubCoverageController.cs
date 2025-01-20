@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Protocols;
+using Microsoft.AspNetCore.Authorization;
 using WPRProject.Tables;
 
 namespace WPRProject.Controllers
 
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class SubCoverageController : ControllerBase

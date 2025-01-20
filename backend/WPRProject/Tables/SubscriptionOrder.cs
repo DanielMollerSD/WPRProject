@@ -7,6 +7,15 @@ namespace WPRProject.Tables
         public bool Verified { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+
+        [Required]
+        public int? BusinessId { get; set; }
+        public Business? Business { get; set; }
+
+        [Required]  
+        public int? SubscriptionId { get; set; }
+        public Subscription? Subscription { get; set; }
     }
+
 
 }

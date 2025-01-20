@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WPRProject.Tables;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WPRProject.Controllers
 
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class SubDiscountController: ControllerBase

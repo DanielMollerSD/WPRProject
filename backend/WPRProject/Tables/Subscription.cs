@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace WPRProject.Tables
 {
@@ -11,7 +12,8 @@ namespace WPRProject.Tables
        
         public double Price { get; set; }
 
-
+        [JsonIgnore]
+        public ICollection<SubscriptionOrder>? SubscriptionOrders { get; set; }
 
     }
 }
