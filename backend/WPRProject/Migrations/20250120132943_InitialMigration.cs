@@ -53,17 +53,16 @@ namespace WPRProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Mail",
+                name: "Privacy",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Topic = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Mail", x => x.Id);
+                    table.PrimaryKey("PK_Privacy", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -217,7 +216,7 @@ namespace WPRProject.Migrations
                 name: "Employee");
 
             migrationBuilder.DropTable(
-                name: "Mail");
+                name: "Privacy");
 
             migrationBuilder.DropTable(
                 name: "Rent");

@@ -22,5 +22,34 @@ namespace WPRProject.Controllers
         {
             return await _context.Set<Privacy>().ToListAsync();
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdatePrivacy(int id, [FromBody] Privacy privacy)
+        {
+            if (id != privacy.Id)
+            {
+                return BadRequest("Privacy ID mismatch");
+            }
+
+            var existingPrivacy = await _context.Privacy.FindAsync(id);
+            if (existingPrivacy == null)
+            {
+                return NotFound("Privacy not found");
+            }
+
+            existingPrivacy.Description = privacy.Description;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return StatusCode(500, "Failed to update the privacy policy");
+            }
+
+            return NoContent();
+        }
+
     }
 }
