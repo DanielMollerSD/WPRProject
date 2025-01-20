@@ -26,12 +26,9 @@ namespace WPRProject.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Rent>>> GetAllRents()
         {
-            _logger.LogInformation("GetAllRents method called");
-            var rents = await _context.Rent.ToListAsync();
-            _logger.LogInformation("Retrieved {Count} rent records", rents.Count);
+            var rents = await _context.Rent.Include(r => r.Vehicle).ToListAsync();
             return Ok(rents);
         }
-
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRent(int id)
@@ -47,7 +44,6 @@ namespace WPRProject.Controllers
             return Ok(rent);
         }
 
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateRent([FromBody] Rent rent)
         {
@@ -86,6 +82,7 @@ namespace WPRProject.Controllers
 
             try
             {
+                rent.Status = Rent.Pending; // Set default status
                 _context.Rent.Add(rent);
                 await _context.SaveChangesAsync();
 
@@ -112,25 +109,27 @@ namespace WPRProject.Controllers
                 });
             }
         }
-        [HttpPut("{id}/verify")]
-        public async Task<IActionResult> UpdateVerificationStatus(int id, [FromBody] bool isApproved)
-        {
-            _logger.LogInformation("UpdateVerificationStatus method called for RentId {RentId} with status {IsApproved}", id, isApproved);
 
-            var rent = await _context.Rent.FindAsync(id);
+        [HttpPatch("{id}/status")]
+public async Task<IActionResult> UpdateStatus(int id, [FromBody] string newStatus)
+{
+    var rent = await _context.Rent.FindAsync(id);
 
-            if (rent == null)
-            {
-                _logger.LogWarning("Rent with ID {RentId} not found", id);
-                return NotFound();
-            }
+    if (rent == null)
+    {
+        return NotFound();
+    }
 
-            rent.Verified = isApproved; 
-            await _context.SaveChangesAsync(); 
+    // Validate the new status value
+    if (newStatus != Rent.Pending && newStatus != Rent.Accepted && newStatus != Rent.Declined)
+    {
+        return BadRequest("Invalid status value. Allowed values are: 'pending', 'accepted', 'declined'.");
+    }
 
-            _logger.LogInformation("Updated verification status for RentId {RentId} to {IsApproved}", id, isApproved);
-            return Ok(rent); 
-        }
+    rent.Status = newStatus;
+    await _context.SaveChangesAsync();
 
+    return Ok(rent);
+}
     }
 }
