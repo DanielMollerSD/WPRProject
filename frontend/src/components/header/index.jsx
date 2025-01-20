@@ -18,8 +18,9 @@ function Header() {
         try {
             const decoded = jwtDecode(token);
             console.log("Decoded Token:", decoded);
-            userRole = decoded["role"] || "Unknown";
+            userRole = decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || "Unknown";
             isLoggedIn = true;
+            console.log(userRoles);
         } catch (error) {
             console.error("Token decoding failed:", error);
         }

@@ -396,6 +396,17 @@ namespace WPRProject.Migrations
 
             modelBuilder.Entity("WPRProject.Tables.Damage", b =>
                 {
+                    b.HasOne("WPRProject.Tables.Vehicle", "Vehicle")
+                        .WithMany("Damages")
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Vehicle");
+                });
+
+            modelBuilder.Entity("WPRProject.Tables.Rent", b =>
+                {
                     b.HasOne("WPRProject.Tables.Customer", "Customer")
                         .WithMany("Rents")
                         .HasForeignKey("CustomerId")
@@ -403,22 +414,11 @@ namespace WPRProject.Migrations
                         .IsRequired();
 
                     b.HasOne("WPRProject.Tables.Vehicle", "Vehicle")
-                        .WithMany("Damages")
-                        .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Vehicle");
-                });
-
-            modelBuilder.Entity("WPRProject.Tables.Rent", b =>
-                {
-                    b.HasOne("WPRProject.Tables.Vehicle", "Vehicle")
                         .WithMany("Rents")
                         .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Customer");
 
                     b.Navigation("Vehicle");
                 });
@@ -440,6 +440,11 @@ namespace WPRProject.Migrations
                     b.Navigation("Business");
 
                     b.Navigation("Subscription");
+                });
+
+            modelBuilder.Entity("WPRProject.Tables.Customer", b =>
+                {
+                    b.Navigation("Rents");
                 });
 
             modelBuilder.Entity("WPRProject.Tables.Subscription", b =>

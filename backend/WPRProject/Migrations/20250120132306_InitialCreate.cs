@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WPRProject.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateBusiness : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,7 +19,6 @@ namespace WPRProject.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BusinessName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Kvk = table.Column<int>(type: "int", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BusinessAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BusinessPostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -174,7 +173,6 @@ namespace WPRProject.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Verified = table.Column<bool>(type: "bit", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -186,11 +184,19 @@ namespace WPRProject.Migrations
                     PickupLocation = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PickupTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SafetyInstructions = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    VehicleId = table.Column<int>(type: "int", nullable: true)
+                    VehicleId = table.Column<int>(type: "int", nullable: true),
+                    CustomerId = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Rent", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Rent_Customer_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customer",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Rent_Vehicle_VehicleId",
                         column: x => x.VehicleId,
@@ -203,6 +209,11 @@ namespace WPRProject.Migrations
                 name: "IX_Damage_VehicleId",
                 table: "Damage",
                 column: "VehicleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rent_CustomerId",
+                table: "Rent",
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rent_VehicleId",
@@ -224,9 +235,6 @@ namespace WPRProject.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Customer");
-
-            migrationBuilder.DropTable(
                 name: "Damage");
 
             migrationBuilder.DropTable(
@@ -240,6 +248,9 @@ namespace WPRProject.Migrations
 
             migrationBuilder.DropTable(
                 name: "SubscriptionOrder");
+
+            migrationBuilder.DropTable(
+                name: "Customer");
 
             migrationBuilder.DropTable(
                 name: "Vehicle");
