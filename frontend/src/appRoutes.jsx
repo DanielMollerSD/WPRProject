@@ -12,7 +12,8 @@ import SignUpBusiness from './pages/signup-business';
 import SignupSelectionScreen from './pages/signup-select';
 import VehicleOverview from './pages/vehicle-overview';
 import RentScreen from './pages/rent-screen';
-import RentOverview from './pages/rent-overview';  // Importeer de nieuwe RentOverview component
+import Rentrequests from './pages/rent-requests';
+import RentOverview from './pages/rent-overview'; // Import de nieuwe RentOverview-pagina
 
 function AppRoutes() {
   return (
@@ -28,9 +29,10 @@ function AppRoutes() {
             <Route path="/signup-particular" element={<SignUpParticular />} />
             <Route path="/signup-business" element={<SignUpBusiness />} />
             <Route path="/signup-select" element={<SignupSelectionScreen />} />
-            <Route path="/vehicle-overview" element={ <VehicleOverview/>}/>
+            <Route path="/vehicle-overview" element={<VehicleOverview />} />
             <Route path="/rent/:id" element={<RentScreen />} />
-            <Route path="/rent-overview" element={<RentOverview />} /> 
+            <Route path="/rent-requests" element={<Rentrequests />} />
+            <Route path="/rent-overview" element={<RentOverview />} /> {/* Nieuwe route */}
           </Routes>
         </main>
 

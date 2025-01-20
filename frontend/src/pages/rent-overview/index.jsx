@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 
 const RentOverview = () => {
-  const [rents, setRents] = useState([]); // Houdt alle huurverzoeken bij
-  const [loading, setLoading] = useState(true); // Staat de laadstatus bij
-  const [error, setError] = useState(""); // Voor het weergeven van foutmeldingen
+  const [rents, setRents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [editMode, setEditMode] = useState(null); // Houdt bij welk huurverzoek in bewerkingsmodus is
 
   const apiBaseUrl = "https://localhost:7265/api/rent"; // Zorg ervoor dat je het juiste API endpoint gebruikt
 
-  // Gebruik van useEffect om de huurverzoeken op te halen zodra de component is geladen
+  // Haal alle huurverzoeken op bij het laden van de pagina
   useEffect(() => {
     const fetchRentDetails = async () => {
       try {
@@ -16,26 +17,26 @@ const RentOverview = () => {
           throw new Error("Failed to fetch rent details");
         }
         const data = await response.json();
-        setRents(data); // Zet de gegevens in de state
+        setRents(data); // Zet de data in de state
         setLoading(false); // Zet de laadstatus uit
       } catch (err) {
-        setError(err.message); // Stel de foutmelding in
-        setLoading(false); // Zet de laadstatus uit
+        setError(err.message);
+        setLoading(false);
       }
     };
 
-    fetchRentDetails(); // Roep de functie aan
-  }, []); // Lege dependency array betekent dat de useEffect slechts eenmaal wordt uitgevoerd
+    fetchRentDetails();
+  }, []);
 
   // Functie om de status van een huurverzoek bij te werken
   const updateStatus = async (rentId, newStatus) => {
     try {
       const response = await fetch(`${apiBaseUrl}/${rentId}/status`, {
-        method: "PATCH", // Gebruik PATCH in plaats van PUT
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(newStatus), // Verzend de nieuwe status als string
+        body: JSON.stringify(newStatus), // stuur de nieuwe status (bijv. "accepted", "declined" of "pending")
       });
 
       if (!response.ok) {
@@ -55,15 +56,20 @@ const RentOverview = () => {
     }
   };
 
-  // Laadindicator weergeven
+  // Laadindicator tonen
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  // Foutmelding weergeven als er een probleem is
+  // Toon foutmelding als er een probleem is
   if (error) {
     return <div>Error: {error}</div>;
   }
+
+  // Functie om editmode in of uit te schakelen
+  const toggleEditMode = (rentId) => {
+    setEditMode(editMode === rentId ? null : rentId); // Zet editmode aan of uit
+  };
 
   return (
     <div className="container">
@@ -77,7 +83,12 @@ const RentOverview = () => {
             <th>End Date</th>
             <th>First Name</th>
             <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Total Price</th>
             <th>Status</th>
+            <th>Pickup Location</th>
+            <th>Dropoff Location</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -91,26 +102,50 @@ const RentOverview = () => {
                 <td>{new Date(rent.endDate).toLocaleDateString()}</td>
                 <td>{rent.firstName}</td>
                 <td>{rent.lastName}</td>
+                <td>{rent.email}</td>
+                <td>{rent.phone}</td>
+                <td>{rent.totalPrice ? `€${rent.totalPrice}` : "Not set"}</td>
                 <td>{rent.status}</td>
+                <td>{rent.pickupLocation || "Not specified"}</td>
+                <td>{rent.dropoffLocation || "Not specified"}</td>
                 <td>
+                  {/* Voeg een knop toe om editmode aan te zetten */}
                   <button
-                    className="btn btn-approve"
-                    onClick={() => updateStatus(rent.id, "accepted")}
+                    className="btn btn-primary"
+                    onClick={() => toggleEditMode(rent.id)}
                   >
-                    Approve
+                    {editMode === rent.id ? "Cancel" : "Edit"}
                   </button>
-                  <button
-                    className="btn btn-decline"
-                    onClick={() => updateStatus(rent.id, "declined")}
-                  >
-                    Decline
-                  </button>
+
+                  {/* Toon de andere knoppen alleen als editmode is ingeschakeld */}
+                  {editMode === rent.id && (
+                    <div>
+                      <button
+                        className="btn btn-success"
+                        onClick={() => updateStatus(rent.id, "accepted")}
+                      >
+                        Approve
+                      </button>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => updateStatus(rent.id, "declined")}
+                      >
+                        Decline
+                      </button>
+                      <button
+                        className="btn btn-warning"
+                        onClick={() => updateStatus(rent.id, "pending")}
+                      >
+                        Pending
+                      </button>
+                    </div>
+                  )}
                 </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan="8">No rent requests available.</td>
+              <td colSpan="13">No rent requests available.</td>
             </tr>
           )}
         </tbody>
