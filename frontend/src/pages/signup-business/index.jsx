@@ -1,10 +1,12 @@
 import "./styles.scss";
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function SignUpBusiness() {
   const password1Ref = useRef(null);
   const password2Ref = useRef(null);
+  const navigate = useNavigate(); 
 
   const togglePassword = () => {
     const type1 =
@@ -19,17 +21,20 @@ function SignUpBusiness() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
+
     const formData = {
-      FirstName: e.target.voornaam.value,
-      LastName: e.target.achternaam.value,
-      TussenVoegsel: e.target.tussenvoegsel.value || undefined,
-      Email: e.target.email.value,
       BusinessName: e.target.naam.value,
       BusinessAddress: e.target.adres.value,
       BusinessPostalCode: e.target.postcode.value,
       Kvk: e.target.kvk.value,
+      businessEmployee: {
+      FirstName: e.target.voornaam.value,
+      LastName: e.target.achternaam.value,
+      TussenVoegsel: e.target.tussenvoegsel.value || undefined,
+      Email: e.target.email.value,
       Password: e.target.password.value,
       Role: "owner",
+      }
     };
 
     console.log("Sending request to backend...");
@@ -46,13 +51,15 @@ function SignUpBusiness() {
           },
           body: JSON.stringify(formData),
         }
+      
       );
-
+      console.log("Request Body:", JSON.stringify(formData));
       console.log("Response Status:", response.status);
       console.log("Response Headers:", response.headers);
 
       if (response.ok) {
         alert("Account created successfully!");
+        navigate("/login");
       } else {
         const error = await response.json(); // Capture JSON response error
         console.error("Error Response:", error);
@@ -162,7 +169,7 @@ function SignUpBusiness() {
                                     className="LargeInput"
                                     placeholder="Voer uw wachtwoord in"
                                     ref={password1Ref}
-                                    pattern="(?=.[!@#$%^&(),.?:{}|<>-+=;'/~`\[\]^])[A-Za-z\d!@#$%^&*(),.?:{}|<>-+=;'/~`\[\]^]"
+                                    pattern="^(?=.*[!@#$%^&(),.?:{}|<>-+=;'/~`\[\]^])[A-Za-z\d!@#$%^&*(),.?:{}|<>-+=;'/~`\[\]^]{8,}$"
                                     name="password"
                                     required
                                 />
@@ -175,7 +182,7 @@ function SignUpBusiness() {
                                     name="password-repeat"
                                     placeholder="Herhaal uw wachtwoord"
                                     ref={password2Ref}
-                                    pattern="(?=.[!@#$%^&(),.?:{}|<>-+=;'/~`\[\]^])[A-Za-z\d!@#$%^&*(),.?:{}|<>-+=;'/~`\[\]^]"
+                                    pattern="^(?=.*[!@#$%^&(),.?:{}|<>-+=;'/~`\[\]^])[A-Za-z\d!@#$%^&*(),.?:{}|<>-+=;'/~`\[\]^]{8,}$"
                                     required 
                                 />
                             </div>

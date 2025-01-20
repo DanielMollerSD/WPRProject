@@ -125,72 +125,40 @@ namespace WPRProject.Controllers
             return Ok(customer); // Return the updated customer data
         }
 
-        [HttpPut("updateBusiness")]
-public async Task<ActionResult> UpdateCustomer([FromBody] UpdateBusinessDto customerUpdateDto)
+       [HttpPut("updateBusiness")]
+public async Task<ActionResult> UpdateBusiness([FromBody] UpdateBusinessDto customerUpdateDto)
 {
-
     var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 
-    // Fetch the current customer based on the logged-in user's email
-    var customer = await _context.Business.FirstOrDefaultAsync(c => c.Email == userEmail);
+    // Fetch the current business customer based on the logged-in user's email
+    var businessCustomer = await _context.Business
+        .FirstOrDefaultAsync(c => c.BusinessName == userEmail); // Or use a different way to identify business users
 
-    if (customer == null)
+    if (businessCustomer == null)
     {
-        return NotFound("Customer not found.");
+        return NotFound("Business customer not found.");
     }
 
     // Only update fields that are provided in the DTO
-    if (!string.IsNullOrEmpty(customerUpdateDto.FirstName))
+    if (!string.IsNullOrEmpty(customerUpdateDto.BusinessName))
     {
-        customer.FirstName = customerUpdateDto.FirstName;
-    }
-
-    if (!string.IsNullOrEmpty(customerUpdateDto.LastName))
-    {
-        customer.LastName = customerUpdateDto.LastName;
-    }
-
-    if (!string.IsNullOrEmpty(customerUpdateDto.Email))
-    {
-        customer.Email = customerUpdateDto.Email;
+        businessCustomer.BusinessName = customerUpdateDto.BusinessName;
     }
 
     if (!string.IsNullOrEmpty(customerUpdateDto.BusinessAddress))
     {
-        customer.BusinessAddress = customerUpdateDto.BusinessAddress;
+        businessCustomer.BusinessAddress = customerUpdateDto.BusinessAddress;
     }
 
     if (!string.IsNullOrEmpty(customerUpdateDto.BusinessPostalCode))
     {
-        customer.BusinessPostalCode = customerUpdateDto.BusinessPostalCode;
+        businessCustomer.BusinessPostalCode = customerUpdateDto.BusinessPostalCode;
     }
 
-    if (!string.IsNullOrEmpty(customerUpdateDto.BusinessName))
-    {
-        customer.BusinessName = customerUpdateDto.BusinessName;
-    }
 
-    if (!string.IsNullOrEmpty(customerUpdateDto.TussenVoegsel))
-    {
-        customer.TussenVoegsel = customerUpdateDto.TussenVoegsel;
-    }
-
-    if (customerUpdateDto.Kvk.HasValue)
-    {
-        customer.Kvk = customerUpdateDto.Kvk.Value;
-    }
-
-    if (!string.IsNullOrEmpty(customerUpdateDto.Password))
-    {
-        // Hash the password before saving it
-        var hashedPassword = BCrypt.Net.BCrypt.HashPassword(customerUpdateDto.Password);
-        customer.Password = hashedPassword;
-    }
-
-    // Save changes to the database
     await _context.SaveChangesAsync();
 
-    return Ok(customer); // Return the updated customer data
+    return Ok(businessCustomer); // Return the updated business customer data
 }
 
 

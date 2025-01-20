@@ -1,10 +1,12 @@
 import './styles.scss';
 import React, { useRef } from "react";
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function SignUpParticular() {
     const password1Ref = useRef(null);
     const password2Ref = useRef(null);
+    const navigate = useNavigate(); 
 
     const togglePassword = () => {
         const type1 = password1Ref.current.type === "password" ? "text" : "password";
@@ -45,6 +47,7 @@ function SignUpParticular() {
     
             if (response.ok) {
                 alert("Account created successfully!");
+                navigate("/login")
             } else {
                 const error = await response.json(); // Capture JSON response error
                 console.error("Error Response:", error);
@@ -174,12 +177,18 @@ function SignUpParticular() {
                                 </div>
 
                                 <div>
-                                <button type="submit" className="SignupButton">Registreren</button>
+                                    <button type="submit" className="SignupButton">Registreren</button>
                                 </div>
                             </form>
 
+                            {/* Voeg hier een nieuwe Link-knop toe */}
+                            <Link to="/rent-overview">
+                                <button className="btn-go-to-rent-overview">Go to Rent Overview</button>
+                            </Link>
+
+                            {/* Je kunt ook de "next page" knop gebruiken zoals eerder */}
                             <Link to="/vehicle-overview">
-                                <button>next page</button>
+                                <button>Next Page</button>
                             </Link>
                             <Link to="/vehicle-crud">
                                 <button>crud page</button>

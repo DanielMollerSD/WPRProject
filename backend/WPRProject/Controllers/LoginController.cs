@@ -46,6 +46,7 @@ namespace WPRProject.Controllers
                 }
             }
 
+
             var secretKey = _configuration["Jwt:Key"];
             var issuer = _configuration["Jwt:Issuer"];
             var audience = _configuration["Jwt:Audience"];
@@ -59,24 +60,29 @@ namespace WPRProject.Controllers
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, (customer?.FirstName ?? "") + " " + (customer?.LastName ?? "")),
-                new Claim(ClaimTypes.Email, customer?.Email ?? employee?.Email)
+                new Claim(ClaimTypes.Email, customer?.Email ?? employee?.Email),
+            
             };
 
             if (customer != null)
-            {
-                if (customer is Business businessCustomer && !string.IsNullOrEmpty(businessCustomer.Role))
                 {
-                    claims.Add(new Claim("role", businessCustomer.Role));
+                    if (customer is BusinessEmployee businessCustomer && !string.IsNullOrEmpty(businessCustomer.Role))
+                    {
+                        claims.Add(new Claim(ClaimTypes.Role, businessCustomer.Role)); // Add BusinessEmployee role
+                    }
+                    else if (customer is Individual)
+                    {
+                        claims.Add(new Claim(ClaimTypes.Role, "Individual")); // Add Individual role
+                    }
                 }
-                else if (customer is Individual)
-                {
-                    claims.Add(new Claim("role", "Individual"));
-                }
-            }
             else if (employee != null)
             {
-                claims.Add(new Claim("role", employee.Role));
+                if (!string.IsNullOrEmpty(employee.Role))
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, employee.Role)); // Add Employee role
+                }
             }
+
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

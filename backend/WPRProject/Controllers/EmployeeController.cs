@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using WPRProject.Tables;
 using WPRProject.DTOS;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace WPRProject.Controllers
 
@@ -18,6 +20,8 @@ namespace WPRProject.Controllers
             _context = context;
         }
 
+
+        [Authorize(Roles = "Backoffice")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
         {
@@ -39,7 +43,21 @@ namespace WPRProject.Controllers
 
             return employee;
         }
-        [HttpPost("register-backoffice")]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteFrontoficeAccount(int id)
+        {
+            var account = await _context.Employee.FindAsync(id);
+            if (account == null)
+            {
+                return NotFound(new { message = "Account not found" });
+            }
+            _context.Employee.Remove(account);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Account deleted successfully" });
+        }
+
+        [HttpPost("register-carsandall")]
         public async Task<IActionResult> Register([FromBody] EmployeeRegisterDto registerDto)
         {
             try
@@ -58,7 +76,7 @@ namespace WPRProject.Controllers
                 {
                     Email = registerDto.Email,
                     Password = hashedPassword,
-                    Role = "backoffice"
+                    Role = registerDto.Role
                 };
 
                 _context.Employee.Add(newEmployee);

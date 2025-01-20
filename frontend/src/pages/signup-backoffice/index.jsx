@@ -1,10 +1,12 @@
 import "./styles.scss";
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function SignUpBackoffice() {
   const password1Ref = useRef(null);
   const password2Ref = useRef(null);
+  const navigate = useNavigate(); 
 
   const togglePassword = () => {
     const type1 =
@@ -21,18 +23,19 @@ function SignUpBackoffice() {
     const formData = {
       Email: e.target.email.value,
       Password: e.target.password.value,
+      Role: "Backoffice",
     };
 
     console.log("Sending request to backend...");
     console.log(
       "Request URL:",
-      "https://localhost:7265/api/Employee/register-backoffice"
+      "https://localhost:7265/api/Employee/register-carsandall"
     );
     console.log("Request Body:", JSON.stringify(formData));
 
     try {
       const response = await fetch(
-        "https://localhost:7265/api/Employee/register-backoffice",
+        "https://localhost:7265/api/Employee/register-carsandall",
         {
           method: "POST",
           headers: {
@@ -47,6 +50,7 @@ function SignUpBackoffice() {
 
       if (response.ok) {
         alert("Account created successfully!");
+        navigate("/login")
       } else {
         const error = await response.json(); // Capture JSON response error
         console.error("Error Response:", error);
