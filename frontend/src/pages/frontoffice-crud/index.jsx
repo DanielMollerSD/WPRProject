@@ -1,16 +1,16 @@
 import "./styles.scss";
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom"; // Make sure you import useNavigate
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function FrontofficeCRUD() {
-  const navigate = useNavigate(); // Call useNavigate to get navigate function
+  const navigate = useNavigate();
   const password1Ref = useRef(null);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [employees, setEmployees] = useState([]);
-  const [currentAccount, setCurrentAccount] = useState(null); // To store logged-in account info
+  const [currentAccount, setCurrentAccount] = useState(null);
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -20,9 +20,9 @@ function FrontofficeCRUD() {
   const [isFormVisible, setIsFormVisible] = useState(false);
 
   const togglePassword = () => {
-    const type1 =
+    const type =
       password1Ref.current.type === "password" ? "text" : "password";
-    password1Ref.current.type = type1;
+    password1Ref.current.type = type;
   };
 
   // Fetch the current account data
@@ -33,16 +33,16 @@ function FrontofficeCRUD() {
 
       axios
         .get("https://localhost:7265/api/Employee", {
-          withCredentials: true, // Include cookies with the request
+          withCredentials: true,
         })
         .then((response) => {
-          setData(response.data); // Set the fetched data
-          setCurrentAccount(response.data); // Store the logged-in account info
+          setData(response.data);
+          setCurrentAccount(response.data);
           setLoading(false);
         })
         .catch((error) => {
           console.log(error);
-          setError(error.message); // Handle the error
+          setError(error.message);
           setLoading(false);
         });
     };
@@ -51,21 +51,27 @@ function FrontofficeCRUD() {
   }, []);
 
   // Fetch all employees
-  async function fetchEmployees() {
+  const fetchEmployees = async () => {
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_APP_API_URL}/Employee`,
         {
-          withCredentials: true, // Ensure cookies are sent with the request
+          withCredentials: true,
         }
       );
-      setEmployees(response.data);
+
+      if (Array.isArray(response.data)) {
+        setEmployees(response.data);
+      } else {
+        console.error("Expected an array but received:", response.data);
+        setEmployees([]);
+      }
     } catch (error) {
       console.error("Failed to fetch employees", error);
       alert("Je hebt geen toegang tot deze pagina!");
       navigate("/login");
     }
-  }
+  };
 
   useEffect(() => {
     fetchEmployees();
@@ -77,12 +83,10 @@ function FrontofficeCRUD() {
     setForm({ ...form, [name]: value });
   };
 
-  // Handle form submission
   // Handle Create or Update Employee
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Ensure the account data is fetched before proceeding
     if (!currentAccount) {
       alert("Accountgegevens laden nog. Probeer het opnieuw.");
       return;
@@ -93,8 +97,6 @@ function FrontofficeCRUD() {
       email: form.email,
       password: form.password,
     };
-    console.log("currentAccount:", currentAccount);
-    console.log("form:", form);
 
     if (!filledForm.email || !filledForm.password) {
       alert("Alle velden zijn verplicht!");
@@ -106,7 +108,6 @@ function FrontofficeCRUD() {
       setError(null);
 
       if (isEditing) {
-        // Update Employee (PUT request)
         const response = await axios.put(
           "https://localhost:7265/api/Employee",
           filledForm,
@@ -114,10 +115,8 @@ function FrontofficeCRUD() {
             withCredentials: true,
           }
         );
-
         console.log("User data updated:", response.data);
       } else {
-        // Create Employee (POST request)
         const response = await axios.post(
           `${import.meta.env.VITE_APP_API_URL}/Employee/register-carsandall`,
           filledForm,
@@ -135,7 +134,7 @@ function FrontofficeCRUD() {
       });
       setIsEditing(false);
       setIsFormVisible(false);
-      fetchEmployees(); // Refresh the employee list after successful operation
+      fetchEmployees();
     } catch (error) {
       console.error(error);
       alert("Er is iets misgegaan bij het opslaan van de medewerker");
@@ -146,9 +145,7 @@ function FrontofficeCRUD() {
 
   // Delete employee
   const handleDelete = async (id) => {
-    if (
-      !window.confirm("Weet je zeker dat je deze medewerker wilt verwijderen?")
-    )
+    if (!window.confirm("Weet je zeker dat je deze medewerker wilt verwijderen?"))
       return;
 
     try {
@@ -176,7 +173,7 @@ function FrontofficeCRUD() {
     });
   };
 
-  // Hide the form (cancel button or after submission)
+  // Hide the form
   const handleCancel = () => {
     setIsFormVisible(false);
     setForm({
@@ -202,9 +199,7 @@ function FrontofficeCRUD() {
           {isFormVisible && (
             <div>
               <h2>
-                {isEditing
-                  ? "Bewerk Medewerker"
-                  : "Nieuwe Medewerker Toevoegen"}
+                {isEditing ? "Bewerk Medewerker" : "Nieuwe Medewerker Toevoegen"}
               </h2>
               <form className="employee-form" onSubmit={handleSubmit}>
                 <input
@@ -244,36 +239,37 @@ function FrontofficeCRUD() {
           )}
 
           <div className="cards-container">
-            <h2>Frontofficemedewerkers:</h2>
+            <h2>CarsAndAll medewerkers:</h2>
             <div className="row">
-              {employees.map((employee) => (
-                <div className="col-md-6 col-lg-4" key={employee.id}>
-                  <div className="card">
-                    <div className="card-body">
-                      <p className="card-title">{employee.email}</p>
-                      <div className="tags">
-                        <div className="tag">
-                          <strong>Rol:</strong> {employee.role}
+              {Array.isArray(employees) && employees.length > 0 ? (
+                employees.map((employee) => (
+                  <div className="col-md-6 col-lg-4" key={employee.id}>
+                    <div className="card">
+                      <div className="card-body">
+                        <p className="card-title">{employee.email}</p>
+                        <div className="tags">
+                          <div className="tag">
+                            <strong>Rol:</strong> {employee.role}
+                          </div>
                         </div>
+                        <button
+                          className="delete-button"
+                          onClick={() => handleDelete(employee.id)}
+                        >
+                          Verwijderen
+                        </button>
                       </div>
-                      <button
-                        className="delete-button"
-                        onClick={() => handleDelete(employee.id)}
-                      >
-                        Verwijderen
-                      </button>
-                      
                     </div>
                   </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <p>Geen medewerkers gevonden.</p>
+              )}
             </div>
           </div>
         </div>
       </div>
     </div>
-    
-
   );
 }
 

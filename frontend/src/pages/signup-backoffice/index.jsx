@@ -1,10 +1,12 @@
 import "./styles.scss";
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function SignUpBackoffice() {
   const password1Ref = useRef(null);
   const password2Ref = useRef(null);
+  const navigate = useNavigate(); 
 
   const togglePassword = () => {
     const type1 =
@@ -48,6 +50,7 @@ function SignUpBackoffice() {
 
       if (response.ok) {
         alert("Account created successfully!");
+        navigate("/login")
       } else {
         const error = await response.json(); // Capture JSON response error
         console.error("Error Response:", error);
