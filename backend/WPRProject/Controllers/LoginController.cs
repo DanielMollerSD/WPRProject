@@ -16,7 +16,7 @@ namespace WPRProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LoginController: ControllerBase
+    public class LoginController : ControllerBase
     {
 
         private readonly CarsAndAllContext _context;
@@ -40,11 +40,11 @@ namespace WPRProject.Controllers
 
             if (customer == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, customer.Password))
             {
-                if(employee == null|| !BCrypt.Net.BCrypt.Verify(loginDto.Password, employee.Password))
+                if (employee == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, employee.Password))
                 {
-                     return Unauthorized(new { Message = "Invalid credentials" });
+                    return Unauthorized(new { Message = "Invalid credentials" });
                 }
-              } 
+            }
 
 
             var secretKey = _configuration["Jwt:Key"];
@@ -57,23 +57,28 @@ namespace WPRProject.Controllers
             }
 
 
-            List<Claim> claims = null;
-
-            if(customer != null){
-                 claims = new List<Claim>
+            List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, (customer.FirstName ?? "") + " " + (customer.LastName ?? "")),
-                new Claim(ClaimTypes.Email, customer.Email)
-            };
-            } else if (employee != null)
-            {
-                 claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Role, employee.Role),
-                new Claim(ClaimTypes.Email, employee.Email)
+                new Claim(ClaimTypes.Name, (customer?.FirstName ?? "") + " " + (customer?.LastName ?? "")),
+                new Claim(ClaimTypes.Email, customer?.Email ?? employee?.Email)
             };
 
+            if (customer != null)
+            {
+                if (customer is Business businessCustomer && !string.IsNullOrEmpty(businessCustomer.Role))
+                {
+                    claims.Add(new Claim("role", businessCustomer.Role));
+                }
+                else if (customer is Individual)
+                {
+                    claims.Add(new Claim("role", "Individual"));
+                }
             }
+            else if (employee != null)
+            {
+                claims.Add(new Claim("role", employee.Role));
+            }
+
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
@@ -86,12 +91,11 @@ namespace WPRProject.Controllers
 
             var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
-
             Response.Cookies.Append("access_token", tokenString, new CookieOptions
             {
                 HttpOnly = true,
-                Secure = false,
-                SameSite = SameSiteMode.Strict,
+                Secure = Request.IsHttps,
+                SameSite = SameSiteMode.None,
                 Expires = DateTime.Now.AddMinutes(60 * 24 * 7)
             });
 

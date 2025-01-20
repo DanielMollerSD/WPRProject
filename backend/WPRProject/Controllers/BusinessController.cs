@@ -69,7 +69,6 @@ namespace WPRProject.Controllers
                 {
                     return BadRequest(new { message = "Email is al in gebruik" });
                 }
-                Console.WriteLine(registerDto.Password);
                 var hashedPassword = BCrypt.Net.BCrypt.HashPassword(registerDto.Password);
             
                 var newBusiness = new Business
@@ -88,8 +87,6 @@ namespace WPRProject.Controllers
 
                 _context.Business.Add(newBusiness);
                 await _context.SaveChangesAsync();
-                Console.WriteLine(registerDto.Password);
-                Console.WriteLine("Hashed Password: " + hashedPassword);
 
                 return Ok(new { individual = newBusiness }); 
             }

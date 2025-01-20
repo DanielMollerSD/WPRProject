@@ -21,7 +21,7 @@ namespace WPRProject
 
             try
             {
-                Log.Information("Starting application");
+                Log.Information("Started application");
 
                 var builder = WebApplication.CreateBuilder(args);
                 builder.Host.UseSerilog((context, loggerConfig) =>

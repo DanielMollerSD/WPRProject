@@ -12,7 +12,7 @@ using WPRProject;
 namespace WPRProject.Migrations
 {
     [DbContext(typeof(CarsAndAllContext))]
-    [Migration("20250116121253_InitialCreate")]
+    [Migration("20250119141452_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -186,7 +186,7 @@ namespace WPRProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VehicleId")
+                    b.Property<int?>("VehicleId")
                         .HasColumnType("int");
 
                     b.Property<bool>("Verified")
@@ -394,8 +394,7 @@ namespace WPRProject.Migrations
                     b.HasOne("WPRProject.Tables.Vehicle", "Vehicle")
                         .WithMany("Rents")
                         .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Vehicle");
                 });
