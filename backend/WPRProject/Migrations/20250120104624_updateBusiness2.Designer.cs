@@ -12,13 +12,8 @@ using WPRProject;
 namespace WPRProject.Migrations
 {
     [DbContext(typeof(CarsAndAllContext))]
-<<<<<<<< HEAD:backend/WPRProject/Migrations/20250120085742_InitalCreate.Designer.cs
-    [Migration("20250120085742_InitalCreate")]
-    partial class InitalCreate
-========
-    [Migration("20250120094437_InitialMigration")]
-    partial class InitialMigration
->>>>>>>> 0a8ffb410c28ba52e9da90293dfcaed2f967ffa2:backend/WPRProject/Migrations/20250120094437_InitialMigration.Designer.cs
+    [Migration("20250120104624_updateBusiness2")]
+    partial class updateBusiness2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,6 +24,34 @@ namespace WPRProject.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("WPRProject.Tables.Business", b =>
+                {
+                    b.Property<int>("BusinessId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BusinessId"));
+
+                    b.Property<string>("BusinessAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BusinessName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BusinessPostalCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Kvk")
+                        .HasColumnType("int");
+
+                    b.HasKey("BusinessId");
+
+                    b.ToTable("Business", (string)null);
+                });
 
             modelBuilder.Entity("WPRProject.Tables.Customer", b =>
                 {
@@ -368,28 +391,6 @@ namespace WPRProject.Migrations
                     b.HasDiscriminator().HasValue("Discount");
                 });
 
-            modelBuilder.Entity("WPRProject.Tables.Business", b =>
-                {
-                    b.HasBaseType("WPRProject.Tables.BusinessEmployee");
-
-                    b.Property<string>("BusinessAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BusinessName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BusinessPostalCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Kvk")
-                        .HasColumnType("int");
-
-                    b.HasDiscriminator().HasValue("Business");
-                });
-
             modelBuilder.Entity("WPRProject.Tables.Damage", b =>
                 {
                     b.HasOne("WPRProject.Tables.Vehicle", "Vehicle")
@@ -414,7 +415,7 @@ namespace WPRProject.Migrations
             modelBuilder.Entity("WPRProject.Tables.SubscriptionOrder", b =>
                 {
                     b.HasOne("WPRProject.Tables.Business", "Business")
-                        .WithMany("SubscriptionOrders")
+                        .WithMany()
                         .HasForeignKey("BusinessId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -440,11 +441,6 @@ namespace WPRProject.Migrations
                     b.Navigation("Damages");
 
                     b.Navigation("Rents");
-                });
-
-            modelBuilder.Entity("WPRProject.Tables.Business", b =>
-                {
-                    b.Navigation("SubscriptionOrders");
                 });
 #pragma warning restore 612, 618
         }

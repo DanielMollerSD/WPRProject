@@ -6,15 +6,28 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WPRProject.Migrations
 {
     /// <inheritdoc />
-<<<<<<<< HEAD:backend/WPRProject/Migrations/20250120085742_InitalCreate.cs
-    public partial class InitalCreate : Migration
-========
-    public partial class InitialMigration : Migration
->>>>>>>> 0a8ffb410c28ba52e9da90293dfcaed2f967ffa2:backend/WPRProject/Migrations/20250120094437_InitialMigration.cs
+    public partial class UpdateBusiness : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Business",
+                columns: table => new
+                {
+                    BusinessId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BusinessName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Kvk = table.Column<int>(type: "int", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BusinessAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BusinessPostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Business", x => x.BusinessId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Customer",
                 columns: table => new
@@ -28,10 +41,6 @@ namespace WPRProject.Migrations
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(21)", maxLength: 21, nullable: false),
                     Role = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BusinessName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Kvk = table.Column<int>(type: "int", nullable: true),
-                    BusinessAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BusinessPostalCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhoneNumber = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     Address = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -125,10 +134,10 @@ namespace WPRProject.Migrations
                 {
                     table.PrimaryKey("PK_SubscriptionOrder", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SubscriptionOrder_Customer_BusinessId",
+                        name: "FK_SubscriptionOrder_Business_BusinessId",
                         column: x => x.BusinessId,
-                        principalTable: "Customer",
-                        principalColumn: "Id",
+                        principalTable: "Business",
+                        principalColumn: "BusinessId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_SubscriptionOrder_Subscription_SubscriptionId",
@@ -215,6 +224,9 @@ namespace WPRProject.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Customer");
+
+            migrationBuilder.DropTable(
                 name: "Damage");
 
             migrationBuilder.DropTable(
@@ -233,7 +245,7 @@ namespace WPRProject.Migrations
                 name: "Vehicle");
 
             migrationBuilder.DropTable(
-                name: "Customer");
+                name: "Business");
 
             migrationBuilder.DropTable(
                 name: "Subscription");

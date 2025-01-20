@@ -56,45 +56,61 @@ namespace WPRProject.Controllers
             return Ok(new { message = "Account deleted successfully" });
         }
 
-       
+
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] BusinessRegisterDto registerDto)
         {
             try
             {
+                // Check if KvK already exists
                 var existingBusiness = await _context.Business
-                    .FirstOrDefaultAsync(c => c.Email == registerDto.Email);
+                    .FirstOrDefaultAsync(c => c.Kvk == registerDto.Kvk);
 
                 if (existingBusiness != null)
                 {
-                    return BadRequest(new { message = "Email is al in gebruik" });
+                    return BadRequest(new { message = "Kvk is al in gebruik" });
                 }
-                var hashedPassword = BCrypt.Net.BCrypt.HashPassword(registerDto.Password);
-            
+
+                if (registerDto.businessEmployee == null)
+                {
+                    return BadRequest(new { message = "Business employee data is missing." });
+                }
+
+                // Hash passwords
+                var employeePassword = BCrypt.Net.BCrypt.HashPassword(registerDto.businessEmployee.Password);
+
+                // Create the business employee
+                var newBusinessEmployee = new BusinessEmployee
+                {
+                    FirstName = registerDto.businessEmployee.FirstName,
+                    LastName = registerDto.businessEmployee.LastName,
+                    TussenVoegsel = registerDto.businessEmployee.TussenVoegsel,
+                    Email = registerDto.businessEmployee.Email,
+                    Password = employeePassword,
+                    Role = registerDto.businessEmployee.Role
+                };
+
+                // Create the business
                 var newBusiness = new Business
                 {
-                    FirstName = registerDto.FirstName,
-                    LastName = registerDto.LastName,
-                    TussenVoegsel = registerDto.TussenVoegsel,
-                    Email = registerDto.Email,
-                    Password = hashedPassword,
                     BusinessName = registerDto.BusinessName,
                     BusinessAddress = registerDto.BusinessAddress,
                     Kvk = registerDto.Kvk,
                     BusinessPostalCode = registerDto.BusinessPostalCode,
-                    Role = registerDto.Role,
                 };
 
+                Console.WriteLine($"Received Business Employee: {registerDto.businessEmployee}");
                 _context.Business.Add(newBusiness);
+                _context.Customer.Add(newBusinessEmployee);
                 await _context.SaveChangesAsync();
 
-                return Ok(new { individual = newBusiness }); 
+                return Ok(new { business = newBusiness, employee = newBusinessEmployee });
             }
             catch (Exception ex)
             {
-                
                 return StatusCode(500, new { message = "An error occurred", details = ex.Message });
             }
         }
+
     }
 }

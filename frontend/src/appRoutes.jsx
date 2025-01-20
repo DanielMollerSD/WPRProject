@@ -20,11 +20,8 @@ import VehicleDamage from "./pages/frontoffice-vehicle-damage";
 import BackofficeVehicleDamage from "./pages/backoffice-vehicle-damage";
 import SignUpBackoffice from "./pages/signup-backoffice";
 import BusinessCRUD from "./pages/business-account-crud";
-<<<<<<< HEAD
 import FrontofficeCRUD from "./pages/frontoffice-crud";
-=======
 import SubscriptionSelect from "./pages/subscription-select";
->>>>>>> 0a8ffb410c28ba52e9da90293dfcaed2f967ffa2
 
 function AppRoutes() {
   return (
@@ -56,11 +53,8 @@ function AppRoutes() {
               element={<BackofficeVehicleDamage />}
             />
             <Route path="/business-account-crud" element={<BusinessCRUD />} />
-<<<<<<< HEAD
             <Route path="/frontoffice-crud" element={<FrontofficeCRUD />} />
-=======
             <Route path="/subscription-select" element={<SubscriptionSelect />} />
->>>>>>> 0a8ffb410c28ba52e9da90293dfcaed2f967ffa2
           </Routes>
         </main>
 

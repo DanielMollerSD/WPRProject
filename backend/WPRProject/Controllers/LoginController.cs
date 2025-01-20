@@ -63,22 +63,6 @@ namespace WPRProject.Controllers
                 new Claim(ClaimTypes.Email, customer?.Email ?? employee?.Email)
             };
 
-            if (customer != null)
-            {
-                if (customer is Business businessCustomer && !string.IsNullOrEmpty(businessCustomer.Role))
-                {
-                    claims.Add(new Claim("role", businessCustomer.Role));
-                }
-                else if (customer is Individual)
-                {
-                    claims.Add(new Claim("role", "Individual"));
-                }
-            }
-            else if (employee != null)
-            {
-                claims.Add(new Claim("role", employee.Role));
-            }
-
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(

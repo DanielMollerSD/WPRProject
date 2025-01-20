@@ -21,17 +21,20 @@ function SignUpBusiness() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
+
     const formData = {
-      FirstName: e.target.voornaam.value,
-      LastName: e.target.achternaam.value,
-      TussenVoegsel: e.target.tussenvoegsel.value || undefined,
-      Email: e.target.email.value,
       BusinessName: e.target.naam.value,
       BusinessAddress: e.target.adres.value,
       BusinessPostalCode: e.target.postcode.value,
       Kvk: e.target.kvk.value,
+      businessEmployee: {
+      FirstName: e.target.voornaam.value,
+      LastName: e.target.achternaam.value,
+      TussenVoegsel: e.target.tussenvoegsel.value || undefined,
+      Email: e.target.email.value,
       Password: e.target.password.value,
       Role: "owner",
+      }
     };
 
     console.log("Sending request to backend...");
@@ -48,8 +51,9 @@ function SignUpBusiness() {
           },
           body: JSON.stringify(formData),
         }
+      
       );
-
+      console.log("Request Body:", JSON.stringify(formData));
       console.log("Response Status:", response.status);
       console.log("Response Headers:", response.headers);
 
@@ -165,7 +169,7 @@ function SignUpBusiness() {
                                     className="LargeInput"
                                     placeholder="Voer uw wachtwoord in"
                                     ref={password1Ref}
-                                    pattern="(?=.[!@#$%^&(),.?:{}|<>-+=;'/~`\[\]^])[A-Za-z\d!@#$%^&*(),.?:{}|<>-+=;'/~`\[\]^]"
+                                    pattern="^(?=.*[!@#$%^&(),.?:{}|<>-+=;'/~`\[\]^])[A-Za-z\d!@#$%^&*(),.?:{}|<>-+=;'/~`\[\]^]{8,}$"
                                     name="password"
                                     required
                                 />
@@ -178,7 +182,7 @@ function SignUpBusiness() {
                                     name="password-repeat"
                                     placeholder="Herhaal uw wachtwoord"
                                     ref={password2Ref}
-                                    pattern="(?=.[!@#$%^&(),.?:{}|<>-+=;'/~`\[\]^])[A-Za-z\d!@#$%^&*(),.?:{}|<>-+=;'/~`\[\]^]"
+                                    pattern="^(?=.*[!@#$%^&(),.?:{}|<>-+=;'/~`\[\]^])[A-Za-z\d!@#$%^&*(),.?:{}|<>-+=;'/~`\[\]^]{8,}$"
                                     required 
                                 />
                             </div>
