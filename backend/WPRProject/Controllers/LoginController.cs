@@ -60,7 +60,8 @@ namespace WPRProject.Controllers
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, (customer?.FirstName ?? "") + " " + (customer?.LastName ?? "")),
-                new Claim(ClaimTypes.Email, customer?.Email ?? employee?.Email)
+                new Claim(ClaimTypes.Email, customer?.Email ?? employee?.Email),
+                new Claim (ClaimTypes.Role, employee?.Role)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
