@@ -9,7 +9,6 @@
         justify-content: center;
         align-items: center;
         height: calc(100vh - 70px);
-        background-image: url(../../assets/img/subscriptionselectBG.jpg);
         background-repeat: no-repeat;
         background-size: cover;
         image-rendering: optimizeQuality;
@@ -47,14 +46,12 @@
                         text-align: center;
 
                         &.coverage-icon {
-                            background-image: url(../../assets/img/icons/coverage.png);
                             background-repeat: no-repeat;
                             background-position: 50% 50%;
                             background-size: 50%;
                         }
 
                         &.discount-icon {
-                            background-image: url(../../assets/img/icons/discount.png);
                             background-repeat: no-repeat;
                             background-position: 50% 50%;
                             background-size: 50%;

@@ -342,9 +342,14 @@ namespace WPRProject.Migrations
                 {
                     b.HasBaseType("WPRProject.Tables.Customer");
 
+                    b.Property<int>("BusinessId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.HasIndex("BusinessId");
 
                     b.HasDiscriminator().HasValue("BusinessEmployee");
                 });
@@ -422,7 +427,7 @@ namespace WPRProject.Migrations
             modelBuilder.Entity("WPRProject.Tables.SubscriptionOrder", b =>
                 {
                     b.HasOne("WPRProject.Tables.Business", "Business")
-                        .WithMany()
+                        .WithMany("SubscriptionOrders")
                         .HasForeignKey("BusinessId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -436,6 +441,24 @@ namespace WPRProject.Migrations
                     b.Navigation("Business");
 
                     b.Navigation("Subscription");
+                });
+
+            modelBuilder.Entity("WPRProject.Tables.BusinessEmployee", b =>
+                {
+                    b.HasOne("WPRProject.Tables.Business", "Business")
+                        .WithMany("BusinessEmployees")
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Business");
+                });
+
+            modelBuilder.Entity("WPRProject.Tables.Business", b =>
+                {
+                    b.Navigation("BusinessEmployees");
+
+                    b.Navigation("SubscriptionOrders");
                 });
 
             modelBuilder.Entity("WPRProject.Tables.Customer", b =>
