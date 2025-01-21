@@ -43,20 +43,18 @@ namespace WPRProject.Controllers
         }
 
         // POST: api/SubOrder
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateSubscriptionOrder([FromBody] SubscriptionOrder order)
         {
 
-            var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-            Console.WriteLine("e");
-            Console.WriteLine(userEmail);
-            if (string.IsNullOrEmpty(userEmail))
-            {
-                return Unauthorized(new { Message = "User is not authenticated." });
-            }
-
-            
+            // var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            // Console.WriteLine("e");
+            // Console.WriteLine(userEmail);
+            // if (string.IsNullOrEmpty(userEmail))
+            // {
+            //     return Unauthorized(new { Message = "User is not authenticated." });
+            // }
 
             // Retrieve the BusinessId from the logged-in user's claims
             var businessIdClaim = User.Claims.FirstOrDefault(c => c.Type == "BusinessId")?.Value;
@@ -71,9 +69,11 @@ namespace WPRProject.Controllers
             {
                 return BadRequest(new { Message = "Invalid BusinessId claim value." });
             }
+            
 
             // Set the BusinessId in the order object
             order.BusinessId = businessId;
+            Console.WriteLine(businessId);
 
             if (!ModelState.IsValid)
             {
@@ -85,7 +85,8 @@ namespace WPRProject.Controllers
                 _context.SubscriptionOrder.Add(order);
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetSubscriptionOrder", new { id = order.Id }, order);
+                return CreatedAtAction(nameof(GetOrder), new { id = order.Id }, order);
+
             }
             catch (Exception ex)
             {
