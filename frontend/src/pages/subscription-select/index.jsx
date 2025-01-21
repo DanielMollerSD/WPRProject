@@ -49,8 +49,6 @@ function SubscriptionSelection() {
             const response = await axios.post("https://localhost:7265/api/SubOrder",
                 {
                     withCredentials: true,
-                },
-                {
                     subscriptionId,
                 }
             );
