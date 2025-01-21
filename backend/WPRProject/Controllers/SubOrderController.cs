@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using WPRProject.Tables;
+using System.Security.Claims;
 
 namespace WPRProject.Controllers
 {
@@ -41,19 +43,59 @@ namespace WPRProject.Controllers
         }
 
         // POST: api/SubOrder
+        //[Authorize]
         [HttpPost]
-        public async Task<ActionResult<SubscriptionOrder>> CreateOrder(SubscriptionOrder order)
+        public async Task<IActionResult> CreateSubscriptionOrder([FromBody] SubscriptionOrder order)
         {
-            if (!_context.Business.Any(b => b.BusinessId == order.BusinessId))
-                return BadRequest("Invalid BusinessId.");
 
-            if (!_context.Subscription.Any(s => s.Id == order.SubscriptionId))
-                return BadRequest("Invalid SubscriptionId.");
+            var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            Console.WriteLine("e");
+            Console.WriteLine(userEmail);
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                return Unauthorized(new { Message = "User is not authenticated." });
+            }
 
-            _context.SubscriptionOrder.Add(order);
-            await _context.SaveChangesAsync();
+            
 
-            return CreatedAtAction(nameof(GetOrder), new { id = order.Id }, order);
+            // Retrieve the BusinessId from the logged-in user's claims
+            var businessIdClaim = User.Claims.FirstOrDefault(c => c.Type == "BusinessId")?.Value;
+            Console.WriteLine("a");
+            Console.WriteLine(businessIdClaim);
+            if (string.IsNullOrEmpty(businessIdClaim))
+            {
+                return Unauthorized(new { Message = "User is not authenticated or BusinessId claim is missing." });
+            }
+
+            if (!int.TryParse(businessIdClaim, out var businessId))
+            {
+                return BadRequest(new { Message = "Invalid BusinessId claim value." });
+            }
+
+            // Set the BusinessId in the order object
+            order.BusinessId = businessId;
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                _context.SubscriptionOrder.Add(order);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction("GetSubscriptionOrder", new { id = order.Id }, order);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = "An error occurred while creating the subscription order.",
+                    details = ex.Message
+                });
+            }
         }
+
     }
 }

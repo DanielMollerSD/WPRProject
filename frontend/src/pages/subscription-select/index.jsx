@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
+import axios from "axios";
 import "./styles.scss";
 
 function SubscriptionSelection() {
@@ -41,53 +42,27 @@ function SubscriptionSelection() {
         fetchSubscriptions();
     }, []);
 
-    function getLoggedInBusinessId() {
-        const token = Cookies.get("access_token");
-        console.log("Token in cookies:", token); 
-        if (!token) throw new Error("No token found. User not logged in.");
-    
-        try {
-            const decodedToken = jwtDecode(token);
-            console.log("Decoded Token:", decodedToken);
-            return decodedToken.businessId || null;
-        } catch (error) {
-            console.error("Error decoding token:", error);
-            return null;
-        }
-    }
     
     async function handlePurchase(subscriptionId) {
         try {
-            const businessId = getLoggedInBusinessId();
-            if (!businessId)
-                throw new Error("Business ID not found. Ensure user is logged in.");
-
-            const response = await fetch(
-                `${import.meta.env.VITE_APP_API_URL}/SubOrder`,
+    
+            const response = await axios.post("https://localhost:7265/api/SubOrder",
                 {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${Cookies.get("access_token")}`,
-                    },
-                    body: JSON.stringify({
-                        businessId,
-                        subscriptionId,
-                    }),
+                    withCredentials: true,
+                },
+                {
+                    subscriptionId,
                 }
             );
-
-            if (!response.ok) {
-                throw new Error("Failed to create subscription order");
-            }
-
-            console.log("Subscription order created successfully!");
+    
+            console.log("Subscription order created successfully:", response.data);
             alert("Subscription purchased successfully!");
         } catch (error) {
             console.error("Error purchasing subscription:", error.message);
             alert("Failed to purchase subscription. Please try again.");
         }
     }
+    
 
     return (
         <>
