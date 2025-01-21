@@ -125,41 +125,7 @@ namespace WPRProject.Controllers
             return Ok(customer); // Return the updated customer data
         }
 
-       [HttpPut("updateBusiness")]
-public async Task<ActionResult> UpdateBusiness([FromBody] UpdateBusinessDto customerUpdateDto)
-{
-    var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 
-    // Fetch the current business customer based on the logged-in user's email
-    var businessCustomer = await _context.Business
-        .FirstOrDefaultAsync(c => c.BusinessName == userEmail); // Or use a different way to identify business users
-
-    if (businessCustomer == null)
-    {
-        return NotFound("Business customer not found.");
-    }
-
-    // Only update fields that are provided in the DTO
-    if (!string.IsNullOrEmpty(customerUpdateDto.BusinessName))
-    {
-        businessCustomer.BusinessName = customerUpdateDto.BusinessName;
-    }
-
-    if (!string.IsNullOrEmpty(customerUpdateDto.BusinessAddress))
-    {
-        businessCustomer.BusinessAddress = customerUpdateDto.BusinessAddress;
-    }
-
-    if (!string.IsNullOrEmpty(customerUpdateDto.BusinessPostalCode))
-    {
-        businessCustomer.BusinessPostalCode = customerUpdateDto.BusinessPostalCode;
-    }
-
-
-    await _context.SaveChangesAsync();
-
-    return Ok(businessCustomer); // Return the updated business customer data
-}
 
 
 

@@ -10,7 +10,6 @@ function BusinessSettings() {
   const [error, setError] = useState(null);
   const [validationError, setValidationError] = useState(""); // Validation error state
   const [userData, setUserData] = useState({
-    email: "",
     businessAddress: "",
     businessPostalCode: "",
     businessName: "",
@@ -33,7 +32,7 @@ function BusinessSettings() {
       setError(null);
 
       axios
-        .get("https://localhost:7265/api/Customer", {
+        .get("https://localhost:7265/api/Business", {
           withCredentials: true, // Include cookies with the request
         })
         .then((response) => {
@@ -75,7 +74,7 @@ function BusinessSettings() {
 
     axios
       .put(
-        "https://localhost:7265/api/Customer/updateBusiness",
+        "https://localhost:7265/api/Business/updateBusiness",
         updatedUserData,
         {
           withCredentials: true,
@@ -227,6 +226,11 @@ function BusinessSettings() {
                   Opslaan
                 </button>
               </div>
+              <ul>
+                  {businesses.map((business) => (
+                    <li key={business.id}>{business.name}</li>
+                  ))}
+                </ul>
             </div>
           </form>
         </section>

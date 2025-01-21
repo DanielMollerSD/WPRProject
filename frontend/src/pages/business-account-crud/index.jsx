@@ -91,6 +91,7 @@ function BusinessCRUD() {
       businessName: currentAccount.businessName,
       businessAddress: currentAccount.businessAddress,
       businessPostalCode: currentAccount.businessPostalCode,
+      businessId: currentAccount.businessId,
       kvk: currentAccount.kvk,
       firstName: form.firstName,
       lastName: form.lastName,
@@ -98,6 +99,7 @@ function BusinessCRUD() {
       role: form.role,
       email: form.email,
       password: form.password,
+      
     };
     console.log("currentAccount:", currentAccount);
     console.log("form:", form);

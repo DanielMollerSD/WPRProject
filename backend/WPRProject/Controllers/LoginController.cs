@@ -29,63 +29,82 @@ namespace WPRProject.Controllers
         }
 
 
-        [HttpPost]
-        public async Task<ActionResult> Login(UserLoginDto loginDto)
+       [HttpPost]
+public async Task<ActionResult> Login(UserLoginDto loginDto)
+{
+    // Retrieve customer and employee based on the email
+    var employee = await _context.Employee
+        .FirstOrDefaultAsync(c => c.Email == loginDto.Email);
+    var customer = await _context.Customer
+        .FirstOrDefaultAsync(c => c.Email == loginDto.Email);
+
+    // Check credentials for both customer and employee
+    if (customer != null && BCrypt.Net.BCrypt.Verify(loginDto.Password, customer.Password))
+    {
+        // Generate claims for the customer
+        List<Claim> claims = new List<Claim>
         {
-            var employee = await _context.Employee
-            .FirstOrDefaultAsync(c => c.Email == loginDto.Email);
-            var customer = await _context.Customer
-            .FirstOrDefaultAsync(c => c.Email == loginDto.Email);
+            new Claim(ClaimTypes.Name, $"{customer.FirstName} {customer.LastName}"),
+            new Claim(ClaimTypes.Email, customer.Email),
+    
+        };
 
+        return GenerateAndSetJwtToken(claims);
+    }
+    else if (employee != null && BCrypt.Net.BCrypt.Verify(loginDto.Password, employee.Password))
+    {
+        // Generate claims for the employee
+        List<Claim> claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Email, employee.Email),
+            new Claim(ClaimTypes.Role, employee.Role), // Role claim for authorization
+        
+        };
 
-            if (customer == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, customer.Password))
-            {
-                if (employee == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, employee.Password))
-                {
-                    return Unauthorized(new { Message = "Invalid credentials" });
-                }
-            }
+        return GenerateAndSetJwtToken(claims);
+    }
 
+    // Return unauthorized if neither match
+    return Unauthorized(new { Message = "Invalid credentials" });
+}
 
-            var secretKey = _configuration["Jwt:Key"];
-            var issuer = _configuration["Jwt:Issuer"];
-            var audience = _configuration["Jwt:Audience"];
+private ActionResult GenerateAndSetJwtToken(List<Claim> claims)
+{
+    // Fetch JWT configuration
+    var secretKey = _configuration["Jwt:Key"];
+    var issuer = _configuration["Jwt:Issuer"];
+    var audience = _configuration["Jwt:Audience"];
 
-            if (string.IsNullOrEmpty(secretKey))
-            {
-                throw new ArgumentNullException("The JWT secret key is missing from configuration.");
-            }
+    if (string.IsNullOrEmpty(secretKey))
+    {
+        throw new ArgumentNullException("The JWT secret key is missing from configuration.");
+    }
 
+    // Generate JWT token
+    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+    var token = new JwtSecurityToken(
+        issuer: issuer,
+        audience: audience,
+        claims: claims,
+        expires: DateTime.Now.AddDays(7), // 7 days expiration
+        signingCredentials: creds
+    );
 
-            List<Claim> claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, (customer?.FirstName ?? "") + " " + (customer?.LastName ?? "")),
-                new Claim(ClaimTypes.Email, customer?.Email ?? employee?.Email)
-            };
+    var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var token = new JwtSecurityToken(
-                issuer: issuer,
-                audience: audience,
-                claims: claims,
-                expires: DateTime.Now.AddMinutes(60 * 24 * 7),
-                signingCredentials: creds
-            );
+    // Set token as an HTTP-only cookie
+    Response.Cookies.Append("access_token", tokenString, new CookieOptions
+    {
+        HttpOnly = true,
+        Secure = Request.IsHttps,
+        SameSite = SameSiteMode.None,
+        Expires = DateTime.Now.AddDays(7)
+    });
 
-            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+    return Ok(new { Token = tokenString });
+}
 
-            Response.Cookies.Append("access_token", tokenString, new CookieOptions
-            {
-                HttpOnly = true,
-                Secure = Request.IsHttps,
-                SameSite = SameSiteMode.None,
-                Expires = DateTime.Now.AddMinutes(60 * 24 * 7)
-            });
-
-
-            return Ok(new { Token = tokenString });
-        }
 
     }
 }
