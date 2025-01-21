@@ -21,7 +21,7 @@ namespace WPRProject
 
             try
             {
-                Log.Information("Started application");
+                Log.Information("Starting application...");
 
                 var builder = WebApplication.CreateBuilder(args);
                 builder.Host.UseSerilog((context, loggerConfig) =>
@@ -30,7 +30,7 @@ namespace WPRProject
 
                 // Add Serilog to the logging pipeline
                 builder.Logging.ClearProviders();
-                builder.Host.UseSerilog();    
+                builder.Host.UseSerilog();
 
                 // Add services to the container.
                 builder.Services.AddRazorPages();
@@ -73,7 +73,7 @@ namespace WPRProject
                             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
                         };
 
-                        
+
                     });
 
                 var app = builder.Build();
@@ -84,6 +84,17 @@ namespace WPRProject
                     app.UseSwaggerUI();
                 }
 
+                // Redirect to swagger 
+                app.Use(async (context, next) =>
+                {
+                    if (context.Request.Path == "/")
+                    {
+                        context.Response.Redirect("/swagger/index.html");
+                        return;
+                    }
+                    await next();
+                });
+
                 app.UseHttpsRedirection();
 
                 app.UseCors("AllowSpecificOrigin");
@@ -93,6 +104,20 @@ namespace WPRProject
                 app.UseAuthorization();
 
                 app.MapControllers();
+
+                var urls = builder.Configuration.GetValue<string>("urls")?.Split(';');
+                if (urls?.Any() == true)
+                {
+                    Log.Information("Application running on the following URLs:");
+                    foreach (var url in urls)
+                    {
+                        Log.Information(" - {Url}", url);
+                    }
+                }
+                else
+                {
+                    Log.Information("No URLs configured. Defaulting to http://localhost:5000");
+                }
 
                 app.Run();
             }

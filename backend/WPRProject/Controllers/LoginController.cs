@@ -28,7 +28,7 @@ namespace WPRProject.Controllers
             _configuration = configuration;
         }
 
-
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> Login(UserLoginDto loginDto)
         {
@@ -75,12 +75,9 @@ namespace WPRProject.Controllers
                         claims.Add(new Claim(ClaimTypes.Role, "Individual")); // Add Individual role
                     }
                 }
-            else if (employee != null)
+            else if (employee != null && !string.IsNullOrEmpty(employee.Role))
             {
-                if (!string.IsNullOrEmpty(employee.Role))
-                {
-                    claims.Add(new Claim(ClaimTypes.Role, employee.Role)); // Add Employee role
-                }
+                claims.Add(new Claim(ClaimTypes.Role, employee.Role)); // Add Employee role
             }
 
 
