@@ -73,19 +73,24 @@ function Header() {
 
                             {isLoggedIn && userRole === "Backoffice" && (
                                 <>
-                                    <Link to="#">Link toevoegen in /component/header</Link>
+                                    <Link to="/rent-requests">Aanvragen</Link>
+                                    <Link to="/rent-overview">Overzicht</Link>
+                                    <Link to="/vehicle-crud">Voertuigen</Link>
+                                    <Link to="/frontoffice-crud">Frontoffice beheren</Link>
+                                    <Link to="/backoffice-privacy-page">Privacy beheren</Link>
                                 </>
                             )}
 
                             {isLoggedIn && userRole === "Frontoffice" && (
                                 <>
-                                    <Link to="#">Link toevoegen in /component/header</Link>
+                                    <Link to="/frontoffice-vehicle-overview">Vehicle overview</Link>
                                 </>
                             )}
 
                             {isLoggedIn && userRole === "Owner" && (
                                 <>
-                                    <Link to="#">Link toevoegen in /component/header</Link>
+                                    <Link to="/business-account-crud">Medewerkers</Link>
+                                    <Link to="/business-settings">Instellingen</Link>
                                 </>
                             )}
 

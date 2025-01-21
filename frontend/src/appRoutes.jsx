@@ -38,7 +38,7 @@ function AppRoutes() {
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/home" element={<Home />} />{" "}
+            <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup-particular" element={<SignUpParticular />} />
             <Route path="/signup-business" element={<SignUpBusiness />} />
@@ -58,7 +58,6 @@ function AppRoutes() {
             <Route path="/privacy-page" element={<PrivacyPage />} />
             <Route path="/backoffice-privacy-page" element={<BackofficePrivacyPage />} />
             <Route path="/vehicle-overview" element={<VehicleOverview />} />
-            <Route path="/rent/:id" element={<RentScreen />} />
             <Route path="/rent-requests" element={<Rentrequests />} />
             <Route path="/rent-overview" element={<RentOverview />} />
           </Routes>

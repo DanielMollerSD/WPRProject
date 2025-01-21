@@ -33,7 +33,7 @@ function SignUpBusiness() {
       TussenVoegsel: e.target.tussenvoegsel.value || undefined,
       Email: e.target.email.value,
       Password: e.target.password.value,
-      Role: "owner",
+      Role: "Owner",
       }
     };
 
