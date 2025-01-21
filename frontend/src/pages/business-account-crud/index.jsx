@@ -39,12 +39,16 @@ function BusinessCRUD() {
           withCredentials: true, // Include cookies with the request
         })
         .then((response) => {
+          console.log("Fetched current account:", response.data); // Log response data
+          if (!response.data) {
+            throw new Error("No account data returned");
+          }
           setData(response.data); // Set the fetched data
           setCurrentAccount(response.data); // Store the logged-in account info
           setLoading(false);
         })
         .catch((error) => {
-          console.log(error);
+          console.log("Error fetching current account:", error);
           setError(error.message); // Handle the error
           setLoading(false);
         });
@@ -54,21 +58,59 @@ function BusinessCRUD() {
   }, []);
 
   // Fetch all employees
-  async function fetchEmployees() {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_APP_API_URL}/Business`
-      );
-      const data = await response.json();
-      setEmployees(data);
-    } catch (error) {
-      console.error("Failed to fetch employees", error);
-    }
-  }
-
   useEffect(() => {
+    const fetchEmployees = async () => {
+      if (!currentAccount) {
+        console.log("currentAccount is null, skipping employee fetch.");
+        return;
+      }
+
+      try {
+        const token = localStorage.getItem("access_token");
+
+        const response = await axios.get(
+          "https://localhost:7265/api/Business/employees",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true,
+          }
+        );
+
+        console.log("Employee data fetched:", response.data);
+
+        if (
+          response.data &&
+          response.data.employees &&
+          Array.isArray(response.data.employees.$values)
+        ) {
+          const employees = response.data.employees.$values;
+
+          // Filter and enrich employees with businessName
+          const filteredEmployees = employees
+            .filter(
+              (employee) => employee.businessId === currentAccount.businessId
+            )
+            .map((employee) => ({
+              ...employee,
+              businessName: currentAccount.businessName, // Add businessName from currentAccount
+            }));
+         
+          setEmployees(filteredEmployees);
+
+          console.log("Current account businessName:", currentAccount.businessName);
+        } else {
+          throw new Error("Invalid data format");
+        }
+      } catch (error) {
+        console.error("Failed to fetch employees:", error);
+        setError("Failed to fetch employees. Please try again.");
+      }
+    };
+
     fetchEmployees();
-  }, []);
+  }, [currentAccount]);
 
   // Handle form input changes
   const handleChange = (e) => {
@@ -99,7 +141,6 @@ function BusinessCRUD() {
       role: form.role,
       email: form.email,
       password: form.password,
-      
     };
     console.log("currentAccount:", currentAccount);
     console.log("form:", form);
@@ -319,9 +360,6 @@ function BusinessCRUD() {
                       <div className="tags">
                         <div className="tag">
                           <strong>Rol:</strong> {employee.role}
-                        </div>
-                        <div className="tag">
-                          <strong>Bedrijfsnaam:</strong> {employee.businessName}
                         </div>
                       </div>
                       <button

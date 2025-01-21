@@ -12,8 +12,8 @@ using WPRProject;
 namespace WPRProject.Migrations
 {
     [DbContext(typeof(CarsAndAllContext))]
-    [Migration("20250120132449_UpdataBusiness")]
-    partial class UpdataBusiness
+    [Migration("20250121152123_BEmployeeCustomerRelations")]
+    partial class BEmployeeCustomerRelations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,9 +37,6 @@ namespace WPRProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("BusinessEmployeeId")
-                        .HasColumnType("int");
-
                     b.Property<string>("BusinessName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -53,8 +50,6 @@ namespace WPRProject.Migrations
 
                     b.HasKey("BusinessId");
 
-                    b.HasIndex("BusinessEmployeeId");
-
                     b.ToTable("Business", (string)null);
                 });
 
@@ -65,6 +60,9 @@ namespace WPRProject.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BusinessEmployeeId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
@@ -91,6 +89,8 @@ namespace WPRProject.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BusinessEmployeeId");
 
                     b.ToTable("Customer");
 
@@ -348,9 +348,14 @@ namespace WPRProject.Migrations
                 {
                     b.HasBaseType("WPRProject.Tables.Customer");
 
+                    b.Property<int>("BusinessId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.HasIndex("BusinessId");
 
                     b.HasDiscriminator().HasValue("BusinessEmployee");
                 });
@@ -396,11 +401,13 @@ namespace WPRProject.Migrations
                     b.HasDiscriminator().HasValue("Discount");
                 });
 
-            modelBuilder.Entity("WPRProject.Tables.Business", b =>
+            modelBuilder.Entity("WPRProject.Tables.Customer", b =>
                 {
                     b.HasOne("WPRProject.Tables.BusinessEmployee", "BusinessEmployee")
                         .WithMany()
-                        .HasForeignKey("BusinessEmployeeId");
+                        .HasForeignKey("BusinessEmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("BusinessEmployee");
                 });
@@ -443,6 +450,22 @@ namespace WPRProject.Migrations
                     b.Navigation("Business");
 
                     b.Navigation("Subscription");
+                });
+
+            modelBuilder.Entity("WPRProject.Tables.BusinessEmployee", b =>
+                {
+                    b.HasOne("WPRProject.Tables.Business", "Business")
+                        .WithMany("Employees")
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Business");
+                });
+
+            modelBuilder.Entity("WPRProject.Tables.Business", b =>
+                {
+                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("WPRProject.Tables.Subscription", b =>

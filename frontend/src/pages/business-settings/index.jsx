@@ -3,28 +3,19 @@ import axios from "axios";
 import "./styles.scss";
 
 function BusinessSettings() {
-  const password1Ref = useRef(null);
-  const password2Ref = useRef(null);
-  const [data, setData] = useState(null);
+
+  const [data, setData] = useState(null); // Changed from [] to null
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [validationError, setValidationError] = useState(""); // Validation error state
+  const [validationError, setValidationError] = useState("");
   const [userData, setUserData] = useState({
     businessAddress: "",
     businessPostalCode: "",
     businessName: "",
     password: "",
-    repeatPassword: "", // Add repeat password to state
+    repeatPassword: "",
   });
 
-  const togglePassword = () => {
-    const type1 =
-      password1Ref.current.type === "password" ? "text" : "password";
-    const type2 =
-      password2Ref.current.type === "password" ? "text" : "password";
-    password1Ref.current.type = type1;
-    password2Ref.current.type = type2;
-  };
 
   useEffect(() => {
     const fetchData = () => {
@@ -33,16 +24,21 @@ function BusinessSettings() {
 
       axios
         .get("https://localhost:7265/api/Business", {
-          withCredentials: true, // Include cookies with the request
+          withCredentials: true,
         })
         .then((response) => {
-          setData(response.data); // Set the fetched data
-          console.log(response.data); // Check if the data is structured as expected
+          setData(response.data);
+          setUserData({
+            businessAddress: response.data?.businessAddress || "",
+            businessPostalCode: response.data?.businessPostalCode || "",
+            businessName: response.data?.businessName || "",
+            password: "", // Set to empty or any default value
+        
+          });
           setLoading(false);
         })
         .catch((error) => {
-          console.log(error);
-          setError(error.message); // Handle the error
+          setError(error.message);
           setLoading(false);
         });
     };
@@ -51,21 +47,18 @@ function BusinessSettings() {
   }, []);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault();
 
-    // Validate password fields
     if (userData.password !== userData.repeatPassword) {
-      setValidationError("Passwords do not match!"); // Set error message
+      setValidationError("Passwords do not match!");
       return;
     }
 
     setLoading(true);
     setError(null);
-    setValidationError(""); // Clear validation error if passwords match
+    setValidationError("");
 
-    // Prepare updated user data
     const updatedUserData = {
-      email: userData.email,
       businessAddress: userData.businessAddress,
       businessPostalCode: userData.businessPostalCode,
       businessName: userData.businessName,
@@ -73,13 +66,9 @@ function BusinessSettings() {
     };
 
     axios
-      .put(
-        "https://localhost:7265/api/Business/updateBusiness",
-        updatedUserData,
-        {
-          withCredentials: true,
-        }
-      )
+      .put("https://localhost:7265/api/Business/updateBusiness", updatedUserData, {
+        withCredentials: true,
+      })
       .then((response) => {
         console.log("User data updated:", response.data);
         setLoading(false);
@@ -90,29 +79,9 @@ function BusinessSettings() {
       });
   };
 
-  if (loading) {
-    return (
-      <>
-        <div>Loading...</div>
-      </>
-    );
-  }
-
-  if (error) {
-    return (
-      <>
-        <div>Error!</div>
-      </>
-    );
-  }
-
-  if (!data) {
-    return (
-      <>
-        <div>No data found!</div>
-      </>
-    );
-  }
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error!</div>;
+  if (!data) return <div>No data found!</div>;
 
   return (
     <>
@@ -123,24 +92,11 @@ function BusinessSettings() {
           <form onSubmit={handleSubmit}>
             <div className="as-group">
               <div>
-                <label>Email:</label>
-                <input
-                  type="text"
-                  className="as-email"
-                  placeholder={data.email}
-                  name="email"
-                  value={userData.email} // Controlled input
-                  onChange={(e) =>
-                    setUserData({ ...userData, email: e.target.value })
-                  } // Update on change
-                />
-              </div>
-              <div>
                 <label>BedrijfsAdres:</label>
                 <input
                   type="text"
                   className="as-adress"
-                  placeholder={data?.businessAddress || ""}
+                  placeholder={data?.businessAddress || "Business Address not available"}
                   name="adres"
                   value={userData.businessAddress}
                   onChange={(e) =>
@@ -151,68 +107,39 @@ function BusinessSettings() {
                   }
                 />
               </div>
+
               <div>
                 <label>Postcode:</label>
                 <input
                   type="text"
                   className="as-postalcode"
-                  placeholder={data.businessPostalCode}
+                  placeholder={data?.businessPostalCode || "Postal Code not available"}
                   name="postcode"
-                  value={userData.businessPostalCode} // Controlled input
+                  value={userData.businessPostalCode}
                   onChange={(e) =>
                     setUserData({
                       ...userData,
                       businessPostalCode: e.target.value,
                     })
-                  } // Update on change
+                  }
                 />
               </div>
+
               <div>
                 <label>Bedrijfsnaam:</label>
                 <input
                   type="text"
                   className="as-phonenumber"
-                  placeholder={data.businessName}
+                  placeholder={data?.businessName || "Business Name not available"}
                   name="phoneNumber"
-                  value={userData.businessName} // Controlled input
+                  value={userData.businessName}
                   onChange={(e) =>
-                    setUserData({ ...userData, businessName: e.target.value })
-                  } // Update on change
+                    setUserData({
+                      ...userData,
+                      businessName: e.target.value,
+                    })
+                  }
                 />
-              </div>
-              <div>
-                <label>Wachtwoord:</label>
-                <input
-                  type="password"
-                  ref={password1Ref}
-                  placeholder="Voer wachtwoord in"
-                  name="password"
-                  value={userData.password} // Bind to state
-                  onChange={(e) =>
-                    setUserData({ ...userData, password: e.target.value })
-                  } // Update state
-                />
-              </div>
-              <div>
-                <label>Herhaal Wachtwoord:</label>
-                <input
-                  type="password"
-                  ref={password2Ref}
-                  placeholder="Herhaal wachtwoord"
-                  name="repeatPassword"
-                  value={userData.repeatPassword} // Bind to state
-                  onChange={(e) =>
-                    setUserData({ ...userData, repeatPassword: e.target.value })
-                  } // Update state
-                />
-              </div>
-              <div>
-                <input
-                  type="checkbox"
-                  className="chkbx"
-                  onChange={togglePassword}
-                />
-                Toon wachtwoord
               </div>
 
               {validationError && (
@@ -226,11 +153,6 @@ function BusinessSettings() {
                   Opslaan
                 </button>
               </div>
-              <ul>
-                  {businesses.map((business) => (
-                    <li key={business.id}>{business.name}</li>
-                  ))}
-                </ul>
             </div>
           </form>
         </section>

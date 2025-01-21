@@ -12,7 +12,6 @@ namespace WPRProject
     {
         public static void Main(string[] args)
         {
-
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true).Build())
@@ -30,7 +29,7 @@ namespace WPRProject
 
                 // Add Serilog to the logging pipeline
                 builder.Logging.ClearProviders();
-                builder.Host.UseSerilog();    
+                builder.Host.UseSerilog();
 
                 // Add services to the container.
                 builder.Services.AddRazorPages();
@@ -48,17 +47,19 @@ namespace WPRProject
                 builder.Services.AddEndpointsApiExplorer();
                 builder.Services.AddSwaggerGen();
 
+                // CORS Configuration
                 builder.Services.AddCors(options =>
                 {
-                    options.AddPolicy("AllowSpecificOrigin", policy =>
+                    options.AddPolicy("AllowAnyOrigin", policy =>
                     {
-                        policy.WithOrigins("http://localhost:5173")
+                        policy.WithOrigins("http://localhost:5173") // Replace if necessary
                             .AllowAnyMethod()
                             .AllowAnyHeader()
                             .AllowCredentials();
                     });
                 });
 
+                // JWT Authentication Configuration
                 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
                     {
@@ -72,8 +73,13 @@ namespace WPRProject
                             ValidAudience = builder.Configuration["Jwt:Audience"],
                             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
                         };
+                    });
 
-                        
+                // Add Json options for controllers
+                builder.Services.AddControllers()
+                    .AddJsonOptions(options =>
+                    {
+                        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
                     });
 
                 var app = builder.Build();
@@ -86,12 +92,17 @@ namespace WPRProject
 
                 app.UseHttpsRedirection();
 
-                app.UseCors("AllowSpecificOrigin");
+                // Configure CORS first
+                app.UseCors("AllowAnyOrigin");
+
+                // Middleware for JWT
                 app.UseMiddleware<JwtMiddleware>();
 
+                // Authentication and Authorization
                 app.UseAuthentication();
                 app.UseAuthorization();
 
+                // Map Controllers
                 app.MapControllers();
 
                 app.Run();

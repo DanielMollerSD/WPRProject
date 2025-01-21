@@ -5,7 +5,7 @@
 namespace WPRProject.Migrations
 {
     /// <inheritdoc />
-    public partial class updateBusinessEmployee2 : Migration
+    public partial class BEmployeeCustomerRelations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
