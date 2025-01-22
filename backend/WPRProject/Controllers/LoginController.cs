@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
 using BCrypt.Net;
+using WPRProject.Utilities;
 
 namespace WPRProject.Controllers
 
@@ -28,40 +29,20 @@ namespace WPRProject.Controllers
             _configuration = configuration;
         }
 
-
-     [HttpPost]
+       [HttpPost]
         public async Task<ActionResult> Login(UserLoginDto loginDto)
         {
-            // Retrieve customer and employee based on the email
+            // First, try to find the user in the Employee table
             var employee = await _context.Employee
                 .FirstOrDefaultAsync(c => c.Email == loginDto.Email);
+
+            // If not found in Employee, check the Customer table for BusinessEmployee or Individual
             var customer = await _context.Customer
                 .FirstOrDefaultAsync(c => c.Email == loginDto.Email);
 
-            // Check credentials for both customer and employee
-            if (customer != null && BCrypt.Net.BCrypt.Verify(loginDto.Password, customer.Password))
+            if (employee != null && BCrypt.Net.BCrypt.Verify(loginDto.Password, employee.Password))
             {
-                // Generate claims for the customer
-                List<Claim> claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, $"{customer.FirstName} {customer.LastName}"),
-                    new Claim(ClaimTypes.Email, customer.Email),
-                };
-
-                if (customer is BusinessEmployee businessCustomer && !string.IsNullOrEmpty(businessCustomer.Role))
-                {
-                    claims.Add(new Claim(ClaimTypes.Role, businessCustomer.Role));
-                }
-                else if (customer is Individual)
-                {
-                    claims.Add(new Claim(ClaimTypes.Role, "Individual"));
-                }
-
-                return GenerateAndSetJwtToken(claims);
-            }
-            else if (employee != null && BCrypt.Net.BCrypt.Verify(loginDto.Password, employee.Password))
-            {
-                // Generate claims for the employee
+                // Handle Employee login
                 List<Claim> claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Email, employee.Email),
@@ -70,10 +51,39 @@ namespace WPRProject.Controllers
 
                 return GenerateAndSetJwtToken(claims);
             }
+            else if (customer != null && BCrypt.Net.BCrypt.Verify(loginDto.Password, customer.Password))
+            {
+                // Handle BusinessEmployee or Individual login
+                List<Claim> claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, $"{customer.FirstName} {customer.LastName}"),
+                    new Claim(ClaimTypes.Email, customer.Email),
+                };
 
-            // Return unauthorized if neither match
+                if (customer is BusinessEmployee businessEmployee)
+                {
+                    // Handle BusinessEmployee login
+                    var businessId = await _context.Business
+                        .Where(b => b.BusinessId == businessEmployee.BusinessId)
+                        .Select(b => b.BusinessId)
+                        .FirstOrDefaultAsync();
+
+                    claims.Add(new Claim(ClaimTypes.Role, businessEmployee.Role));
+                    claims.Add(new Claim(CustomClaimTypes.BusinessId, businessId.ToString()));
+                }
+                else if (customer is Individual)
+                {
+                    // Handle Individual login
+                    claims.Add(new Claim(ClaimTypes.Role, "Individual"));
+                }
+
+                return GenerateAndSetJwtToken(claims);
+            }
+
+            // If no match, return Unauthorized
             return Unauthorized(new { Message = "Invalid credentials" });
         }
+
 
         private ActionResult GenerateAndSetJwtToken(List<Claim> claims)
         {
@@ -111,4 +121,6 @@ namespace WPRProject.Controllers
             return Ok(new { Token = tokenString });
         }
             }
+
+
         }

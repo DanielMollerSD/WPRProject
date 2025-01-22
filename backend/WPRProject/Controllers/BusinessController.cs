@@ -8,6 +8,9 @@ using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using System.Linq;
+using WPRProject.Utilities;
+using System.IdentityModel.Tokens.Jwt;
+
 
 namespace WPRProject.Controllers
 {
@@ -47,6 +50,7 @@ namespace WPRProject.Controllers
         }
 
         // Get all employees of the business
+       [Authorize(Roles = "Owner, Wagenparkbeheerder")]
         [HttpGet("employees")]
         public async Task<IActionResult> GetEmployees()
         {
@@ -94,13 +98,13 @@ namespace WPRProject.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBusinessAccount(int id)
         {
-            var businessAccount = await _context.Business.FindAsync(id);
+            var businessAccount = await _context.Customer.FindAsync(id);
             if (businessAccount == null)
             {
                 return NotFound(new { Message = "Business account not found." });
             }
 
-            _context.Business.Remove(businessAccount);
+            _context.Customer.Remove(businessAccount);
             await _context.SaveChangesAsync();
 
             return Ok(new { Message = "Account deleted successfully" });
@@ -110,6 +114,7 @@ namespace WPRProject.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] BusinessRegisterDto registerDto)
         {
+
             if (registerDto.businessEmployee == null)
             {
                 return BadRequest(new { Message = "Business employee data is missing." });
@@ -164,7 +169,64 @@ namespace WPRProject.Controllers
                 return StatusCode(500, new { Message = "An error occurred while registering the business.", Details = ex.Message });
             }
         }
+        [HttpPost("register-employee")]
+public async Task<IActionResult> Register([FromBody] BusinessEmployeeRegisterDto registerDto)
+{
+    if (registerDto == null)
+    {
+        return BadRequest(new { Message = "Business employee data is missing." });
+    }
 
+    try
+    {
+        // Extract JWT token from the "access_token" cookie
+        var token = Request.Cookies["access_token"];
+        
+        if (string.IsNullOrEmpty(token))
+        {
+            return Unauthorized(new { Message = "Authentication token is missing." });
+        }
+
+        // Decode the token and extract the BusinessId from claims
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var jwtToken = tokenHandler.ReadJwtToken(token);
+
+        var businessIdClaim = jwtToken?.Claims?.FirstOrDefault(c => c.Type == "BusinessId");
+
+        if (businessIdClaim == null)
+        {
+            return Unauthorized(new { Message = "BusinessId not found in the token." });
+        }
+
+        // Convert the BusinessId from string to int (or whatever type it is)
+        var businessId = int.Parse(businessIdClaim.Value);
+
+        // Hash employee password
+        var hashedPassword = BCrypt.Net.BCrypt.HashPassword(registerDto.Password);
+
+        // Create the business employee
+        var newBusinessEmployee = new BusinessEmployee
+        {
+            FirstName = registerDto.FirstName,
+            LastName = registerDto.LastName,
+            TussenVoegsel = registerDto.TussenVoegsel,
+            Email = registerDto.Email,
+            Password = hashedPassword,
+            Role = registerDto.Role,
+            BusinessId = businessId // Use the BusinessId extracted from the token
+        };
+
+        // Add the new business employee to the context
+        _context.Customer.Add(newBusinessEmployee);
+        await _context.SaveChangesAsync();
+
+        return Ok(new { Employee = newBusinessEmployee });
+    }
+    catch (Exception ex)
+    {
+        return StatusCode(500, new { message = "An error occurred", details = ex.Message });
+    }
+}
         // Update business details
         [HttpPut("updateBusiness")]
         public async Task<ActionResult> UpdateBusiness([FromBody] UpdateBusinessDto updateBusinessDto)
@@ -191,5 +253,50 @@ namespace WPRProject.Controllers
 
             return Ok(business);
         }
+        [HttpPut("updateEmployee/{id}")]
+public async Task<IActionResult> UpdateEmployee(int id, [FromBody] UpdateBusinessAccountDto employeeDto)
+{
+    // Fetch the employee by ID from the database
+    var employee = await _context.Customer
+        .OfType<BusinessEmployee>()  // Assuming BusinessEmployee is a subclass of Customer
+        .FirstOrDefaultAsync(e => e.Id == id);  // Ensure you use the correct identifier (CustomerId or whatever field matches)
+
+    if (employee == null)
+    {
+        return NotFound(new { Message = "Employee not found." });
     }
+
+    // Check if the new email is different and already in use by another account
+    if (!string.IsNullOrEmpty(employeeDto.Email) && employeeDto.Email != employee.Email)
+    {
+        var existingEmail = await _context.Customer
+            .OfType<BusinessEmployee>()
+            .FirstOrDefaultAsync(e => e.Email == employeeDto.Email);
+
+        if (existingEmail != null)
+        {
+            return BadRequest(new { Message = "The email is already in use by another account." });
+        }
+    }
+
+    // Only update the properties that are provided in the DTO
+    employee.FirstName = employeeDto.FirstName ?? employee.FirstName;
+    employee.LastName = employeeDto.LastName ?? employee.LastName;
+    employee.Email = employeeDto.Email ?? employee.Email;
+    employee.Role = employeeDto.Role ?? employee.Role;
+
+    // If the password is provided, hash it
+    if (!string.IsNullOrEmpty(employeeDto.Password))
+    {
+        employee.Password = BCrypt.Net.BCrypt.HashPassword(employeeDto.Password);
+    }
+
+    // Save the changes to the database
+    await _context.SaveChangesAsync();
+
+    // Return the updated employee details
+    return Ok(new { Message = "Employee updated successfully", Employee = employee });
+}
+    }
+
 }

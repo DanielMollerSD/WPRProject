@@ -6,7 +6,6 @@ namespace WPRProject.Tables
     {
         public string Role { get; set; }
 
-        [Required]
         public int BusinessId { get; set; }
         public Business? Business { get; set; }
     }
