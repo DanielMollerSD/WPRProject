@@ -36,6 +36,8 @@ function SubscriptionSelection() {
                     coverage: coverageData || [],
                     discount: discountData || [],
                 });
+
+                console.log(subscriptions)
             } catch (error) {
                 console.error("Error fetching subscriptions:", error.message);
                 setError("Failed to load subscriptions. Please try again.");
@@ -57,7 +59,7 @@ function SubscriptionSelection() {
             } else {
                 console.log("No token found in cookies.");
             }
-            
+
             console.log("Access token from cookies:", token);
 
             if (!token) {
@@ -101,38 +103,30 @@ function SubscriptionSelection() {
                             <h2>Subscriptions</h2>
                             {error && <p className="error">{error}</p>}
                             <div id="form-group-select">
-                                {subscriptions.coverage.length > 0 ? (
+                                {subscriptions.coverage?.$values?.length > 0 ? (
                                     <button
                                         className="SelectionButtons coverage-icon"
-                                        onClick={() =>
-                                            handlePurchase(subscriptions.coverage[0].id)
-                                        }
+                                        onClick={() => handlePurchase(subscriptions.coverage.$values[0].id)}
                                         disabled={loading}
                                     >
-                                        <h3 className="buttonTitle">
-                                            {subscriptions.coverage[0].name}
-                                        </h3>
+                                        <h3 className="buttonTitle">{subscriptions.coverage.$values[0].name}</h3>
                                         <p className="buttonDescription">
-                                            {subscriptions.coverage[0].description}
+                                            {subscriptions.coverage.$values[0].description}
                                         </p>
                                     </button>
                                 ) : (
                                     <p>No Coverage Subscriptions available.</p>
                                 )}
 
-                                {subscriptions.discount.length > 0 ? (
+                                {subscriptions.discount?.$values?.length > 0 ? (
                                     <button
                                         className="SelectionButtons discount-icon"
-                                        onClick={() =>
-                                            handlePurchase(subscriptions.discount[0].id)
-                                        }
+                                        onClick={() => handlePurchase(subscriptions.discount.$values[0].id)}
                                         disabled={loading}
                                     >
-                                        <h3 className="buttonTitle">
-                                            {subscriptions.discount[0].name}
-                                        </h3>
+                                        <h3 className="buttonTitle">{subscriptions.discount.$values[0].name}</h3>
                                         <p className="buttonDescription">
-                                            {subscriptions.discount[0].description}
+                                            {subscriptions.discount.$values[0].description}
                                         </p>
                                     </button>
                                 ) : (
