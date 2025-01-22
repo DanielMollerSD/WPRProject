@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
 using BCrypt.Net;
+using WPRProject.Utilities;
 
 namespace WPRProject.Controllers
 
@@ -28,8 +29,7 @@ namespace WPRProject.Controllers
             _configuration = configuration;
         }
 
-
-     [HttpPost]
+        [HttpPost]
         public async Task<ActionResult> Login(UserLoginDto loginDto)
         {
             // Retrieve customer and employee based on the email
@@ -50,7 +50,16 @@ namespace WPRProject.Controllers
 
                 if (customer is BusinessEmployee businessCustomer && !string.IsNullOrEmpty(businessCustomer.Role))
                 {
-                    claims.Add(new Claim(ClaimTypes.Role, businessCustomer.Role)); // Add BusinessEmployee role
+                var businessId = await _context.Business
+                .Where(b => b.BusinessId == businessCustomer.BusinessId)
+                .Select(b => b.BusinessId)
+                .FirstOrDefaultAsync();
+
+            // Add the BusinessId claim to the user's claims
+                claims.Add(new Claim(ClaimTypes.Role, businessCustomer.Role));
+
+                claims.Add(new Claim(CustomClaimTypes.BusinessId, businessCustomer.BusinessId.ToString()));
+
                 }
                 else if (customer is Individual)
                 {
@@ -70,7 +79,6 @@ namespace WPRProject.Controllers
 
                 return GenerateAndSetJwtToken(claims);
             }
-
             // Return unauthorized if neither match
             return Unauthorized(new { Message = "Invalid credentials" });
         }
@@ -112,4 +120,6 @@ namespace WPRProject.Controllers
             return Ok(new { Token = tokenString });
         }
             }
+
+
         }
