@@ -91,7 +91,7 @@ function BusinessCRUD() {
           .filter(
             (employee) =>
               employee.businessId === currentAccount.businessId &&
-              employee.role !== "Owner" &&
+              employee.role !== "Owner"
            // Exclude employees with 'Owner' role
           )
           .map((employee) => ({
