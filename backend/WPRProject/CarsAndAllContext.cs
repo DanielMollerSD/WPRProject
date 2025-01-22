@@ -71,7 +71,21 @@ namespace WPRProject
 
             
             modelBuilder.Entity<Business>()
-                .ToTable("Business"); // Ensure it gets mapped to its own table
+                .ToTable("Business")
+                .HasKey(b => b.BusinessId);
+          
+           modelBuilder.Entity<BusinessEmployee>()
+                .HasOne(be => be.Business)
+                .WithMany(b => b.Employees)
+                .HasForeignKey(be => be.BusinessId)
+                .OnDelete(DeleteBehavior.Cascade);
+                
+            modelBuilder.Entity<Business>()
+                .HasMany(b => b.Employees)
+                .WithOne(be => be.Business)
+                .HasForeignKey(be => be.BusinessId)
+                .OnDelete(DeleteBehavior.Cascade);
+                 // Ensure it gets mapped to its own table
             
 
             base.OnModelCreating(modelBuilder);
