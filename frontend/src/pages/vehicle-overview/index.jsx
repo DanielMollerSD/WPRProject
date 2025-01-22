@@ -1,3 +1,4 @@
+import axios from "axios";
 import "./styles.scss";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -17,39 +18,37 @@ function VehicleOverview() {
   async function fetchVehicles() {
     try {
       const params = new URLSearchParams();
-      if (selectedVehicleType !== "all")
-        params.append("vehicleType", selectedVehicleType);
-      if (selectedVehicleBrand !== "all")
-        params.append("brand", selectedVehicleBrand);
+      if (selectedVehicleType !== "all") params.append("vehicleType", selectedVehicleType);
+      if (selectedVehicleBrand !== "all") params.append("brand", selectedVehicleBrand);
       if (minPrice) params.append("minPrice", minPrice);
       if (maxPrice) params.append("maxPrice", maxPrice);
       if (startDate) params.append("startDate", startDate);
       if (endDate) params.append("endDate", endDate);
-
-      const response = await fetch(
-        `${import.meta.env.VITE_APP_API_URL}/Vehicle?${params.toString()}`
+  
+      // Make the Axios GET request
+      const response = await axios.get(
+        `${import.meta.env.VITE_APP_API_URL}/Vehicle?${params.toString()}`,
+        {
+          withCredentials: true,
+        }
       );
-      if (!response.ok) throw new Error("Failed to fetch vehicles");
-
-      const data = await response.json();
-      const vehicles = data.$values || []; // Extract the $values array if it exists
+  
+      console.log("Response data:", response.data);
+  
+      const vehicles = response.data.$values || [];
       setVehicles(vehicles);
-
+  
       if (vehicleTypes.length === 0) {
-        const types = Array.from(
-          new Set(vehicles.map((vehicle) => vehicle.vehicleType))
-        );
+        const types = Array.from(new Set(vehicles.map((vehicle) => vehicle.vehicleType)));
         setVehicleTypes([...types]);
       }
-
+  
       if (vehicleBrands.length === 0) {
-        const brands = Array.from(
-          new Set(vehicles.map((vehicle) => vehicle.brand))
-        );
+        const brands = Array.from(new Set(vehicles.map((vehicle) => vehicle.brand)));
         setVehicleBrands([...brands]);
       }
     } catch (e) {
-      console.error(e.message);
+      console.error("Error fetching vehicles:", e.message);
       setError("Failed to load vehicles");
     }
   }
