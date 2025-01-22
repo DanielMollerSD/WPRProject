@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
-import axios from "axios";
 import "./styles.scss";
 
 function SubscriptionSelection() {
@@ -10,6 +9,9 @@ function SubscriptionSelection() {
         coverage: [],
         discount: [],
     });
+
+    const [loading, setLoading] = useState(false); // Track loading state
+    const [error, setError] = useState(null); // Track errors
 
     useEffect(() => {
         async function fetchSubscriptions() {
@@ -36,31 +38,57 @@ function SubscriptionSelection() {
                 });
             } catch (error) {
                 console.error("Error fetching subscriptions:", error.message);
+                setError("Failed to load subscriptions. Please try again.");
             }
         }
 
         fetchSubscriptions();
     }, []);
 
-    
     async function handlePurchase(subscriptionId) {
+        setLoading(true);
+        setError(null);
+
         try {
-    
-            const response = await axios.post("https://localhost:7265/api/SubOrder",
+            const token = Cookies.get("access_token");
+            if (token) {
+                const decodedToken = jwtDecode(token);
+                console.log("Decoded Token:", decodedToken);
+            } else {
+                console.log("No token found in cookies.");
+            }
+            
+            console.log("Access token from cookies:", token);
+
+            if (!token) {
+                throw new Error("User is not authenticated. Please log in.");
+            }
+
+            const response = await axios.post(
+                "https://localhost:7265/api/SubOrder",
                 {
                     withCredentials: true,
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                },
+                {
+                    status: "Pending",
+                    startDate: new Date().toISOString(),
+                    endDate: new Date(new Date().setMonth(new Date().getMonth() + 1)).toISOString(),
                     subscriptionId,
                 }
             );
-    
+
             console.log("Subscription order created successfully:", response.data);
             alert("Subscription purchased successfully!");
         } catch (error) {
             console.error("Error purchasing subscription:", error.message);
-            alert("Failed to purchase subscription. Please try again.");
+            setError("Failed to purchase subscription. Please try again.");
+        } finally {
+            setLoading(false);
         }
     }
-    
 
     return (
         <>
@@ -71,6 +99,7 @@ function SubscriptionSelection() {
                     <main className="SelectionName">
                         <section className="selection-container">
                             <h2>Subscriptions</h2>
+                            {error && <p className="error">{error}</p>}
                             <div id="form-group-select">
                                 {subscriptions.coverage.length > 0 ? (
                                     <button
@@ -78,6 +107,7 @@ function SubscriptionSelection() {
                                         onClick={() =>
                                             handlePurchase(subscriptions.coverage[0].id)
                                         }
+                                        disabled={loading}
                                     >
                                         <h3 className="buttonTitle">
                                             {subscriptions.coverage[0].name}
@@ -96,6 +126,7 @@ function SubscriptionSelection() {
                                         onClick={() =>
                                             handlePurchase(subscriptions.discount[0].id)
                                         }
+                                        disabled={loading}
                                     >
                                         <h3 className="buttonTitle">
                                             {subscriptions.discount[0].name}
@@ -108,6 +139,7 @@ function SubscriptionSelection() {
                                     <p>No Discount Subscriptions available.</p>
                                 )}
                             </div>
+                            {loading && <p>Processing your purchase...</p>}
                         </section>
                     </main>
                 </div>
