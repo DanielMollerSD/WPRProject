@@ -23,8 +23,9 @@ namespace WPRProject.Tables
         [JsonIgnore]
         
         public ICollection<SubscriptionOrder>? SubscriptionOrders { get; set; }
-        
-        // [JsonIgnore]
-        // public ICollection<BusinessEmployee> Employees {get;set;} = new List<BusinessEmployee>();
-    }
+
+//         [JsonIgnore]
+//         public ICollection<BusinessEmployee> Employees {get;set;} = new List<BusinessEmployee>();
+
+  }
 }

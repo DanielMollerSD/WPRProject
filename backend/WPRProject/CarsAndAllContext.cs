@@ -76,12 +76,12 @@ namespace WPRProject
           
            modelBuilder.Entity<BusinessEmployee>()
                 .HasOne(be => be.Business)
-                .WithMany(b => b.Employees)
+                .WithMany(b => b.BusinessEmployees)
                 .HasForeignKey(be => be.BusinessId)
                 .OnDelete(DeleteBehavior.Cascade);
                 
             modelBuilder.Entity<Business>()
-                .HasMany(b => b.Employees)
+                .HasMany(b => b.BusinessEmployees)
                 .WithOne(be => be.Business)
                 .HasForeignKey(be => be.BusinessId)
                 .OnDelete(DeleteBehavior.Cascade);

@@ -35,7 +35,7 @@ namespace WPRProject.Controllers
             }
 
             var business = await _context.Business
-                .Where(b => b.Employees.Any(e => e.Email == userEmail))
+                .Where(b => b.BusinessEmployees.Any(e => e.Email == userEmail))
                 .FirstOrDefaultAsync();
 
             if (business == null)
@@ -58,15 +58,15 @@ namespace WPRProject.Controllers
             }
 
             var business = await _context.Business
-                .Include(b => b.Employees)
-                .FirstOrDefaultAsync(b => b.Employees.Any(e => e.Email == userEmail));
+                .Include(b => b.BusinessEmployees)
+                .FirstOrDefaultAsync(b => b.BusinessEmployees.Any(e => e.Email == userEmail));
 
             if (business == null)
             {
                 return NotFound("No business found for the logged-in user.");
             }
 
-            var employees = business.Employees;
+            var employees = business.BusinessEmployees;
 
             if (employees == null || !employees.Any())
             {
