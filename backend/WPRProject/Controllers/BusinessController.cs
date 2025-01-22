@@ -50,6 +50,7 @@ namespace WPRProject.Controllers
         }
 
         // Get all employees of the business
+       [Authorize(Roles = "Owner, Wagenparkbeheerder")]
         [HttpGet("employees")]
         public async Task<IActionResult> GetEmployees()
         {
