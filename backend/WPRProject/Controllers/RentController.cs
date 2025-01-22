@@ -131,5 +131,39 @@ public async Task<IActionResult> UpdateStatus(int id, [FromBody] string newStatu
 
     return Ok(rent);
 }
+[HttpGet("user")]
+[Authorize]
+public async Task<IActionResult> GetRentsByUser()
+{
+    // Haal het e-mailadres van de ingelogde gebruiker uit de claims
+    var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+
+    if (string.IsNullOrEmpty(userEmail))
+    {
+        return Unauthorized(new { Message = "User is not authenticated." });
+    }
+
+    try
+    {
+        // Filter huurverzoeken op basis van het e-mailadres van de gebruiker
+        var rents = await _context.Rent
+            .Include(r => r.Vehicle)
+            .Include(r => r.Customer)
+            .Where(r => r.Customer.Email == userEmail)
+            .ToListAsync();
+
+        return Ok(rents);
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, "An error occurred while fetching rents for user with email {UserEmail}", userEmail);
+        return StatusCode(500, new
+        {
+            message = "An error occurred while fetching rents for the user.",
+            details = ex.Message
+        });
+    }
+}
+
     }
 }
