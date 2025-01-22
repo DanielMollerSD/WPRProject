@@ -12,7 +12,7 @@ using WPRProject;
 namespace WPRProject.Migrations
 {
     [DbContext(typeof(CarsAndAllContext))]
-    [Migration("20250122114712_InitialCreate")]
+    [Migration("20250122155441_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

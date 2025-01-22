@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Cookies from "js-cookie";
-import { jwtDecode } from "jwt-decode";
 import "./styles.scss";
 
 function SubscriptionSelection() {
@@ -10,8 +8,8 @@ function SubscriptionSelection() {
         discount: [],
     });
 
-    const [loading, setLoading] = useState(false); // Track loading state
-    const [error, setError] = useState(null); // Track errors
+    const [loading, setLoading] = useState(false); 
+    const [error, setError] = useState(null); 
 
     useEffect(() => {
         async function fetchSubscriptions() {
@@ -32,12 +30,18 @@ function SubscriptionSelection() {
 
                 const discountData = await discountResponse.json();
 
-                setSubscriptions({
-                    coverage: coverageData || [],
-                    discount: discountData || [],
-                });
+                // Extract values
+                const extractedSubscriptions = {
+                    coverage: coverageData?.$values || [],
+                    discount: discountData?.$values || [],
+                };
 
-                console.log(subscriptions)
+                setSubscriptions(extractedSubscriptions);
+
+                console.log({
+                    coverage: extractedSubscriptions.coverage,
+                    discount: extractedSubscriptions.discount,
+                });
             } catch (error) {
                 console.error("Error fetching subscriptions:", error.message);
                 setError("Failed to load subscriptions. Please try again.");
@@ -61,7 +65,7 @@ function SubscriptionSelection() {
                     subscriptionId,
                 },
                 {
-                    withCredentials: true,  // This should be in the third argument (config)
+                    withCredentials: true,
                 }
             );
 
@@ -84,32 +88,34 @@ function SubscriptionSelection() {
                             <h2>Subscriptions</h2>
                             {error && <p className="error">{error}</p>}
                             <div id="form-group-select">
-                                {subscriptions.coverage?.$values?.length > 0 ? (
-                                    <button
-                                        className="SelectionButtons coverage-icon"
-                                        onClick={() => handlePurchase(subscriptions.coverage.$values[0].id)}
-                                        disabled={loading}
-                                    >
-                                        <h3 className="buttonTitle">{subscriptions.coverage.$values[0].name}</h3>
-                                        <p className="buttonDescription">
-                                            {subscriptions.coverage.$values[0].description}
-                                        </p>
-                                    </button>
+                                {subscriptions.coverage.length > 0 ? (
+                                    subscriptions.coverage.map((sub) => (
+                                        <button
+                                            key={sub.id}
+                                            className="SelectionButtons coverage-icon"
+                                            onClick={() => handlePurchase(sub.id)}
+                                            disabled={loading}
+                                        >
+                                            <h3 className="buttonTitle">{sub.name}</h3>
+                                            <p className="buttonDescription">{sub.description}</p>
+                                        </button>
+                                    ))
                                 ) : (
                                     <p>No Coverage Subscriptions available.</p>
                                 )}
 
-                                {subscriptions.discount?.$values?.length > 0 ? (
-                                    <button
-                                        className="SelectionButtons discount-icon"
-                                        onClick={() => handlePurchase(subscriptions.discount.$values[0].id)}
-                                        disabled={loading}
-                                    >
-                                        <h3 className="buttonTitle">{subscriptions.discount.$values[0].name}</h3>
-                                        <p className="buttonDescription">
-                                            {subscriptions.discount.$values[0].description}
-                                        </p>
-                                    </button>
+                                {subscriptions.discount.length > 0 ? (
+                                    subscriptions.discount.map((sub) => (
+                                        <button
+                                            key={sub.id}
+                                            className="SelectionButtons discount-icon"
+                                            onClick={() => handlePurchase(sub.id)}
+                                            disabled={loading}
+                                        >
+                                            <h3 className="buttonTitle">{sub.name}</h3>
+                                            <p className="buttonDescription">{sub.description}</p>
+                                        </button>
+                                    ))
                                 ) : (
                                     <p>No Discount Subscriptions available.</p>
                                 )}
