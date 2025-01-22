@@ -12,8 +12,8 @@ using WPRProject;
 namespace WPRProject.Migrations
 {
     [DbContext(typeof(CarsAndAllContext))]
-    [Migration("20250122112208_RenameEmployee")]
-    partial class RenameEmployee
+    [Migration("20250122114712_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -279,11 +279,12 @@ namespace WPRProject.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("SubscriptionId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("Verified")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

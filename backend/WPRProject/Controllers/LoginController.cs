@@ -51,6 +51,7 @@ namespace WPRProject.Controllers
                 if (customer is BusinessEmployee businessCustomer && !string.IsNullOrEmpty(businessCustomer.Role))
                 {
                     claims.Add(new Claim(ClaimTypes.Role, businessCustomer.Role)); // Add BusinessEmployee role
+                    claims.Add(new Claim("BusinessId", businessCustomer.BusinessId.ToString()));
                 }
                 else if (customer is Individual)
                 {
@@ -87,7 +88,6 @@ namespace WPRProject.Controllers
                 throw new ArgumentNullException("The JWT secret key is missing from configuration.");
             }
 
-            // Generate JWT token
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
