@@ -14,7 +14,11 @@ function BackofficeSubscription() {
                     `${import.meta.env.VITE_APP_API_URL}/SubOrder`,
                     { withCredentials: true }
                 );
-                setOrders(response.data);
+                
+                console.log("Fetched orders:", response.data);
+    
+                const orders = response.data?.$values || response.data;
+                setOrders(Array.isArray(orders) ? orders : []);
             } catch (err) {
                 console.error("Error fetching orders:", err.message);
                 setError("Failed to load subscription orders.");
@@ -22,11 +26,11 @@ function BackofficeSubscription() {
                 setLoading(false);
             }
         }
-
+    
         fetchOrders();
     }, []);
+    
 
-    //approving
     async function approveOrder(orderId) {
         try {
             const response = await axios.patch(
@@ -36,7 +40,6 @@ function BackofficeSubscription() {
             );
             console.log("Order approved:", response.data);
 
-            // update order status
             setOrders((prevOrders) =>
                 prevOrders.map((order) =>
                     order.id === orderId ? { ...order, status: "Approved" } : order
@@ -49,7 +52,6 @@ function BackofficeSubscription() {
         }
     }
 
-    //declining
     async function declineOrder(orderId) {
         try {
             const response = await axios.patch(
@@ -88,32 +90,39 @@ function BackofficeSubscription() {
                     </tr>
                 </thead>
                 <tbody>
-                    {orders.map((order) => (
-                        <tr key={order.id}>
-                            <td>{order.id}</td>
-                            <td>{order.userEmail || "N/A"}</td>
-                            <td>{order.subscriptionName}</td>
-                            <td>{order.status}</td>
-                            <td>
-                                {order.status !== "Approved" && order.status !== "Declined" && (
-                                    <>
-                                        <button
-                                            className="approve-button"
-                                            onClick={() => approveOrder(order.id)}
-                                        >
-                                            Approve
-                                        </button>
-                                        <button
-                                            className="decline-button"
-                                            onClick={() => declineOrder(order.id)}
-                                        >
-                                            Decline
-                                        </button>
-                                    </>
-                                )}
-                            </td>
+                    {Array.isArray(orders) && orders.length > 0 ? (
+                        orders.map((order) => (
+                            <tr key={order.id}>
+                                <td>{order.id}</td>
+                                <td>{order.userEmail || "N/A"}</td>
+                                <td>{order.subscriptionName}</td>
+                                <td>{order.status}</td>
+                                <td>
+                                    {order.status !== "Approved" &&
+                                        order.status !== "Declined" && (
+                                            <>
+                                                <button
+                                                    className="approve-button"
+                                                    onClick={() => approveOrder(order.id)}
+                                                >
+                                                    Approve
+                                                </button>
+                                                <button
+                                                    className="decline-button"
+                                                    onClick={() => declineOrder(order.id)}
+                                                >
+                                                    Decline
+                                                </button>
+                                            </>
+                                        )}
+                                </td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan="5">No orders available.</td>
                         </tr>
-                    ))}
+                    )}
                 </tbody>
             </table>
         </div>
