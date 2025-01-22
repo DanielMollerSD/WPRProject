@@ -33,7 +33,7 @@ namespace WPRProject.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRent(int id)
         {
-             _logger.LogInformation("GetRent method called for RentId {RentId}", id);
+            _logger.LogInformation("GetRent method called for RentId {RentId}", id);
             var rent = await _context.Rent.FindAsync(id);
             if (rent == null)
             {
@@ -44,6 +44,7 @@ namespace WPRProject.Controllers
             return Ok(rent);
         }
 
+        [Authorize(Roles = "Individual, Medewerker")]
         [HttpPost]
         public async Task<IActionResult> CreateRent([FromBody] Rent rent)
         {
@@ -52,6 +53,13 @@ namespace WPRProject.Controllers
             var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 
             if (string.IsNullOrEmpty(userEmail))
+            {
+                return Unauthorized(new { Message = "User is not authenticated." });
+            }
+
+            var customer = await _context.Customer.FirstOrDefaultAsync(c => c.Email == userEmail);
+
+            if (customer == null)
             {
                 return Unauthorized(new { Message = "User is not authenticated." });
             }
@@ -69,6 +77,12 @@ namespace WPRProject.Controllers
                 return BadRequest(new { errors = new { VehicleId = "The specified vehicle does not exist." } });
             }
 
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            if (userRole != "Individual" && vehicle.VehicleType != "Car")
+            {
+                return BadRequest(new { errors = new { VehicleId = "The specified vehicle does not exist." } });
+            }
+
             var isRented = await _context.Rent.AnyAsync(r =>
                 r.VehicleId == rent.VehicleId &&
                 r.EndDate >= rent.StartDate &&
@@ -82,7 +96,9 @@ namespace WPRProject.Controllers
 
             try
             {
-                rent.Status = Rent.Pending; // Set default status
+                rent.CustomerId = customer.Id;
+
+                rent.Status = Rent.Pending;
                 _context.Rent.Add(rent);
                 await _context.SaveChangesAsync();
 
@@ -93,7 +109,6 @@ namespace WPRProject.Controllers
                               $"<p>Vehicle: {vehicle.Model}</p>" +
                               $"<p>Rental Period: {rent.StartDate:yyyy-MM-dd} to {rent.EndDate:yyyy-MM-dd}</p>";
 
-                // TODO: Change email adress later!!!
                 await _emailService.SendEmailAsync(userEmail, subject, message);
 
                 _logger.LogInformation("Rental confirmation email sent for RentId {RentId}", rent.Id);
@@ -101,7 +116,7 @@ namespace WPRProject.Controllers
             }
             catch (Exception ex)
             {
-                 _logger.LogError(ex, "An error occurred while creating the rent entry for VehicleId {VehicleId}", rent.VehicleId);
+                _logger.LogError(ex, "An error occurred while creating the rent entry for VehicleId {VehicleId}", rent.VehicleId);
                 return StatusCode(500, new
                 {
                     message = "An error occurred while creating the rent entry.",
@@ -111,25 +126,25 @@ namespace WPRProject.Controllers
         }
 
         [HttpPatch("{id}/status")]
-public async Task<IActionResult> UpdateStatus(int id, [FromBody] string newStatus)
-{
-    var rent = await _context.Rent.FindAsync(id);
+        public async Task<IActionResult> UpdateStatus(int id, [FromBody] string newStatus)
+        {
+            var rent = await _context.Rent.FindAsync(id);
 
-    if (rent == null)
-    {
-        return NotFound();
-    }
+            if (rent == null)
+            {
+                return NotFound();
+            }
 
-    // Validate the new status value
-    if (newStatus != Rent.Pending && newStatus != Rent.Accepted && newStatus != Rent.Declined)
-    {
-        return BadRequest("Invalid status value. Allowed values are: 'pending', 'accepted', 'declined'.");
-    }
+            // Validate the new status value
+            if (newStatus != Rent.Pending && newStatus != Rent.Accepted && newStatus != Rent.Declined)
+            {
+                return BadRequest("Invalid status value. Allowed values are: 'pending', 'accepted', 'declined'.");
+            }
 
-    rent.Status = newStatus;
-    await _context.SaveChangesAsync();
+            rent.Status = newStatus;
+            await _context.SaveChangesAsync();
 
-    return Ok(rent);
-}
+            return Ok(rent);
+        }
     }
 }

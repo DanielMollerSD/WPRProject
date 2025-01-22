@@ -59,7 +59,6 @@ function RentScreen() {
         `${import.meta.env.VITE_APP_API_URL}/Rent`,
         rentData,
         {
-          headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }
       );

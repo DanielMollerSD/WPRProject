@@ -84,6 +84,12 @@ function Header() {
                                 </>
                             )}
 
+                            {isLoggedIn && userRole === "Medewerker" && (
+                                <>
+                                    <Link to="/vehicle-overview">Voertuigen</Link>
+                                </>
+                            )}
+
                             {isLoggedIn && (
                                 <>
                                     <Link to="/logout" onClick={handleLogout}>Logout</Link>
