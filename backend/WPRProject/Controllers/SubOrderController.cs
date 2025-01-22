@@ -18,7 +18,7 @@ namespace WPRProject.Controllers
         }
 
         // GET: api/SubOrder
-[HttpGet]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<object>>> GetOrders()
         {
             // Return orders with business and subscription info
