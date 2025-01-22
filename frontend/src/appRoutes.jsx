@@ -27,7 +27,7 @@ import PrivacyPage from "./pages/privacy-page";
 import BackofficePrivacyPage from "./pages/backoffice-privacy-page";
 import Rentrequests from './pages/rent-requests';
 import RentOverview from './pages/rent-overview'; 
-
+import BackofficeSubscription from "./pages/backoffice-subscription";
 
 function AppRoutes() {
   return (
@@ -60,6 +60,7 @@ function AppRoutes() {
             <Route path="/vehicle-overview" element={<VehicleOverview />} />
             <Route path="/rent-requests" element={<Rentrequests />} />
             <Route path="/rent-overview" element={<RentOverview />} />
+            <Route path="/backoffice-subscription" element={<BackofficeSubscription />} />
           </Routes>
         </main>
 

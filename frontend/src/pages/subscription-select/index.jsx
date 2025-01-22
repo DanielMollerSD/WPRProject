@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
-import axios from "axios";
 import "./styles.scss";
 
 function SubscriptionSelection() {
@@ -10,6 +9,9 @@ function SubscriptionSelection() {
         coverage: [],
         discount: [],
     });
+
+    const [loading, setLoading] = useState(false); // Track loading state
+    const [error, setError] = useState(null); // Track errors
 
     useEffect(() => {
         async function fetchSubscriptions() {
@@ -34,86 +36,89 @@ function SubscriptionSelection() {
                     coverage: coverageData || [],
                     discount: discountData || [],
                 });
+
+                console.log(subscriptions)
             } catch (error) {
                 console.error("Error fetching subscriptions:", error.message);
+                setError("Failed to load subscriptions. Please try again.");
             }
         }
 
         fetchSubscriptions();
     }, []);
 
-    
     async function handlePurchase(subscriptionId) {
+        setLoading(true);
+        setError(null);
+
         try {
-    
-            const response = await axios.post("https://localhost:7265/api/SubOrder",
+            const response = await axios.post(
+                "https://localhost:7265/api/SubOrder",
                 {
-                    withCredentials: true,
+                    status: "Pending",
+                    startDate: new Date().toISOString(),
+                    endDate: new Date(new Date().setMonth(new Date().getMonth() + 1)).toISOString(),
                     subscriptionId,
+                },
+                {
+                    withCredentials: true,  // This should be in the third argument (config)
                 }
             );
-    
+
             console.log("Subscription order created successfully:", response.data);
             alert("Subscription purchased successfully!");
         } catch (error) {
             console.error("Error purchasing subscription:", error.message);
-            alert("Failed to purchase subscription. Please try again.");
+            setError("Failed to purchase subscription. Please try again.");
+        } finally {
+            setLoading(false);
         }
     }
-    
 
     return (
         <>
-            <header></header>
-
             <div className="page page-subscription-selection">
                 <div className="SelectionBody">
                     <main className="SelectionName">
                         <section className="selection-container">
                             <h2>Subscriptions</h2>
+                            {error && <p className="error">{error}</p>}
                             <div id="form-group-select">
-                                {subscriptions.coverage.length > 0 ? (
+                                {subscriptions.coverage?.$values?.length > 0 ? (
                                     <button
                                         className="SelectionButtons coverage-icon"
-                                        onClick={() =>
-                                            handlePurchase(subscriptions.coverage[0].id)
-                                        }
+                                        onClick={() => handlePurchase(subscriptions.coverage.$values[0].id)}
+                                        disabled={loading}
                                     >
-                                        <h3 className="buttonTitle">
-                                            {subscriptions.coverage[0].name}
-                                        </h3>
+                                        <h3 className="buttonTitle">{subscriptions.coverage.$values[0].name}</h3>
                                         <p className="buttonDescription">
-                                            {subscriptions.coverage[0].description}
+                                            {subscriptions.coverage.$values[0].description}
                                         </p>
                                     </button>
                                 ) : (
                                     <p>No Coverage Subscriptions available.</p>
                                 )}
 
-                                {subscriptions.discount.length > 0 ? (
+                                {subscriptions.discount?.$values?.length > 0 ? (
                                     <button
                                         className="SelectionButtons discount-icon"
-                                        onClick={() =>
-                                            handlePurchase(subscriptions.discount[0].id)
-                                        }
+                                        onClick={() => handlePurchase(subscriptions.discount.$values[0].id)}
+                                        disabled={loading}
                                     >
-                                        <h3 className="buttonTitle">
-                                            {subscriptions.discount[0].name}
-                                        </h3>
+                                        <h3 className="buttonTitle">{subscriptions.discount.$values[0].name}</h3>
                                         <p className="buttonDescription">
-                                            {subscriptions.discount[0].description}
+                                            {subscriptions.discount.$values[0].description}
                                         </p>
                                     </button>
                                 ) : (
                                     <p>No Discount Subscriptions available.</p>
                                 )}
                             </div>
+                            {loading && <p>Processing your purchase...</p>}
                         </section>
                     </main>
                 </div>
             </div>
-
-            <footer></footer>
         </>
     );
 }

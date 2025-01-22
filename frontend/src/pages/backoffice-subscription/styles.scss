@@ -1,0 +1,48 @@
+.page-subscription-orders {
+    padding: 20px;
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    }
+
+    .approve-button {
+        padding: 5px 10px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 3px;
+
+        &:hover {
+            background-color: #45a049;
+        }
+    }
+    .decline-button {
+        padding: 5px 10px;
+        background-color: #af4242;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 3px;
+
+        &:hover {
+            background-color: #ac3232;
+        }
+    }
+}

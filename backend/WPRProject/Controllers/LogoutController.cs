@@ -31,10 +31,16 @@ namespace WPRProject.Controllers
         [HttpDelete]
         public IActionResult Logout()
         {
-            Response.Cookies.Delete("access_token");
-            return Ok(new{message = "Logout succesful"});
-        }
-       
+            // Delete the access_token cookie
+            Response.Cookies.Delete("access_token", new CookieOptions
+            {
+                Path = "/",
+                HttpOnly = true,
+                Secure = Request.IsHttps,
+                SameSite = SameSiteMode.None,
+            });
 
+            return Ok(new { Message = "Logout successful" });
+        }
     }
 }

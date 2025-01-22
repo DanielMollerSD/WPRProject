@@ -14,8 +14,8 @@ function PrivacyPage() {
                 }
                 const data = await response.json();
 
-                if (data.length > 0) {
-                    setDescription(data[0].description); 
+                if (data.$values && data.$values.length > 0) {
+                    setDescription(data.$values[0].description);
                 } else {
                     setDescription('No privacy description available.');
                 }

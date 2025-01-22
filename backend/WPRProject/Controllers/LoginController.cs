@@ -63,7 +63,7 @@ namespace WPRProject.Controllers
                 }
                 else if (customer is Individual)
                 {
-                    claims.Add(new Claim(ClaimTypes.Role, "Individual")); // Add Individual role
+                    claims.Add(new Claim(ClaimTypes.Role, "Individual"));
                 }
 
                 return GenerateAndSetJwtToken(claims);
@@ -95,7 +95,6 @@ namespace WPRProject.Controllers
                 throw new ArgumentNullException("The JWT secret key is missing from configuration.");
             }
 
-            // Generate JWT token
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
