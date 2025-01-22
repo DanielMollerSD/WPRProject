@@ -52,33 +52,16 @@ function SubscriptionSelection() {
         setError(null);
 
         try {
-            const token = Cookies.get("access_token");
-            if (token) {
-                const decodedToken = jwtDecode(token);
-                console.log("Decoded Token:", decodedToken);
-            } else {
-                console.log("No token found in cookies.");
-            }
-
-            console.log("Access token from cookies:", token);
-
-            if (!token) {
-                throw new Error("User is not authenticated. Please log in.");
-            }
-
             const response = await axios.post(
                 "https://localhost:7265/api/SubOrder",
-                {
-                    withCredentials: true,
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                },
                 {
                     status: "Pending",
                     startDate: new Date().toISOString(),
                     endDate: new Date(new Date().setMonth(new Date().getMonth() + 1)).toISOString(),
                     subscriptionId,
+                },
+                {
+                    withCredentials: true,  // This should be in the third argument (config)
                 }
             );
 
@@ -94,8 +77,6 @@ function SubscriptionSelection() {
 
     return (
         <>
-            <header></header>
-
             <div className="page page-subscription-selection">
                 <div className="SelectionBody">
                     <main className="SelectionName">
@@ -138,8 +119,6 @@ function SubscriptionSelection() {
                     </main>
                 </div>
             </div>
-
-            <footer></footer>
         </>
     );
 }

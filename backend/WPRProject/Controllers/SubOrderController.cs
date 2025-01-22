@@ -57,33 +57,15 @@ namespace WPRProject.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateSubscriptionOrder([FromBody] SubscriptionOrder order)
         {
-
-            // var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-            // Console.WriteLine("e");
-            // Console.WriteLine(userEmail);
-            // if (string.IsNullOrEmpty(userEmail))
-            // {
-            //     return Unauthorized(new { Message = "User is not authenticated." });
-            // }
-
-            // Retrieve the BusinessId from the logged-in user's claims
-            var businessIdClaim = User.Claims.FirstOrDefault(c => c.Type == "BusinessId")?.Value;
-            Console.WriteLine("a");
-            Console.WriteLine(businessIdClaim);
-            if (string.IsNullOrEmpty(businessIdClaim))
+            var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            if (string.IsNullOrEmpty(userEmail))
             {
-                return Unauthorized(new { Message = "User is not authenticated or BusinessId claim is missing." });
+                return Unauthorized(new { Message = "User is not authenticated." });
             }
 
-            if (!int.TryParse(businessIdClaim, out var businessId))
-            {
-                return BadRequest(new { Message = "Invalid BusinessId claim value." });
-            }
-            
+            var user = await _context.BusinessEmployee.FirstOrDefaultAsync(e => e.Email == userEmail);
 
-            // Set the BusinessId in the order object
-            order.BusinessId = businessId;
-            Console.WriteLine(businessId);
+            order.BusinessId = user.BusinessId;
 
             if (!ModelState.IsValid)
             {

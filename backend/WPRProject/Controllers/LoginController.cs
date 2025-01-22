@@ -50,12 +50,11 @@ namespace WPRProject.Controllers
 
                 if (customer is BusinessEmployee businessCustomer && !string.IsNullOrEmpty(businessCustomer.Role))
                 {
-                    claims.Add(new Claim(ClaimTypes.Role, businessCustomer.Role)); // Add BusinessEmployee role
-                    claims.Add(new Claim("BusinessId", businessCustomer.BusinessId.ToString()));
+                    claims.Add(new Claim(ClaimTypes.Role, businessCustomer.Role));
                 }
                 else if (customer is Individual)
                 {
-                    claims.Add(new Claim(ClaimTypes.Role, "Individual")); // Add Individual role
+                    claims.Add(new Claim(ClaimTypes.Role, "Individual"));
                 }
 
                 return GenerateAndSetJwtToken(claims);
