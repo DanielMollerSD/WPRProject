@@ -17,7 +17,6 @@ namespace WPRProject.Controllers
             _context = context;
         }
 
-        // GET: api/SubOrder
         [HttpGet]
         public async Task<ActionResult<IEnumerable<object>>> GetOrders()
         {
@@ -38,7 +37,6 @@ namespace WPRProject.Controllers
             return Ok(orders);
         }
 
-        // GET: api/SubOrder/{Id}
         [HttpGet("{Id}")]
         public async Task<ActionResult<SubscriptionOrder>> GetOrder(int id)
         {
@@ -52,7 +50,6 @@ namespace WPRProject.Controllers
             return order;
         }
 
-        // POST: api/SubOrder
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateSubscriptionOrder([FromBody] SubscriptionOrder order)
@@ -64,7 +61,6 @@ namespace WPRProject.Controllers
             }
 
             var user = await _context.BusinessEmployee.FirstOrDefaultAsync(e => e.Email == userEmail);
-
             order.BusinessId = user.BusinessId;
 
             if (!ModelState.IsValid)
@@ -74,19 +70,41 @@ namespace WPRProject.Controllers
 
             try
             {
+                var existingApprovedOrder = await _context.SubscriptionOrder
+                    .Where(o => o.BusinessId == user.BusinessId && o.Status == "Approved")
+                    .FirstOrDefaultAsync();
+
+                if (existingApprovedOrder != null)
+                    {
+                        if (existingApprovedOrder.SubscriptionId == order.SubscriptionId)
+                        {
+                            return BadRequest(new { Message = "An approved subscription already exists for the same subscription. You cannot create a new order." });
+                        }
+                        else
+                        {
+                            _context.SubscriptionOrder.Remove(existingApprovedOrder);
+                        }
+                    }
+
+                var existingOrder = await _context.SubscriptionOrder
+                    .Where(o => o.BusinessId == user.BusinessId && o.Status == "Pending")
+                    .FirstOrDefaultAsync();
+
+                if (existingOrder != null)
+                {
+                    _context.SubscriptionOrder.Remove(existingOrder);
+                }
+
+                // Set the new order status to Active
+                order.Status = "Pending";
                 _context.SubscriptionOrder.Add(order);
                 await _context.SaveChangesAsync();
 
                 return CreatedAtAction(nameof(GetOrder), new { id = order.Id }, order);
-
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new
-                {
-                    message = "An error occurred while creating the subscription order.",
-                    details = ex.Message
-                });
+                return StatusCode(500, new { message = "An error occurred", details = ex.Message });
             }
         }
     
@@ -143,6 +161,37 @@ namespace WPRProject.Controllers
                     details = ex.Message
                 });
             }
+        }
+
+        [Authorize]
+        [HttpDelete("delete-active")]
+        public async Task<IActionResult> DeleteActiveSubscription()
+        {
+            var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                return Unauthorized(new { Message = "User is not authenticated." });
+            }
+
+            var user = await _context.BusinessEmployee.FirstOrDefaultAsync(e => e.Email == userEmail);
+            if (user == null)
+            {
+                return NotFound(new { Message = "User not found." });
+            }
+
+            var existingOrder = await _context.SubscriptionOrder
+                .Where(o => o.BusinessId == user.BusinessId && (o.Status == "Pending" || o.Status == "Approved"))
+                .FirstOrDefaultAsync();
+
+            if (existingOrder == null)
+            {
+                return NotFound(new { Message = "No active subscription found." });
+            }
+
+            _context.SubscriptionOrder.Remove(existingOrder);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
 
     }
