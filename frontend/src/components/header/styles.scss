@@ -120,7 +120,6 @@
         .header {
             header {
                 nav {
-                    justify-content: center;
                     a {
                         margin-left: 0;
                         &:hover {
@@ -143,6 +142,7 @@
         .header {
             header {
                 nav {
+                    justify-content: center;
                     flex-direction: column;
                     gap: 0;
                     a {

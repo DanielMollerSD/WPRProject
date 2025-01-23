@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Authorization;
 using WPRProject.Tables;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Security.Claims;
+using System.Text.Json;
+using WPRProject.DTOS;
 
 namespace WPRProject.Controllers
 {
@@ -41,7 +44,7 @@ namespace WPRProject.Controllers
         }
 
         // POST a new rent (Authenticated users)
-        [Authorize(Roles = "Backoffice")]
+        [Authorize(Roles = "Backoffice , Individual , Medewerker")]
         [HttpPost]
         public async Task<IActionResult> CreateRent([FromBody] Rent rent)
         {
@@ -65,6 +68,21 @@ namespace WPRProject.Controllers
             {
                 return Conflict("The vehicle is already rented for the specified period.");
             }
+
+            if (rent.StartDate >= rent.EndDate)
+            {
+                return BadRequest(new { errors = new { DateRange = "Start date must be before end date." } });
+            }
+
+            var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                return Unauthorized(new { Message = "User is not authenticated." });
+            }
+
+            var user = await _context.Customer.FirstOrDefaultAsync(e => e.Email == userEmail);
+
+            rent.CustomerId = user.Id;
 
             try
             {
@@ -110,6 +128,56 @@ namespace WPRProject.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(rent);
+        }
+
+        [Authorize(Roles = "Backoffice")]
+        [HttpGet("requests")]
+        public async Task<ActionResult<IEnumerable<object>>> GetAllRentRequests()
+        {
+            // Include both Vehicle and Customer
+            var rents = await _context.Rent
+                .Include(r => r.Vehicle)
+                .Include(r => r.Customer)
+                .ToListAsync();
+
+            if (rents == null)
+            {
+                return NotFound();
+            }
+
+            var rentRequests = rents.Select(rent => new
+            {
+                rent.Id,
+                rent.StartDate,
+                rent.EndDate,
+                rent.TravelPurpose,
+                rent.FurthestDestination,
+                rent.ExpectedDistance,
+                Vehicle = rent.Vehicle,
+                Customer = rent.Customer switch
+                {
+                    Individual individual => new RentRequestsDto
+                    {
+                        FirstName = individual.FirstName,
+                        LastName = individual.LastName,
+                        Email = individual.Email,
+                        PhoneNumber = individual.PhoneNumber,
+                        Address = individual.Address
+                    },
+                    BusinessEmployee businessEmployee => new RentRequestsDto
+                    {
+                        FirstName = businessEmployee.FirstName,
+                        LastName = businessEmployee.LastName,
+                        Email = businessEmployee.Email,
+                    },
+                    _ => null
+                },
+                TotalPrice = rent.Vehicle != null && rent.StartDate != default && rent.EndDate != default
+                ? (rent.EndDate - rent.StartDate).Days * rent.Vehicle.Price : 0,
+                rent.Status,
+            }).ToList();
+
+            return Ok(rentRequests);
         }
     }
 }

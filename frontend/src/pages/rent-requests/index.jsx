@@ -5,18 +5,15 @@ const Rentrequests = () => {
   const [rents, setRents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const apiBaseUrl = "https://localhost:7265/api/rent";
 
-  // Fetch rent requests on component mount
   useEffect(() => {
     const fetchRentDetails = async () => {
       try {
-        const response = await axios.get(apiBaseUrl, {
+        const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/rent/requests`, {
           withCredentials: true,
         });
 
-        console.log(response); // Debugging
-        setRents(response.data.$values || []); // Gebruik fallback voor data
+        setRents(response.data.$values || []);
         setLoading(false);
       } catch (err) {
         setError("Error: " + (err.response?.data?.message || err.message));
@@ -27,21 +24,17 @@ const Rentrequests = () => {
     fetchRentDetails();
   }, []);
 
-  // Update the status of a rent request
   const updateStatus = async (rentId, newStatus) => {
     try {
       const response = await axios.patch(
-        `${apiBaseUrl}/${rentId}/status`,
-        newStatus, // Stuur de status direct als string
+        `${import.meta.env.VITE_APP_API_URL}/rent/${rentId}/status`,
+        newStatus,
         {
-          headers: {
-            "Content-Type": "application/json", // Zorg voor juiste content type
-          },
-          withCredentials: true, // Verzend cookies indien nodig
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
         }
       );
 
-      // Update the local rent list
       setRents((prevRents) =>
         prevRents.map((rent) =>
           rent.id === response.data.id ? response.data : rent
@@ -93,11 +86,11 @@ const Rentrequests = () => {
               .map((rent) => (
                 <tr key={rent.id}>
                   <td>{rent.id}</td>
-                  <td>{rent.vehicle?.name || "Unknown"}</td>
+                  <td>{rent.vehicle?.brand + " " + rent.vehicle?.model || "Unknown"}</td>
                   <td>{new Date(rent.startDate).toLocaleDateString()}</td>
                   <td>{new Date(rent.endDate).toLocaleDateString()}</td>
-                  <td>{rent.firstName}</td>
-                  <td>{rent.lastName}</td>
+                  <td>{rent.customer?.firstName}</td>
+                  <td>{rent.customer?.lastName}</td>
                   <td>{rent.status}</td>
                   <td>
                     <button

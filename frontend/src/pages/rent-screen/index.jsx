@@ -7,28 +7,23 @@ function RentScreen() {
   const { id } = useParams();
   const [vehicle, setVehicle] = useState(null);
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    address: "",
     travelPurpose: "",
     furthestDestination: "",
     expectedDistance: "",
-    pickupLocation: "",
-    pickupTime: "",
-    safetyInstructions: "",
     startDate: "",
     endDate: "",
   });
 
   useEffect(() => {
-    // Fetch
     async function fetchVehicle() {
       try {
-        const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/Vehicle/${id}`);
-        if (!response.ok) throw new Error("Vehicle not found");
-        const data = await response.json();
-        setVehicle(data);
-      } catch (error) {
+        const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/Vehicle/${id}`, {
+          withCredentials: true
+        });
+
+        setVehicle(response.data || []);
+        setLoading(false);
+      } catch (e) {
         console.error("Error fetching vehicle:", error.message);
       }
     }
@@ -41,14 +36,13 @@ function RentScreen() {
     setFormData({ ...formData, [name]: value });
   };
 
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const rentData = {
       ...formData,
       vehicleId: parseInt(id, 10),
       expectedDistance: parseFloat(formData.expectedDistance),
-      //pickupTime: new Date(formData.pickupTime).toISOString(),
       startDate: new Date(formData.startDate).toISOString(),
       endDate: new Date(formData.endDate).toISOString(),
     };
@@ -56,13 +50,14 @@ function RentScreen() {
 
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_APP_API_URL}/Rent`,
+        `${import.meta.env.VITE_APP_API_URL}/rent`,
         rentData,
         {
+          headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }
       );
-      
+
       if (response.status === 200 || response.status === 201) {
         alert("Rental successfully created!");
       } else {
@@ -88,18 +83,6 @@ function RentScreen() {
             <h1>Rent {vehicle.brand} {vehicle.model}</h1>
             <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <label>First Name:</label>
-                <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} required />
-              </div>
-              <div className="form-group">
-                <label>Last Name:</label>
-                <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} required />
-              </div>
-              <div className="form-group">
-                <label>Address:</label>
-                <input type="text" name="address" value={formData.address} onChange={handleChange} required />
-              </div>
-              <div className="form-group">
                 <label>Travel Purpose:</label>
                 <input type="text" name="travelPurpose" value={formData.travelPurpose} onChange={handleChange} required />
               </div>
@@ -110,18 +93,6 @@ function RentScreen() {
               <div className="form-group">
                 <label>Expected Distance (km):</label>
                 <input type="number" name="expectedDistance" value={formData.expectedDistance} onChange={handleChange} required />
-              </div>
-              <div className="form-group">
-                <label>Pickup Location:</label>
-                <input type="text" name="pickupLocation" value={formData.pickupLocation} onChange={handleChange} required />
-              </div>
-              <div className="form-group">
-                <label>Pickup Time:</label>
-                <input type="datetime-local" name="pickupTime" value={formData.pickupTime} onChange={handleChange} required />
-              </div>
-              <div className="form-group">
-                <label>Safety Instructions:</label>
-                <textarea name="safetyInstructions" value={formData.safetyInstructions} onChange={handleChange}></textarea>
               </div>
               <div className="form-group">
                 <label>Start Date:</label>

@@ -12,7 +12,7 @@ using WPRProject;
 namespace WPRProject.Migrations
 {
     [DbContext(typeof(CarsAndAllContext))]
-    [Migration("20250122161722_InitialCreate")]
+    [Migration("20250123232933_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -170,10 +170,6 @@ namespace WPRProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
@@ -183,26 +179,7 @@ namespace WPRProject.Migrations
                     b.Property<int>("ExpectedDistance")
                         .HasColumnType("int");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("FurthestDestination")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PickupLocation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("PickupTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("SafetyInstructions")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

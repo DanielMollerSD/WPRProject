@@ -5,30 +5,21 @@ const RentOverview = () => {
   const [rents, setRents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [editMode, setEditMode] = useState(null); // Keeps track of which rent request is in edit mode
+  const [editMode, setEditMode] = useState(null);
 
-  const apiBaseUrl = "https://localhost:7265/api/rent"; // Ensure this URL points to your API
-
-  // Fetch all rent requests when the component loads
   useEffect(() => {
     const fetchRentDetails = async () => {
       try {
-        const response = await axios.get(apiBaseUrl, {
-          withCredentials: true, // Send cookies if required
+        const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/rent/requests`, {
+          withCredentials: true,
         });
 
-        console.log("API response:", response.data); // Log full API response for debugging
-        if (response.data?.$values) {
-          setRents(response.data.$values); // If data is in $values, use it
-        } else {
-          setRents(response.data); // Otherwise, use the data directly
-        }
-
-        setLoading(false); // Turn off loading state
+        setRents(response.data.$values || []);
+        setLoading(false);
       } catch (err) {
         console.error("Error fetching rent details:", err);
         setError(err.response?.data?.message || "An error occurred while fetching data");
-        setLoading(false); // Turn off loading state
+        setLoading(false);
       }
     };
 
@@ -39,12 +30,10 @@ const RentOverview = () => {
   const updateStatus = async (rentId, newStatus) => {
     try {
       const response = await axios.patch(
-        `${apiBaseUrl}/${rentId}/status`,
-        JSON.stringify(newStatus), // Send the new status as a JSON string
+        `${import.meta.env.VITE_APP_API_URL}/rent/${rentId}/status`,
+        newStatus,
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }
       );
@@ -97,8 +86,6 @@ const RentOverview = () => {
             <th>Phone</th>
             <th>Total Price</th>
             <th>Status</th>
-            <th>Pickup Location</th>
-            <th>Dropoff Location</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -107,17 +94,15 @@ const RentOverview = () => {
             rents.map((rent) => (
               <tr key={rent.id}>
                 <td>{rent.id}</td>
-                <td>{rent.vehicle ? rent.vehicle.name : "Unknown"}</td>
+                <td>{rent.vehicle?.brand + " " + rent.vehicle?.model || "Unknown"}</td>
                 <td>{new Date(rent.startDate).toLocaleDateString()}</td>
                 <td>{new Date(rent.endDate).toLocaleDateString()}</td>
-                <td>{rent.firstName}</td>
-                <td>{rent.lastName}</td>
-                <td>{rent.email}</td>
-                <td>{rent.phone}</td>
-                <td>{rent.totalPrice ? `€${rent.totalPrice}` : "Not set"}</td>
+                <td>{rent.customer?.firstName}</td>
+                <td>{rent.customer?.lastName}</td>
+                <td>{rent.customer?.email}</td>
+                <td>{rent.customer?.phoneNumber || "Not set"}</td>
+                <td>{rent.totalPrice}</td>
                 <td>{rent.status}</td>
-                <td>{rent.pickupLocation || "Not specified"}</td>
-                <td>{rent.dropoffLocation || "Not specified"}</td>
                 <td>
                   {/* Button to toggle edit mode */}
                   <button
