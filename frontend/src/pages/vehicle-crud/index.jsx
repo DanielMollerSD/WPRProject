@@ -1,6 +1,7 @@
 import './styles.scss';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function VehicleCRUD() {
     const [vehicles, setVehicles] = useState([]);
@@ -16,14 +17,15 @@ function VehicleCRUD() {
         vehicleType: ''
     });
     const [isEditing, setIsEditing] = useState(false);
-    const [isFormVisible, setIsFormVisible] = useState(false); // Manage the visibility of the form
+    const [isFormVisible, setIsFormVisible] = useState(false);
 
     // Fetch all vehicles
     async function fetchVehicles() {
         try {
-            const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/Vehicle`);
-            const data = await response.json();
-            setVehicles(data);
+            const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/Vehicle`, {
+                withCredentials: true
+            });
+            setVehicles(response.data.$values || response.data);
         } catch (error) {
             console.error('Failed to fetch vehicles', error);
         }
@@ -33,18 +35,15 @@ function VehicleCRUD() {
         fetchVehicles();
     }, []);
 
-    // Handle form input changes
     const handleChange = (e) => {
         const { name, value } = e.target;
         setForm({ ...form, [name]: value });
     };
 
-    // Create or Update vehicle
+    // Create or Update
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Submitting vehicle data:', form);
 
-        // Validate form fields
         if (!form.licensePlate || !form.brand || !form.model || !form.price || !form.purchaseYear || !form.vehicleType) {
             alert('Alle velden zijn verplicht!');
             return;
@@ -61,25 +60,32 @@ function VehicleCRUD() {
         }
 
         try {
-            const method = isEditing ? 'PUT' : 'POST';
             const url = isEditing
                 ? `${import.meta.env.VITE_APP_API_URL}/Vehicle/${form.id}`
                 : `${import.meta.env.VITE_APP_API_URL}/Vehicle`;
 
-            const response = await fetch(url, {
-                method,
+            const method = isEditing ? axios.put : axios.post;
+            await method(url, form, {
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(form),
+                withCredentials: true
             });
 
-            if (!response.ok) throw new Error('Failed to save vehicle');
-
-            setForm({ id: null, licensePlate: '', brand: '', model: '', color: '', status: '', note: '', price: 0, purchaseYear: 0, vehicleType: '' });
+            setForm({
+                licensePlate: '',
+                brand: '',
+                model: '',
+                color: '',
+                status: '',
+                note: '',
+                price: 0,
+                purchaseYear: 0,
+                vehicleType: ''
+            });
             setIsEditing(false);
-            setIsFormVisible(false); // Hide the form after submission
+            setIsFormVisible(false);
             fetchVehicles();
         } catch (error) {
-            console.error(error);
+            console.error('Error saving vehicle:', error);
             alert('Er is iets misgegaan bij het opslaan van het voertuig');
         }
     };
@@ -88,7 +94,7 @@ function VehicleCRUD() {
     const handleEdit = (vehicle) => {
         setForm(vehicle);
         setIsEditing(true);
-        setIsFormVisible(true); // Show form when editing
+        setIsFormVisible(true);
     };
 
     // Delete vehicle
@@ -96,41 +102,56 @@ function VehicleCRUD() {
         if (!window.confirm('Weet je zeker dat je dit voertuig wilt verwijderen?')) return;
 
         try {
-            const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/Vehicle/${id}`, { method: 'DELETE' });
-
-            if (!response.ok) throw new Error('Failed to delete vehicle');
-
+            await axios.delete(`${import.meta.env.VITE_APP_API_URL}/Vehicle/${id}`, {
+                withCredentials: true
+            });
             fetchVehicles();
         } catch (error) {
-            console.error(error);
+            console.error('Error deleting vehicle:', error);
         }
     };
 
-    // Show the form for adding a new vehicle
     const handleAddNewVehicle = () => {
         setIsFormVisible(true);
         setIsEditing(false);
-        setForm({ licensePlate: '', brand: '', model: '', color: '', status: '', note: '', price: 0, purchaseYear: 0, vehicleType: '' });
+        setForm({
+            licensePlate: '',
+            brand: '',
+            model: '',
+            color: '',
+            status: '',
+            note: '',
+            price: 0,
+            purchaseYear: 0,
+            vehicleType: ''
+        });
     };
 
-    // Hide the form (cancel button or after submission)
     const handleCancel = () => {
         setIsFormVisible(false);
-        setForm({ licensePlate: '', brand: '', model: '', color: '', status: '', note: '', price: 0, purchaseYear: 0, vehicleType: '' });
+        setForm({
+            licensePlate: '',
+            brand: '',
+            model: '',
+            color: '',
+            status: '',
+            note: '',
+            price: 0,
+            purchaseYear: 0,
+            vehicleType: ''
+        });
     };
 
     return (
         <div className="page page-vehicle-crud">
             <div className="container">
                 <div className="crud-content">
-                    {/* Add New Vehicle Button */}
                     {!isFormVisible && (
                         <button onClick={handleAddNewVehicle} className="add-vehicle-button">
                             <span>+</span> Voeg Voertuig Toe
                         </button>
                     )}
 
-                    {/* Vehicle Form */}
                     {isFormVisible && (
                         <div>
                             <h2>{isEditing ? 'Bewerk Voertuig' : 'Nieuw Voertuig Toevoegen'}</h2>
@@ -144,12 +165,8 @@ function VehicleCRUD() {
                                 <input type="number" name="price" placeholder="Prijs" value={form.price} onChange={handleChange} required />
                                 <input type="number" name="purchaseYear" placeholder="Koop Jaar" value={form.purchaseYear} onChange={handleChange} required />
                                 <input type="text" name="vehicleType" placeholder="Type" value={form.vehicleType} onChange={handleChange} required />
-                                <button type="submit" className="save-button">
-                                    {isEditing ? 'Bewerk Opslaan' : 'Nieuw Opslaan'}
-                                </button>
-                                <button type="button" className="cancel-button" onClick={handleCancel}>
-                                    Annuleren
-                                </button>
+                                <button type="submit" className="save-button">{isEditing ? 'Bewerk Opslaan' : 'Nieuw Opslaan'}</button>
+                                <button type="button" className="cancel-button" onClick={handleCancel}>Annuleren</button>
                             </form>
                         </div>
                     )}
@@ -168,17 +185,11 @@ function VehicleCRUD() {
                                                 <div className="tag"><strong>Prijs:</strong> €{vehicle.price}</div>
                                                 <div className="tag"><strong>Status:</strong> {vehicle.status}</div>
                                             </div>
-                                            <button className="edit-button" onClick={() => handleEdit(vehicle)}>
-                                                Bewerk
-                                            </button>
-                                            <button className="delete-button" onClick={() => handleDelete(vehicle.id)}>
-                                                Verwijder
-                                            </button>
-                                        
-                                            <Link to={`/backoffice-damage/${vehicle.id}`} >
+                                            <button className="edit-button" onClick={() => handleEdit(vehicle)}>Bewerk</button>
+                                            <button className="delete-button" onClick={() => handleDelete(vehicle.id)}>Verwijder</button>
+                                            <Link to={`/backoffice-damage/${vehicle.id}`}>
                                                 <button className="btn btn-primary">Bekijk</button>
                                             </Link>
-
                                         </div>
                                     </div>
                                 </div>
