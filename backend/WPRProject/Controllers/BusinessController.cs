@@ -228,6 +228,7 @@ public async Task<IActionResult> Register([FromBody] BusinessEmployeeRegisterDto
     }
 }
         // Update business details
+        [Authorize (Roles = "Owner")]
         [HttpPut("updateBusiness")]
         public async Task<ActionResult> UpdateBusiness([FromBody] UpdateBusinessDto updateBusinessDto)
         {
