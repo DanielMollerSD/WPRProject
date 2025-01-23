@@ -17,7 +17,6 @@ namespace WPRProject.Controllers
             _context = context;
         }
 
-        // GET: api/SubOrder
         [HttpGet]
         public async Task<ActionResult<IEnumerable<object>>> GetOrders()
         {
@@ -38,7 +37,6 @@ namespace WPRProject.Controllers
             return Ok(orders);
         }
 
-        // GET: api/SubOrder/{Id}
         [HttpGet("{Id}")]
         public async Task<ActionResult<SubscriptionOrder>> GetOrder(int id)
         {
@@ -52,7 +50,6 @@ namespace WPRProject.Controllers
             return order;
         }
 
-        // POST: api/SubOrder
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateSubscriptionOrder([FromBody] SubscriptionOrder order)
@@ -73,17 +70,22 @@ namespace WPRProject.Controllers
 
             try
             {
-                // Check for an existing approved subscription
                 var existingApprovedOrder = await _context.SubscriptionOrder
                     .Where(o => o.BusinessId == user.BusinessId && o.Status == "Approved")
                     .FirstOrDefaultAsync();
 
                 if (existingApprovedOrder != null)
-                {
-                    return BadRequest(new { Message = "An approved subscription already exists. You cannot create a new order." });
-                }
+                    {
+                        if (existingApprovedOrder.SubscriptionId == order.SubscriptionId)
+                        {
+                            return BadRequest(new { Message = "An approved subscription already exists for the same subscription. You cannot create a new order." });
+                        }
+                        else
+                        {
+                            _context.SubscriptionOrder.Remove(existingApprovedOrder);
+                        }
+                    }
 
-                // Check for an existing active subscription
                 var existingOrder = await _context.SubscriptionOrder
                     .Where(o => o.BusinessId == user.BusinessId && o.Status == "Pending")
                     .FirstOrDefaultAsync();
