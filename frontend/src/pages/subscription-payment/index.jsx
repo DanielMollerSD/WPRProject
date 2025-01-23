@@ -13,7 +13,7 @@ function SubscriptionPayment() {
     const handleConfirm = async () => {
         setLoading(true);
         setError(null);
-
+    
         try {
             const response = await axios.post(
                 `${import.meta.env.VITE_APP_API_URL}/SubOrder`,
@@ -25,7 +25,7 @@ function SubscriptionPayment() {
                 },
                 { withCredentials: true }
             );
-
+    
             console.log("Subscription order created successfully:", response.data);
             alert("Subscription purchased successfully!");
             navigate("/subscription-select");
@@ -37,11 +37,11 @@ function SubscriptionPayment() {
             setLoading(false);
         }
     };
-
+    
     const handleCancel = () => {
         navigate("/subscription-select");
     };
-
+    
     return (
         <div className="page payment-page">
             <div className="payment-container">
