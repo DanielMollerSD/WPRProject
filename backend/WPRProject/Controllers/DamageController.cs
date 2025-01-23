@@ -16,7 +16,7 @@ namespace WPRProject.Controllers
             _context = context;
         }
 
-        [Authorize(Roles = "Frontoffice")]
+        [Authorize(Roles = "Backoffice, Frontoffice")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Damage>>> GetDamages()
         {
@@ -87,8 +87,8 @@ namespace WPRProject.Controllers
         }
 
         [Authorize(Roles = "Backoffice")]
-        [HttpPut("{id}/pending")]
-        public async Task<IActionResult> SetDamageToPending(int id)
+        [HttpPut("{id}/decline")]
+        public async Task<IActionResult> DeclineDamage(int id)
         {
             var damage = await _context.Damage.FindAsync(id);
 
@@ -97,7 +97,7 @@ namespace WPRProject.Controllers
                 return NotFound(new { Message = "Damage not found" });
             }
 
-            damage.Status = "Pending";
+            damage.Status = "Declined";
             await _context.SaveChangesAsync();
 
             return Ok(damage);

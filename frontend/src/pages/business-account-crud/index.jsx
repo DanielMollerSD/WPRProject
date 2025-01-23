@@ -10,7 +10,7 @@ function BusinessCRUD() {
   const [error, setError] = useState(null);
 
   const [employees, setEmployees] = useState([]);
-  const [currentAccount, setCurrentAccount] = useState(null); // To store logged-in account info
+  const [currentAccount, setCurrentAccount] = useState(null);
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -28,47 +28,38 @@ function BusinessCRUD() {
     password1Ref.current.type = type1;
   };
 
-  // Fetch the current account data
   useEffect(() => {
     const fetchCurrentAccount = () => {
       setLoading(true);
       setError(null);
 
       axios
-        .get("https://localhost:7265/api/Customer", {
-          withCredentials: true, // Include cookies with the request
+        .get(`${import.meta.env.VITE_APP_API_URL}/Customer`, {
+          withCredentials: true,
         })
         .then((response) => {
-          console.log("Fetched current account:", response.data); // Log response data
           if (!response.data) {
             throw new Error("No account data returned");
           }
-          setData(response.data); // Set the fetched data
-          setCurrentAccount(response.data); // Store the logged-in account info
-          setLoading(false);
+          setData(response.data);
+          setCurrentAccount(response.data); 
         })
         .catch((error) => {
-          console.log("Error fetching current account:", error);
-          setError(error.message); // Handle the error
-          setLoading(false);
-        });
+          setError(error.message); 
+        })
+        .finally(() => setLoading(false));
     };
 
     fetchCurrentAccount();
   }, []);
 
-  // Fetch all employees
   const fetchEmployees = async () => {
-    if (!currentAccount) {
-      console.log("currentAccount is null, skipping employee fetch.");
-      return;
-    }
+    if (!currentAccount) return;
 
     try {
       const token = localStorage.getItem("access_token");
-
       const response = await axios.get(
-        "https://localhost:7265/api/Business/employees",
+        `${import.meta.env.VITE_APP_API_URL}/Business/employees`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -77,60 +68,31 @@ function BusinessCRUD() {
         }
       );
 
-      console.log("Employee data fetched:", response.data);
-
-      if (
-        response.data &&
-        response.data.employees &&
-        Array.isArray(response.data.employees.$values)
-      ) {
-        const employees = response.data.employees.$values;
-
-        // Filter out employees with role 'owner' and match businessId
-        const filteredEmployees = employees
-          .filter(
-            (employee) =>
-              employee.businessId === currentAccount.businessId &&
-              employee.role !== "Owner"
-           // Exclude employees with 'Owner' role
-          )
-          .map((employee) => ({
-            ...employee,
-            businessName: currentAccount.businessName, // Add businessName from currentAccount
-          }));
-
-        setEmployees(filteredEmployees);
-
-        console.log(
-          "Current account businessName:",
-          currentAccount.businessName
+      if (response.data && response.data.employees) {
+        const filteredEmployees = response.data.employees.$values.filter(
+          (employee) =>
+            employee.businessId === currentAccount.businessId &&
+            employee.role !== "Owner"
         );
-      } else {
-        throw new Error("Invalid data format");
+        setEmployees(filteredEmployees);
       }
     } catch (error) {
-      console.error("Failed to fetch employees:", error);
       setError("Failed to fetch employees. Please try again.");
     }
   };
 
-  // Call fetchEmployees within useEffect
   useEffect(() => {
     fetchEmployees();
   }, [currentAccount]);
 
-  // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
 
-  // Handle form submission
-  // Handle Create or Update Employee
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Ensure the account data is fetched before proceeding
     if (!currentAccount) {
       alert("Accountgegevens laden nog. Probeer het opnieuw.");
       return;
@@ -145,34 +107,21 @@ function BusinessCRUD() {
       password: form.password,
     };
 
-    if (
-      !filledForm.firstName ||
-      !filledForm.lastName ||
-      !filledForm.email ||
-      !filledForm.password
-    ) {
+    if (!filledForm.firstName || !filledForm.lastName || !filledForm.email || !filledForm.password) {
       alert("Alle velden zijn verplicht!");
       return;
     }
 
     try {
       setLoading(true);
-      setError(null);
-
       if (isEditing) {
-        // Update Employee (PUT request)
-        const response = await axios.put(
-          `https://localhost:7265/api/Business/updateEmployee/${form.id}`, // Pass the employee ID in the URL
+        await axios.put(
+          `${import.meta.env.VITE_APP_API_URL}/Business/updateEmployee/${form.id}`,
           filledForm,
-          {
-            withCredentials: true,
-          }
+          { withCredentials: true }
         );
-
-        console.log("User data updated:", response.data);
       } else {
-        // Create Employee (POST request)
-        const response = await axios.post(
+        await axios.post(
           `${import.meta.env.VITE_APP_API_URL}/Business/register-employee`,
           filledForm,
           {
@@ -180,8 +129,6 @@ function BusinessCRUD() {
             withCredentials: true,
           }
         );
-
-        console.log("Employee created:", response.data);
       }
 
       setForm({
@@ -194,43 +141,34 @@ function BusinessCRUD() {
       });
       setIsEditing(false);
       setIsFormVisible(false);
-      fetchEmployees(); // Refresh the employee list after successful operation
+      fetchEmployees(); // Refresh
     } catch (error) {
-      alert(error.response.data.message);
+      alert(error.response?.data?.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
   };
 
-  // Edit employee
   const handleEdit = (employee) => {
     setForm(employee);
     setIsEditing(true);
     setIsFormVisible(true);
   };
 
-  // Delete employee
   const handleDelete = async (id) => {
-    if (
-      !window.confirm("Weet je zeker dat je deze medewerker wilt verwijderen?")
-    )
-      return;
+    if (!window.confirm("Weet je zeker dat je deze medewerker wilt verwijderen?")) return;
 
     try {
-      const response = await fetch(
+      const response = await axios.delete(
         `${import.meta.env.VITE_APP_API_URL}/Business/${id}`,
-        { method: "DELETE" }
+        { withCredentials: true }
       );
-
-      if (!response.ok) throw new Error("Failed to delete employee");
-
       fetchEmployees();
     } catch (error) {
       console.error(error);
     }
   };
 
-  // Show the form for adding a new employee
   const handleAddNewEmployee = () => {
     setIsFormVisible(true);
     setIsEditing(false);
@@ -244,7 +182,6 @@ function BusinessCRUD() {
     });
   };
 
-  // Hide the form (cancel button or after submission)
   const handleCancel = () => {
     setIsFormVisible(false);
     setForm({
@@ -266,17 +203,13 @@ function BusinessCRUD() {
               onClick={handleAddNewEmployee}
               className="add-business-account-button"
             >
-            + Voeg Medewerker toe
+              + Voeg Medewerker toe
             </button>
           )}
 
           {isFormVisible && (
             <div>
-              <h2>
-                {isEditing
-                  ? "Bewerk Medewerker"
-                  : "Nieuwe Medewerker Toevoegen"}
-              </h2>
+              <h2>{isEditing ? "Bewerk Medewerker" : "Nieuwe Medewerker Toevoegen"}</h2>
               <form className="employee-form" onSubmit={handleSubmit}>
                 <input
                   type="text"
@@ -355,8 +288,7 @@ function BusinessCRUD() {
                   <div className="card">
                     <div className="card-body">
                       <h5 className="card-title">
-                        {employee.firstName} {employee.tussenVoegsel}{" "}
-                        {employee.lastName}
+                        {employee.firstName} {employee.tussenVoegsel} {employee.lastName}
                       </h5>
                       <p className="card-description">{employee.email}</p>
                       <div className="tags">
@@ -364,16 +296,10 @@ function BusinessCRUD() {
                           <strong>Rol:</strong> {employee.role}
                         </div>
                       </div>
-                      <button
-                        className="edit-button"
-                        onClick={() => handleEdit(employee)}
-                      >
+                      <button className="edit-button" onClick={() => handleEdit(employee)}>
                         Bewerken
                       </button>
-                      <button
-                        className="delete-button"
-                        onClick={() => handleDelete(employee.id)}
-                      >
+                      <button className="delete-button" onClick={() => handleDelete(employee.id)}>
                         Verwijderen
                       </button>
                     </div>

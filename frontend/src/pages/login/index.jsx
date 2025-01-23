@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';  
+import axios from "axios";
 
 import "./styles.scss";
 
@@ -10,36 +11,29 @@ function Login() {
     const navigate = useNavigate(); 
 
     const handleLogin = async (event) => {
-        event.preventDefault(); 
+        event.preventDefault();
 
-        const response = await fetch("https://localhost:7265/api/Login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                email: email,
-                password: password,
-            }),
-            credentials: "include", 
-        });
+        try {
+            const response = await axios.post(
+                `${import.meta.env.VITE_APP_API_URL}/Login`,
+                {
+                    email,
+                    password,
+                },
+                { withCredentials: true }
+            );
 
-        if (response.ok) {
-            try {
-                const data = await response.json();
-                localStorage.setItem("access_token", data.token);
-                navigate('/vehicle-overview');  
-            } catch (error) {
-                console.error("Error parsing the response JSON", error);
-                setError("Something went wrong while processing the login.");
+            if (response.status === 200) {
+                const { token } = response.data;
+                localStorage.setItem("access_token", token);
+                navigate('/vehicle-overview');
             }
-        } else {
-            try {
-                const errorData = await response.json();
-                setError(errorData.Message || "Login failed. Please try again.");
-            } catch (error) {
-                console.error("Error parsing the error response JSON", error);
-                setError("Login failed. Please try again.");
+        } catch (error) {
+            if (error.response && error.response.data) {
+                setError(error.response.data.Message || "Login failed. Please try again.");
+            } else {
+                console.error("Error during login:", error);
+                setError("An unexpected error occurred. Please try again.");
             }
         }
     };
@@ -99,7 +93,6 @@ function Login() {
                     <div className="bgImgLogin"></div>
                 </div>
             </div>
-            
         </>
     );
 }

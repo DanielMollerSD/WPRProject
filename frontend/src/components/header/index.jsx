@@ -25,7 +25,7 @@ function Header() {
     }
 
     const handleLogout = () => {
-        axios.delete("https://localhost:7265/api/Logout", {
+        axios.delete(`${import.meta.env.VITE_APP_API_URL}/Logout`, {
             withCredentials: true,
         }).then((response) => {
             console.log("Logout successful", response);
@@ -54,41 +54,57 @@ function Header() {
                                 </>
                             )}
 
+
                             {isLoggedIn && userRole === "Individual" && (
                                 <>
                                     <Link to="/vehicle-overview">Voertuigen</Link>
                                     <Link to="/account-settings">Profiel</Link>
+
                                 </>
                             )}
 
-                            {isLoggedIn && userRole === "Backoffice" && (
-                                <>
-                                    <Link to="/rent-requests">Aanvragen</Link>
-                                    <Link to="/rent-overview">Overzicht</Link>
-                                    <Link to="/vehicle-crud">Voertuigen</Link>
-                                    <Link to="/frontoffice-crud">Frontoffice beheren</Link>
-                                    <Link to="/backoffice-privacy-page">Privacy beheren</Link>
-                                </>
-                            )}
-
-                            {isLoggedIn && userRole === "Frontoffice" && (
-                                <>
-                                    <Link to="/frontoffice-vehicle-overview">Vehicle overview</Link>
-                                </>
-                            )}
 
                             {isLoggedIn && userRole === "Owner" && (
                                 <>
                                     <Link to="/business-account-crud">Medewerkers</Link>
-                                    <Link to="/business-settings">Instellingen</Link>
+                                    <Link to="/business-settings">Profiel</Link>
                                 </>
                             )}
+
+
+                            {isLoggedIn && userRole === "Wagenparkbeheerder" && (
+                                <>
+                                    <Link to="/business-account-crud">Medewerkers</Link>
+                                    <Link to="/subscription-select">Abbonementen</Link>
+                                </>
+                            )}
+
 
                             {isLoggedIn && userRole === "Medewerker" && (
                                 <>
                                     <Link to="/vehicle-overview">Voertuigen</Link>
                                 </>
                             )}
+                            
+
+                            {isLoggedIn && userRole === "Backoffice" && (
+                                <>
+                                    <Link to="/rent-overview">Overzicht</Link>
+                                    <Link to="/rent-requests">Aanvragen</Link>
+                                    <Link to="/backoffice-subscription">Abbonementen</Link>
+                                    <Link to="/vehicle-crud">Voertuigen</Link>
+                                    <Link to="/frontoffice-crud">Frontoffice beheren</Link>
+                                    <Link to="/backoffice-privacy-page">Privacy beheren</Link>
+                                </>
+                            )}
+
+
+                            {isLoggedIn && userRole === "Frontoffice" && (
+                                <>
+                                    <Link to="/frontoffice-vehicle-overview">Voertuigen beheren</Link>
+                                </>
+                            )}
+
 
                             {isLoggedIn && (
                                 <>

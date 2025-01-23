@@ -1,25 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 import './styles.scss';
 
 function BackofficeVehicleDamage() {
   const { id } = useParams();
   const [vehicle, setVehicle] = useState(null);
-  const [damages, setDamages] = useState([]); 
+  const [damages, setDamages] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchVehicleAndDamages() {
       try {
-        // Fetch vehicle data
-        const vehicleResponse = await fetch(`${import.meta.env.VITE_APP_API_URL}/Vehicle/${id}`);
-        const vehicleData = await vehicleResponse.json();
-        setVehicle(vehicleData);
+        const [vehicleResponse, damageResponse] = await Promise.all([
+          axios.get(`${import.meta.env.VITE_APP_API_URL}/Vehicle/${id}`, {
+            withCredentials: true,
+          }),
+          axios.get(`${import.meta.env.VITE_APP_API_URL}/Damage/vehicle/${id}`, {
+            withCredentials: true,
+          })
+        ]);
 
-        // Fetch damages for the specific vehicle
-        const damageResponse = await fetch(`${import.meta.env.VITE_APP_API_URL}/Damage/vehicle/${id}`);
-        const damageData = await damageResponse.json();
-        setDamages(Array.isArray(damageData) ? damageData : []); //initialize
+        setVehicle(vehicleResponse.data);
+        setDamages(Array.isArray(damageResponse.data.$values) ? damageResponse.data.$values : []);
       } catch (error) {
         console.error("Error fetching data:", error.message);
       } finally {
@@ -30,47 +33,29 @@ function BackofficeVehicleDamage() {
     fetchVehicleAndDamages();
   }, [id]);
 
-  const handleApprove = async (damageId) => {
+  const updateDamageStatus = async (damageId, status) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/Damage/${damageId}/approve`, {
-        method: "PUT",
-      });
-      if (response.ok) {
-        const updatedDamage = await response.json();
-        setDamages((prevDamages) =>
-          prevDamages.map((damage) =>
-            damage.id === updatedDamage.id ? updatedDamage : damage
-          )
-        );
-        alert("Damage approved!");
-      } else {
-        alert("Error approving damage!");
-      }
-    } catch (error) {
-      console.error("Error approving damage:", error);
-      alert("Error approving damage!");
-    }
-  };
+      let url;
 
-  const handleSetPending = async (damageId) => {
-    try {
-      const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/Damage/${damageId}/pending`, {
-        method: "PUT",
-      });
-      if (response.ok) {
-        const updatedDamage = await response.json();
-        setDamages((prevDamages) =>
-          prevDamages.map((damage) =>
-            damage.id === updatedDamage.id ? updatedDamage : damage
-          )
-        );
-        alert("Damage set to Pending!");
-      } else {
-        alert("Error setting damage to Pending!");
+      if (status === "Approved") {
+        url = `${import.meta.env.VITE_APP_API_URL}/Damage/${damageId}/approve`;
+      } else if (status === "Decline") {
+        url = `${import.meta.env.VITE_APP_API_URL}/Damage/${damageId}/decline`;
       }
+
+      const response = await axios.put(url, {}, {
+        withCredentials: true,
+      });
+
+      setDamages((prevDamages) =>
+        prevDamages.map((damage) =>
+          damage.id === response.data.id ? response.data : damage
+        )
+      );
+      alert(`Damage ${status}!`);
     } catch (error) {
-      console.error("Error setting damage to Pending:", error);
-      alert("Error setting damage to Pending!");
+      console.error(`Error setting damage to ${status}:`, error);
+      alert(`Error setting damage to ${status}!`);
     }
   };
 
@@ -82,8 +67,10 @@ function BackofficeVehicleDamage() {
     <div className="vehicle-overview">
       {vehicle ? (
         <>
-          <h1>{vehicle.brand} {vehicle.model}</h1>
-          
+          <h1>
+            {vehicle.brand} {vehicle.model}
+          </h1>
+
           <div>
             <h2>Damages:</h2>
             {damages.length > 0 ? (
@@ -91,11 +78,20 @@ function BackofficeVehicleDamage() {
                 {damages.map((damage) => (
                   <li key={damage.id}>
                     {damage.description} - <strong>{damage.status}</strong>
-                    {damage.status !== 'Approved' && (
-                      <button onClick={() => handleApprove(damage.id)}>Approve</button>
-                    )}                  
-                    {damage.status !== 'Pending' && damage.status !== 'Approved' && (
-                      <button onClick={() => handleSetPending(damage.id)}>Set to pending</button>
+                    
+                    {(damage.status !== "Accepted" && damage.status !== "Declined") && (
+                      <>
+                        <button
+                          onClick={() => updateDamageStatus(damage.id, "Approved")}
+                        >
+                          Approve
+                        </button>
+                        <button
+                          onClick={() => updateDamageStatus(damage.id, "Decline")}
+                        >
+                          Decline
+                        </button>
+                      </>
                     )}
                   </li>
                 ))}
@@ -106,7 +102,7 @@ function BackofficeVehicleDamage() {
           </div>
         </>
       ) : (
-        <p>Vehicle details not found.</p>
+        <p>No vehicle damage.</p>
       )}
     </div>
   );

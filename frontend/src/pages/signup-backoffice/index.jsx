@@ -2,11 +2,12 @@ import "./styles.scss";
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function SignUpBackoffice() {
   const password1Ref = useRef(null);
   const password2Ref = useRef(null);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const togglePassword = () => {
     const type1 =
@@ -27,34 +28,30 @@ function SignUpBackoffice() {
     };
 
     console.log("Sending request to backend...");
-    console.log(
-      "Request URL:",
-      "https://localhost:7265/api/Employee/register-carsandall"
-    );
+    console.log("Request URL:", `${import.meta.env.VITE_APP_API_URL}/Employee/register-carsandall`);
     console.log("Request Body:", JSON.stringify(formData));
 
     try {
-      const response = await fetch(
-        "https://localhost:7265/api/Employee/register-carsandall",
+      const response = await axios.post(
+        `${import.meta.env.VITE_APP_API_URL}/Employee/register-carsandall`,
+        formData,
         {
-          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formData),
+          withCredentials: true,
         }
       );
 
       console.log("Response Status:", response.status);
       console.log("Response Headers:", response.headers);
 
-      if (response.ok) {
+      if (response.status === 200 || response.status === 201) {
         alert("Account created successfully!");
-        navigate("/login")
+        navigate("/login");
       } else {
-        const error = await response.json(); // Capture JSON response error
-        console.error("Error Response:", error);
-        alert(`Error: ${error?.message || "Unknown error occurred."}`);
+        console.error("Error Response:", response.data);
+        alert(`Error: ${response.data?.message || "Unknown error occurred."}`);
       }
     } catch (err) {
       console.error("Request failed:", err);

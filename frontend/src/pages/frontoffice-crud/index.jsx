@@ -31,7 +31,7 @@ function FrontofficeCRUD() {
       setError(null);
 
       axios
-        .get("https://localhost:7265/api/Employee", {
+        .get(`${import.meta.env.VITE_APP_API_URL}/Employee`, {
           withCredentials: true,
         })
         .then((response) => {
@@ -40,7 +40,7 @@ function FrontofficeCRUD() {
           setLoading(false);
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
           setError(error.message);
           setLoading(false);
         });
@@ -59,12 +59,11 @@ function FrontofficeCRUD() {
         }
       );
 
-      // Check if the response contains the $values key and that it's an array
       if (response.data && Array.isArray(response.data.$values)) {
         const frontofficeEmployees = response.data.$values.filter(
           (employee) => employee.role === "Frontoffice"
         );
-        setEmployees(frontofficeEmployees); // Use the filtered array
+        setEmployees(frontofficeEmployees);
       } else {
         console.error("Expected an array but received:", response.data);
         setEmployees([]);
@@ -112,7 +111,7 @@ function FrontofficeCRUD() {
 
       if (isEditing) {
         const response = await axios.put(
-          "https://localhost:7265/api/Employee",
+          `${import.meta.env.VITE_APP_API_URL}/Employee`,
           filledForm,
           {
             withCredentials: true,

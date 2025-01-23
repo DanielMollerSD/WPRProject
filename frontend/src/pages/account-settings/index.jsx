@@ -8,14 +8,14 @@ function AccountSettings() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [validationError, setValidationError] = useState(""); // Validation error state
+  const [validationError, setValidationError] = useState("");
   const [userData, setUserData] = useState({
     email: "",
     address: "",
     postalCode: "",
     phoneNumber: "",
     password: "",
-    repeatPassword: "", // Add repeat password to state
+    repeatPassword: "",
   });
 
   const togglePassword = () => {
@@ -28,41 +28,40 @@ function AccountSettings() {
   };
 
   useEffect(() => {
-    const fetchData = () => {
+    const fetchData = async () => {
       setLoading(true);
       setError(null);
 
-      axios
-        .get("https://localhost:7265/api/Customer", {
-          withCredentials: true, // Include cookies with the request
-        })
-        .then((response) => {
-          setData(response.data); // Set the fetched data
-          setLoading(false);
-        })
-        .catch((error) => {
-          setError(error.message); // Handle the error
-          setLoading(false);
-        });
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_APP_API_URL}/Customer`,
+          {
+            withCredentials: true,
+          }
+        );
+        setData(response.data);
+      } catch (err) {
+        setError(err.message || "Failed to fetch customer data");
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();
   }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent default form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    // Validate password fields
     if (userData.password !== userData.repeatPassword) {
-      setValidationError("Passwords do not match!"); // Set error message
+      setValidationError("Passwords do not match!");
       return;
     }
 
     setLoading(true);
     setError(null);
-    setValidationError(""); // Clear validation error if passwords match
+    setValidationError("");
 
-    // Prepare updated user data
     const updatedUserData = {
       email: userData.email,
       address: userData.address,
@@ -71,22 +70,18 @@ function AccountSettings() {
       password: userData.password,
     };
 
-    axios
-      .put(
-        "https://localhost:7265/api/Customer/updateIndividual",
+    try {
+      await axios.put(
+        `${import.meta.env.VITE_APP_API_URL}/Customer/updateIndividual`,
         updatedUserData,
-        {
-          withCredentials: true,
-        }
-      )
-      .then((response) => {
-        console.log("User data updated:", response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(error.message);
-        setLoading(false);
-      });
+        { withCredentials: true }
+      );
+      console.log("User data updated successfully");
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to update user data");
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (loading) {
@@ -94,7 +89,7 @@ function AccountSettings() {
   }
 
   if (error) {
-    return <div>Error!</div>;
+    return <div>Error: {error}</div>;
   }
 
   if (!data) {
@@ -108,63 +103,73 @@ function AccountSettings() {
         <form onSubmit={handleSubmit}>
           <div className="as-group">
             <div>
-              <label className="inputFieldTitle" htmlFor="email">Email:</label>
+              <label className="inputFieldTitle" htmlFor="email">
+                Email:
+              </label>
               <input
                 type="text"
                 className="inputField"
                 id="email"
                 placeholder={data.email}
                 name="email"
-                value={userData.email} // Controlled input
+                value={userData.email}
                 onChange={(e) =>
                   setUserData({ ...userData, email: e.target.value })
-                } // Update on change
+                }
               />
             </div>
             <div>
-              <label className="inputFieldTitle" htmlFor="address">Woonadres:</label>
+              <label className="inputFieldTitle" htmlFor="address">
+                Woonadres:
+              </label>
               <input
                 type="text"
-                 className="inputField"
+                className="inputField"
                 id="address"
                 placeholder={data.address}
                 name="address"
-                value={userData.address} // Controlled input
+                value={userData.address}
                 onChange={(e) =>
                   setUserData({ ...userData, address: e.target.value })
-                } // Update on change
+                }
               />
             </div>
             <div>
-              <label className="inputFieldTitle" htmlFor="postalCode">Postcode:</label>
+              <label className="inputFieldTitle" htmlFor="postalCode">
+                Postcode:
+              </label>
               <input
                 type="text"
                 className="inputField"
                 id="postalCode"
                 placeholder={data.postalCode}
                 name="postalCode"
-                value={userData.postalCode} // Controlled input
+                value={userData.postalCode}
                 onChange={(e) =>
                   setUserData({ ...userData, postalCode: e.target.value })
-                } // Update on change
+                }
               />
             </div>
             <div>
-              <label className="inputFieldTitle" htmlFor="phoneNumber">Telefoonnummer:</label>
+              <label className="inputFieldTitle" htmlFor="phoneNumber">
+                Telefoonnummer:
+              </label>
               <input
                 type="text"
-                 className="inputField"
+                className="inputField"
                 id="phoneNumber"
                 placeholder={data.phoneNumber}
                 name="phoneNumber"
-                value={userData.phoneNumber} // Controlled input
+                value={userData.phoneNumber}
                 onChange={(e) =>
                   setUserData({ ...userData, phoneNumber: e.target.value })
-                } // Update on change
+                }
               />
             </div>
             <div>
-              <label className="inputFieldTitle" htmlFor="password">Wachtwoord:</label>
+              <label className="inputFieldTitle" htmlFor="password">
+                Wachtwoord:
+              </label>
               <input
                 type="password"
                 id="password"
@@ -172,28 +177,30 @@ function AccountSettings() {
                 ref={password1Ref}
                 placeholder="Voer wachtwoord in"
                 name="password"
-                value={userData.password} // Bind to state
+                value={userData.password}
                 onChange={(e) =>
                   setUserData({ ...userData, password: e.target.value })
-                } // Update state
+                }
               />
             </div>
             <div>
-              <label className="inputFieldTitle" htmlFor="repeatPassword">Herhaal Wachtwoord:</label>
+              <label className="inputFieldTitle" htmlFor="repeatPassword">
+                Herhaal Wachtwoord:
+              </label>
               <input
                 type="password"
-                 className="inputField"
+                className="inputField"
                 id="repeatPassword"
                 ref={password2Ref}
                 placeholder="Herhaal wachtwoord"
                 name="repeatPassword"
-                value={userData.repeatPassword} // Bind to state
+                value={userData.repeatPassword}
                 onChange={(e) =>
                   setUserData({
                     ...userData,
                     repeatPassword: e.target.value,
                   })
-                } // Update state
+                }
               />
             </div>
             <div className="show-password-container">

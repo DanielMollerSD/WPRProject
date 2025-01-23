@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./styles.scss";
 
 function SubscriptionSelection() {
@@ -10,22 +11,24 @@ function SubscriptionSelection() {
 
     useEffect(() => {
         async function fetchSubscriptions() {
+            setLoading(true);
             try {
-                const coverageResponse = await fetch(`${import.meta.env.VITE_APP_API_URL}/SubCoverage`);
-                if (!coverageResponse.ok) throw new Error("Coverage subscriptions not found");
-                const coverageData = await coverageResponse.json();
-
-                const discountResponse = await fetch(`${import.meta.env.VITE_APP_API_URL}/SubDiscount`);
-                if (!discountResponse.ok) throw new Error("Discount subscriptions not found");
-                const discountData = await discountResponse.json();
+                const coverageResponse = await axios.get(`${import.meta.env.VITE_APP_API_URL}/SubCoverage`, {
+                    withCredentials: true, 
+                });
+                const discountResponse = await axios.get(`${import.meta.env.VITE_APP_API_URL}/SubDiscount`, {
+                    withCredentials: true,
+                });
 
                 setSubscriptions({
-                    coverage: coverageData?.$values || [],
-                    discount: discountData?.$values || [],
+                    coverage: coverageResponse.data?.$values || [],
+                    discount: discountResponse.data?.$values || [],
                 });
             } catch (err) {
                 console.error("Error fetching subscriptions:", err.message);
                 setError("Failed to load subscriptions. Please try again.");
+            } finally {
+                setLoading(false);
             }
         }
 

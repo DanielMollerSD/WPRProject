@@ -19,7 +19,6 @@ function VehicleCRUD() {
     const [isEditing, setIsEditing] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
-    // Fetch all vehicles
     async function fetchVehicles() {
         try {
             const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/Vehicle`, {
@@ -40,7 +39,6 @@ function VehicleCRUD() {
         setForm({ ...form, [name]: value });
     };
 
-    // Create or Update
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -90,14 +88,12 @@ function VehicleCRUD() {
         }
     };
 
-    // Edit vehicle
     const handleEdit = (vehicle) => {
         setForm(vehicle);
         setIsEditing(true);
         setIsFormVisible(true);
     };
 
-    // Delete vehicle
     const handleDelete = async (id) => {
         if (!window.confirm('Weet je zeker dat je dit voertuig wilt verwijderen?')) return;
 

@@ -1,4 +1,5 @@
 import './styles.scss'
+import { Link } from 'react-router-dom'
 
 function Footer() {
 
@@ -32,6 +33,8 @@ function Footer() {
                             <li>Instagram <i className="fa-brands fa-instagram"></i></li>
                             <li>TikTok <i className="fa-brands fa-tiktok"></i></li>
                             <li>LinkedIn <i className="fa-brands fa-linkedin"></i></li>
+                            <li><Link to="/signup-backoffice">Backoffice</Link></li>
+                            <li><Link to="/privacy-page">Privacy Verklaring</Link></li>
                             </ul>
                         </div>
                     </div>

@@ -3,7 +3,7 @@ import axios from "axios";
 import "./styles.scss";
 
 function BusinessSettings() {
-  const [data, setData] = useState(null); // Changed from [] to null
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [validationError, setValidationError] = useState("");
@@ -11,47 +11,37 @@ function BusinessSettings() {
     businessAddress: "",
     businessPostalCode: "",
     businessName: "",
-    password: "",
-    repeatPassword: "",
   });
 
   useEffect(() => {
-    const fetchData = () => {
+    const fetchData = async () => {
       setLoading(true);
       setError(null);
 
-      axios
-        .get("https://localhost:7265/api/Business", {
-          withCredentials: true,
-        })
-        .then((response) => {
-          setData(response.data);
-          setUserData({
-            businessAddress: response.data?.businessAddress || "",
-            businessPostalCode: response.data?.businessPostalCode || "",
-            businessName: response.data?.businessName || "",
-            password: "", // Set to empty or any default value
-          });
-          setLoading(false);
-        })
-        .catch((error) => {
-          setError(error.message);
-          setLoading(false);
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_APP_API_URL}/Business`,
+          { withCredentials: true }
+        );
+        setData(response.data);
+        setUserData({
+          businessAddress: response.data?.businessAddress || "",
+          businessPostalCode: response.data?.businessPostalCode || "",
+          businessName: response.data?.businessName || "",
         });
+      } catch (err) {
+        setError(err.message || "Failed to fetch business data");
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (userData.password !== userData.repeatPassword) {
-      setValidationError("Passwords do not match!");
-      return;
-    }
-
-    setLoading(true);
     setError(null);
     setValidationError("");
 
@@ -59,29 +49,25 @@ function BusinessSettings() {
       businessAddress: userData.businessAddress,
       businessPostalCode: userData.businessPostalCode,
       businessName: userData.businessName,
-      password: userData.password,
     };
 
-    axios
-      .put(
-        "https://localhost:7265/api/Business/updateBusiness",
+    try {
+      await axios.put(
+        `${import.meta.env.VITE_APP_API_URL}/Business/updateBusiness`,
         updatedUserData,
-        {
-          withCredentials: true,
-        }
-      )
-      .then((response) => {
-        console.log("User data updated:", response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(error.message);
-        setLoading(false);
-      });
+        { withCredentials: true }
+      );
+      window.alert("Business data updated successfully");
+      console.log("Business data updated successfully");
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to update business data");
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error!</div>;
+  if (error) return <div>Error: {error}</div>;
   if (!data) return <div>No data found!</div>;
 
   return (

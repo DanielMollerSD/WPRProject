@@ -21,7 +21,7 @@ function VehicleDamage() {
         const damageResponse = await axios.get(`${import.meta.env.VITE_APP_API_URL}/Damage/vehicle/${id}`, {
           withCredentials: true,
         });
-        setDamages(Array.isArray(damageResponse.data) ? damageResponse.data : []);
+        setDamages(Array.isArray(damageResponse.data.$values) ? damageResponse.data.$values : []);
       } catch (error) {
         console.error("Error fetching data:", error.message);
       } finally {

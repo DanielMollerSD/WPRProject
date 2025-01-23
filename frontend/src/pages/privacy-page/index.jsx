@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './styles.scss';
 
 function PrivacyPage() {
@@ -8,11 +9,8 @@ function PrivacyPage() {
     useEffect(() => {
         const fetchPrivacy = async () => {
             try {
-                const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/Privacy`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch privacy description');
-                }
-                const data = await response.json();
+                const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/Privacy`);
+                const data = response.data;
 
                 if (data.$values && data.$values.length > 0) {
                     setDescription(data.$values[0].description);
@@ -20,7 +18,7 @@ function PrivacyPage() {
                     setDescription('No privacy description available.');
                 }
             } catch (err) {
-                setError(err.message);
+                setError(err.response ? err.response.data : err.message);
             }
         };
 

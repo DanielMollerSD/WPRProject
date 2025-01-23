@@ -30,7 +30,7 @@ namespace WPRProject.Controllers
 
         
 
-        [Authorize (Roles = "Owner, Wagenparkbeheerder")]
+        [Authorize (Roles = "Owner, Individual")]
         [HttpGet]
         public async Task<ActionResult<Customer>> GetCustomers()
         {
@@ -54,7 +54,7 @@ namespace WPRProject.Controllers
             return Ok(customer); // Return the logged-in user data
         }
 
-
+        [Authorize(Roles = "Owner, Wagenparkbeheerder, Individual")]
         [HttpGet("{Id}")]
         public async Task<ActionResult<Customer>> GetOneCustomer(int id)
         {
@@ -69,6 +69,8 @@ namespace WPRProject.Controllers
 
             return customer;
         }
+
+        [Authorize(Roles = "Owner, Wagenparkbeheerder")]
         [HttpPost]
         public async Task<ActionResult<Customer>> CreateCustomer(Customer customer)
         {
@@ -82,6 +84,8 @@ namespace WPRProject.Controllers
 
             return CreatedAtAction(nameof(GetOneCustomer), new { id = customer.Id }, customer);
         }
+
+
         [Authorize(Roles = "Individual")]
         [HttpPut("updateIndividual")]
         public async Task<ActionResult> UpdateCustomer([FromBody] UpdateIndividualDto customerUpdateDto)
@@ -127,6 +131,7 @@ namespace WPRProject.Controllers
         }
 
 
+        [Authorize(Roles = "Owner, Wagenparkbeheerder")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomer(int id)
         {
