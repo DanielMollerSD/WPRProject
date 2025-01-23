@@ -97,14 +97,6 @@ namespace WPRProject.Controllers
                 throw new ArgumentNullException("The JWT secret key is missing from configuration.");
             }
 
-
-            List<Claim> claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, (customer?.FirstName ?? "") + " " + (customer?.LastName ?? "")),
-                new Claim(ClaimTypes.Email, customer?.Email ?? employee?.Email),
-                new Claim (ClaimTypes.Role, employee?.Role)
-            };
-
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
