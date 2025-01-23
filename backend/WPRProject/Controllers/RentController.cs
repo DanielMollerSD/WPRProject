@@ -1,28 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WPRProject.Tables;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
-using Serilog;
+using WPRProject.Tables;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace WPRProject.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
+    [ApiController]
     public class RentController : ControllerBase
     {
         private readonly CarsAndAllContext _context;
-        private readonly EmailService _emailService;
-        private readonly ILogger<RentController> _logger;
 
-        public RentController(CarsAndAllContext context, EmailService emailService, ILogger<RentController> logger)
+        public RentController(CarsAndAllContext context)
         {
             _context = context;
-            _emailService = emailService;
-            _logger = logger;
         }
 
+        // GET all rents (Authenticated users)
+        [Authorize(Roles = "Backoffice")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Rent>>> GetAllRents()
         {
@@ -30,55 +27,31 @@ namespace WPRProject.Controllers
             return Ok(rents);
         }
 
+        // GET a specific rent (Authenticated users)
+        [Authorize(Roles = "Backoffice")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRent(int id)
         {
-            _logger.LogInformation("GetRent method called for RentId {RentId}", id);
             var rent = await _context.Rent.FindAsync(id);
             if (rent == null)
             {
-                _logger.LogWarning("Rent with ID {RentId} not found", id);
                 return NotFound();
             }
-            _logger.LogInformation("Rent record with ID {RentId} retrieved successfully", id);
             return Ok(rent);
         }
 
-        [Authorize(Roles = "Individual, Medewerker")]
+        // POST a new rent (Authenticated users)
+        [Authorize(Roles = "Backoffice")]
         [HttpPost]
         public async Task<IActionResult> CreateRent([FromBody] Rent rent)
         {
-            _logger.LogInformation("CreateRent method called for VehicleId {VehicleId}", rent.VehicleId);
-
-            var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-
-            if (string.IsNullOrEmpty(userEmail))
-            {
-                return Unauthorized(new { Message = "User is not authenticated." });
-            }
-
-            var customer = await _context.Customer.FirstOrDefaultAsync(c => c.Email == userEmail);
-
-            if (customer == null)
-            {
-                return Unauthorized(new { Message = "User is not authenticated." });
-            }
-
             if (!ModelState.IsValid)
             {
-                _logger.LogWarning("Invalid ModelState in CreateRent");
                 return BadRequest(ModelState);
             }
 
             var vehicle = await _context.Vehicle.FindAsync(rent.VehicleId);
             if (vehicle == null)
-            {
-                _logger.LogWarning("Vehicle with ID {VehicleId} not found", rent.VehicleId);
-                return BadRequest(new { errors = new { VehicleId = "The specified vehicle does not exist." } });
-            }
-
-            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
-            if (userRole != "Individual" && vehicle.VehicleType != "Car")
             {
                 return BadRequest(new { errors = new { VehicleId = "The specified vehicle does not exist." } });
             }
@@ -90,33 +63,18 @@ namespace WPRProject.Controllers
 
             if (isRented)
             {
-                _logger.LogInformation("Vehicle with ID {VehicleId} is already rented for the specified period", rent.VehicleId);
                 return Conflict("The vehicle is already rented for the specified period.");
             }
 
             try
             {
-                rent.CustomerId = customer.Id;
-
-                rent.Status = Rent.Pending;
+                rent.Status = Rent.Pending; // Set default status
                 _context.Rent.Add(rent);
                 await _context.SaveChangesAsync();
-
-                _logger.LogInformation("Successfully created rent entry for VehicleId {VehicleId}, RentId {RentId}", rent.VehicleId, rent.Id);
-
-                var subject = "Rental Confirmation";
-                var message = $"<h1>Your rental has been confirmed</h1>" +
-                              $"<p>Vehicle: {vehicle.Model}</p>" +
-                              $"<p>Rental Period: {rent.StartDate:yyyy-MM-dd} to {rent.EndDate:yyyy-MM-dd}</p>";
-
-                await _emailService.SendEmailAsync(userEmail, subject, message);
-
-                _logger.LogInformation("Rental confirmation email sent for RentId {RentId}", rent.Id);
                 return CreatedAtAction("GetRent", new { id = rent.Id }, rent);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while creating the rent entry for VehicleId {VehicleId}", rent.VehicleId);
                 return StatusCode(500, new
                 {
                     message = "An error occurred while creating the rent entry.",
@@ -125,6 +83,8 @@ namespace WPRProject.Controllers
             }
         }
 
+        // PATCH rent status (Authenticated users)
+        [Authorize(Roles = "Backoffice")]
         [HttpPatch("{id}/status")]
         public async Task<IActionResult> UpdateStatus(int id, [FromBody] string newStatus)
         {
