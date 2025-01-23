@@ -266,7 +266,7 @@ function BusinessCRUD() {
               onClick={handleAddNewEmployee}
               className="add-business-account-button"
             >
-              <span>+</span> Voeg Medewerker toe
+            + Voeg Medewerker toe
             </button>
           )}
 

@@ -1,124 +1,218 @@
-.page.page-signup-carsandall {
-
-    html,
-    body {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-    }
-
-    .SignUpBody {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #d6d1c7;
-        color: #333;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: calc(100vh - 70px);
-        background-image: url(../../assets/img/tuktuk.jpg);
-        background-repeat: no-repeat;
-        background-position: 50% 60%;
-        background-size: cover;
-        z-index: 1;
-    }
-
-    .SignUpMain {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
+.page.page-frontoffice-crud {
+    position: relative;
+    background-color: #d6d1c7;
+    padding: 10px 10px;
+  
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 0;
+  
+      .crud-content {
+        background-color: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         width: 100%;
-        max-width: 500px;
-        padding: 20px;
-        box-sizing: border-box;
+        max-width: 1200px; /* Limit the width */
+        overflow-y: auto; /* Enable vertical scrolling */
+        overflow-x: hidden; /* Hide horizontal scrolling */
+        min-height: calc(100vh - 200px); /* Adjust height to allow for scrolling */
+  
+        .add-business-account-button {
+          display: inline-block;
+          background-color: #0066cc;
+          color: white;
+          font-size: 18px;
+          font-weight: bold;
+          border: none;
+          border-radius: 20px;
+          padding: 10px 15px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+         
+  
+  
+          &:hover {
+            background-color: #0052a3;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+          }
+  
+          &:focus {
+            outline: 2px solid #ffbf47;
+            outline-offset: 2px;
+          }
+        }
+  
+        .employee-form {
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+  
+          input,
+          select {
+            height: 40px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 0 15px;
+            font-size: 14px;
+            background-color: #f9f9f9;
+  
+            &:focus {
+              border-color: #0066cc;
+              box-shadow: 0 0 5px rgba(0, 102, 204, 0.5);
+              outline: none;
+            }
+          }
+  
+          .toggle-password-button {
+            background: none;
+            border: none;
+            color: #0066cc;
+            font-size: 14px;
+            text-decoration: underline;
+            cursor: pointer;
+  
+            &:hover {
+              background-color: transparent;
+            }
+          }
+  
+          button {
+            height: 40px;
+            background-color: #0066cc;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+  
+            &:hover {
+              background-color: #0052a3;
+            }
+  
+            &:not(:last-child) {
+              margin-right: 10px;
+            }
+          }
+        }
+  
+        .cards-container {
+          margin-top: 20px;
+          overflow-y: auto; /* Allow vertical scrolling only */
+          overflow-x: hidden; /* Hide horizontal scrolling */
+  
+          h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+          }
+  
+          .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px; /* Reduced gap between boxes */
+  
+            .col-md-6,
+            .col-lg-4 {
+              flex: 1 1 calc(33.333% - 10px);
+              max-width: calc(33.333% - 10px); /* Adjust width to make it more adaptable */
+  
+              .card {
+                display: flex;
+                flex-direction: column;
+                border-radius: 16px;
+                overflow: hidden;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+                &:hover {
+                  transform: translateY(-5px);
+                  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+                }
+  
+                .card-body {
+                  padding: 20px;
+  
+                  .card-title {
+                    margin-bottom: 8px;
+                    font-size: 18px;
+                    font-weight: bold;
+                    color: #333;
+                  }
+  
+                  .card-description {
+                    margin-bottom: 10px;
+                    font-size: 14px;
+                    color: #666;
+                  }
+  
+                  .tags {
+                    display: flex;
+                    gap: 5px;
+                    margin-bottom: 10px;
+  
+                    .tag {
+                      font-size: 12px;
+                      background-color: #f0f0f0;
+                      border-radius: 16px;
+                      padding: 5px 10px;
+                      color: #333;
+                    }
+                  }
+  
+                  .edit-button,
+                  .delete-button {
+                    background-color: #0066cc;
+                    color: white;
+                    font-size: 14px;
+                    font-weight: bold;
+                    border: none;
+                    border-radius: 8px;
+                    padding: 8px 15px;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+  
+                    &:hover {
+                      background-color: #0052a3;
+                    }
+  
+                    &:not(:last-child) {
+                      margin-right: 10px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
-
-    .signup-container {
-        background: #fff;
-        padding: 20px 30px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        width: 95%;
-        text-align: center;
+  
+    @media (max-width: 768px) {
+      .container {
+        .crud-content {
+          padding: 20px;
+  
+          .employee-form {
+            gap: 10px;
+          }
+  
+          .cards-container {
+            .row {
+              .col-md-6,
+              .col-lg-4 {
+                flex: 1 1 calc(100% - 20px);
+                max-width: calc(100% - 20px);
+              }
+            }
+          }
+        }
+      }
     }
-
-    .signup-container h2 {
-        margin-bottom: 20px;
-        color: #003366;
-    }
-
-    .form-group {
-        margin-bottom: 15px;
-        text-align: left;
-        display: flex;
-        justify-content: space-between;
-        gap: 20px;
-        width: 100%;
-    }
-
-    .nameLabel {
-        display: flex;
-        margin-bottom: 5px;
-        font-weight: bold;
-        margin: 0, auto;
-
-    }
-
-    .passwordLabel {
-
-        display: flex;
-        margin-bottom: 5px;
-        font-weight: bold;
-        margin: 0, auto;
-
-    }
-
-    .SignUpInput {
-        width: 100%;
-        max-width: 180px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 1rem;
-        display: block;
-        margin-bottom: 5px;
-
-    }
-
-    .LargeInput {
-        width: 100%;
-        max-width: 415px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 1rem;
-        display: block;
-        margin-bottom: 5px;
-    }
-
-    .SignupButton {
-        width: 100%;
-        padding: 10px;
-        border: none;
-        border-radius: 4px;
-        background-color: #003366;
-        color: #fff;
-        font-size: 1.1rem;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-
-    .SignUpButton:hover {
-        background-color: #0055cc;
-    }
-
-    .chkbx {
-
-        margin-right: 5px;
-
-
-    }
-
-}
+  }
+  
