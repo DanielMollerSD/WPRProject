@@ -142,7 +142,7 @@ namespace WPRProject.Migrations
                     b.ToTable("Employee");
                 });
 
-            modelBuilder.Entity("WPRProject.Tables.Mail", b =>
+            modelBuilder.Entity("WPRProject.Tables.Privacy", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -154,13 +154,9 @@ namespace WPRProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Topic")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Mail");
+                    b.ToTable("Privacy");
                 });
 
             modelBuilder.Entity("WPRProject.Tables.Rent", b =>
@@ -174,6 +170,9 @@ namespace WPRProject.Migrations
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
@@ -207,6 +206,10 @@ namespace WPRProject.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("TravelPurpose")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -214,10 +217,9 @@ namespace WPRProject.Migrations
                     b.Property<int?>("VehicleId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Verified")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
 
                     b.HasIndex("VehicleId");
 
@@ -274,11 +276,12 @@ namespace WPRProject.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("SubscriptionId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("Verified")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -340,9 +343,14 @@ namespace WPRProject.Migrations
                 {
                     b.HasBaseType("WPRProject.Tables.Customer");
 
+                    b.Property<int>("BusinessId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.HasIndex("BusinessId");
 
                     b.HasDiscriminator().HasValue("BusinessEmployee");
                 });
@@ -401,10 +409,18 @@ namespace WPRProject.Migrations
 
             modelBuilder.Entity("WPRProject.Tables.Rent", b =>
                 {
+                    b.HasOne("WPRProject.Tables.Customer", "Customer")
+                        .WithMany("Rents")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("WPRProject.Tables.Vehicle", "Vehicle")
                         .WithMany("Rents")
                         .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Customer");
 
                     b.Navigation("Vehicle");
                 });
@@ -412,7 +428,7 @@ namespace WPRProject.Migrations
             modelBuilder.Entity("WPRProject.Tables.SubscriptionOrder", b =>
                 {
                     b.HasOne("WPRProject.Tables.Business", "Business")
-                        .WithMany()
+                        .WithMany("SubscriptionOrders")
                         .HasForeignKey("BusinessId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -426,6 +442,29 @@ namespace WPRProject.Migrations
                     b.Navigation("Business");
 
                     b.Navigation("Subscription");
+                });
+
+            modelBuilder.Entity("WPRProject.Tables.BusinessEmployee", b =>
+                {
+                    b.HasOne("WPRProject.Tables.Business", "Business")
+                        .WithMany("BusinessEmployees")
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Business");
+                });
+
+            modelBuilder.Entity("WPRProject.Tables.Business", b =>
+                {
+                    b.Navigation("BusinessEmployees");
+
+                    b.Navigation("SubscriptionOrders");
+                });
+
+            modelBuilder.Entity("WPRProject.Tables.Customer", b =>
+                {
+                    b.Navigation("Rents");
                 });
 
             modelBuilder.Entity("WPRProject.Tables.Subscription", b =>

@@ -17,8 +17,7 @@ function Header() {
     if (token) {
         try {
             const decoded = jwtDecode(token);
-            console.log("Decoded Token:", decoded);
-            userRole = decoded["role"] || "Unknown";
+            userRole = decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || "Unknown";
             isLoggedIn = true;
         } catch (error) {
             console.error("Token decoding failed:", error);
@@ -26,25 +25,17 @@ function Header() {
     }
 
     const handleLogout = () => {
-        axios
-            .delete("https://localhost:7265/api/Logout", {
-                // Ensures cookies are included in the request
-            })
-            .then((response) => {
-                // Clear the token (if any other cleanup is needed locally)
-                console.log("Logout successful", response);
-                localStorage.clear();
-    
-                // Redirect to the homepage
-                window.location.href = "/";
-            })
-            .catch((error) => {
-                console.error("Error during logout:", error);
-            });
+        axios.delete("https://localhost:7265/api/Logout", {
+            withCredentials: true,
+        }).then((response) => {
+            console.log("Logout successful", response);
+            localStorage.clear();
+
+            window.location.href = "/";
+        }).catch((error) => {
+            console.error("Error during logout:", error);
+        });
     };
-    
-
-
 
     return (
 
@@ -53,9 +44,9 @@ function Header() {
                 <div className="container">
                     <header>
                         <nav>
-                            
+
                             <Link to="/">Home</Link>
-                            
+
                             {!isLoggedIn && (
                                 <>
                                     <Link to="/login">Login</Link>
@@ -72,19 +63,24 @@ function Header() {
 
                             {isLoggedIn && userRole === "Backoffice" && (
                                 <>
-                                    <Link to="#">Link toevoegen in /component/header</Link>
+                                    <Link to="/rent-requests">Aanvragen</Link>
+                                    <Link to="/rent-overview">Overzicht</Link>
+                                    <Link to="/vehicle-crud">Voertuigen</Link>
+                                    <Link to="/frontoffice-crud">Frontoffice beheren</Link>
+                                    <Link to="/backoffice-privacy-page">Privacy beheren</Link>
                                 </>
                             )}
 
                             {isLoggedIn && userRole === "Frontoffice" && (
                                 <>
-                                    <Link to="#">Link toevoegen in /component/header</Link>
+                                    <Link to="/frontoffice-vehicle-overview">Vehicle overview</Link>
                                 </>
                             )}
 
                             {isLoggedIn && userRole === "Owner" && (
                                 <>
-                                    <Link to="#">Link toevoegen in /component/header</Link>
+                                    <Link to="/business-account-crud">Medewerkers</Link>
+                                    <Link to="/business-settings">Instellingen</Link>
                                 </>
                             )}
 

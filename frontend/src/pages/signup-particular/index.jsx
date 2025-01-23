@@ -177,12 +177,18 @@ function SignUpParticular() {
                                 </div>
 
                                 <div>
-                                <button type="submit" className="SignupButton">Registreren</button>
+                                    <button type="submit" className="SignupButton">Registreren</button>
                                 </div>
                             </form>
 
+                            {/* Voeg hier een nieuwe Link-knop toe */}
+                            <Link to="/rent-overview">
+                                <button className="btn-go-to-rent-overview">Go to Rent Overview</button>
+                            </Link>
+
+                            {/* Je kunt ook de "next page" knop gebruiken zoals eerder */}
                             <Link to="/vehicle-overview">
-                                <button>next page</button>
+                                <button>Next Page</button>
                             </Link>
                             <Link to="/vehicle-crud">
                                 <button>crud page</button>

@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using WPRProject.Tables;
 
 namespace WPRProject.Controllers
@@ -16,13 +18,13 @@ namespace WPRProject.Controllers
         }
 
         //Fetch alle voertuigen
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Vehicle>>> GetVehicles(
             [FromQuery] string? vehicleType,
             [FromQuery] string? brand,
             [FromQuery] double? minPrice,
             [FromQuery] double? maxPrice,
-            [FromQuery] string? userType,
             [FromQuery] DateTime? startDate,
             [FromQuery] DateTime? endDate)
         {
@@ -57,10 +59,12 @@ namespace WPRProject.Controllers
                               (r.StartDate <= startDate && r.EndDate >= endDate))));
             }
 
-            if (!string.IsNullOrEmpty(userType))
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            if (userRole != "Individual")
             {
-                // Apply user-specific filters here based on `userType`
+                query = query.Where(v => v.VehicleType == "Car");
             }
+
             var vehicles = await query.ToListAsync();
             return Ok(vehicles);
         }

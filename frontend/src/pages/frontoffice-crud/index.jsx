@@ -20,8 +20,7 @@ function FrontofficeCRUD() {
   const [isFormVisible, setIsFormVisible] = useState(false);
 
   const togglePassword = () => {
-    const type =
-      password1Ref.current.type === "password" ? "text" : "password";
+    const type = password1Ref.current.type === "password" ? "text" : "password";
     password1Ref.current.type = type;
   };
 
@@ -60,8 +59,12 @@ function FrontofficeCRUD() {
         }
       );
 
-      if (Array.isArray(response.data)) {
-        setEmployees(response.data);
+      // Check if the response contains the $values key and that it's an array
+      if (response.data && Array.isArray(response.data.$values)) {
+        const frontofficeEmployees = response.data.$values.filter(
+          (employee) => employee.role === "Frontoffice"
+        );
+        setEmployees(frontofficeEmployees); // Use the filtered array
       } else {
         console.error("Expected an array but received:", response.data);
         setEmployees([]);
@@ -145,7 +148,9 @@ function FrontofficeCRUD() {
 
   // Delete employee
   const handleDelete = async (id) => {
-    if (!window.confirm("Weet je zeker dat je deze medewerker wilt verwijderen?"))
+    if (
+      !window.confirm("Weet je zeker dat je deze medewerker wilt verwijderen?")
+    )
       return;
 
     try {
@@ -199,7 +204,9 @@ function FrontofficeCRUD() {
           {isFormVisible && (
             <div>
               <h2>
-                {isEditing ? "Bewerk Medewerker" : "Nieuwe Medewerker Toevoegen"}
+                {isEditing
+                  ? "Bewerk Medewerker"
+                  : "Nieuwe Medewerker Toevoegen"}
               </h2>
               <form className="employee-form" onSubmit={handleSubmit}>
                 <input
@@ -239,7 +246,7 @@ function FrontofficeCRUD() {
           )}
 
           <div className="cards-container">
-            <h2>CarsAndAll medewerkers:</h2>
+            <h2>Frontoffice medewerkers:</h2>
             <div className="row">
               {Array.isArray(employees) && employees.length > 0 ? (
                 employees.map((employee) => (
@@ -263,7 +270,7 @@ function FrontofficeCRUD() {
                   </div>
                 ))
               ) : (
-                <p>Geen medewerkers gevonden.</p>
+                <p>Geen Frontofficemedewerkers gevonden.</p>
               )}
             </div>
           </div>

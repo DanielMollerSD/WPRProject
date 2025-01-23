@@ -4,11 +4,11 @@ import axios from "axios";
 
 function BusinessCRUD() {
   const password1Ref = useRef(null);
-  const password2Ref = useRef(null);
+
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [validationError, setValidationError] = useState("");
+
   const [employees, setEmployees] = useState([]);
   const [currentAccount, setCurrentAccount] = useState(null); // To store logged-in account info
   const [form, setForm] = useState({
@@ -39,12 +39,16 @@ function BusinessCRUD() {
           withCredentials: true, // Include cookies with the request
         })
         .then((response) => {
+          console.log("Fetched current account:", response.data); // Log response data
+          if (!response.data) {
+            throw new Error("No account data returned");
+          }
           setData(response.data); // Set the fetched data
           setCurrentAccount(response.data); // Store the logged-in account info
           setLoading(false);
         })
         .catch((error) => {
-          console.log(error);
+          console.log("Error fetching current account:", error);
           setError(error.message); // Handle the error
           setLoading(false);
         });
@@ -54,21 +58,66 @@ function BusinessCRUD() {
   }, []);
 
   // Fetch all employees
-  async function fetchEmployees() {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_APP_API_URL}/Business`
-      );
-      const data = await response.json();
-      setEmployees(data);
-    } catch (error) {
-      console.error("Failed to fetch employees", error);
+  const fetchEmployees = async () => {
+    if (!currentAccount) {
+      console.log("currentAccount is null, skipping employee fetch.");
+      return;
     }
-  }
 
+    try {
+      const token = localStorage.getItem("access_token");
+
+      const response = await axios.get(
+        "https://localhost:7265/api/Business/employees",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        }
+      );
+
+      console.log("Employee data fetched:", response.data);
+
+      if (
+        response.data &&
+        response.data.employees &&
+        Array.isArray(response.data.employees.$values)
+      ) {
+        const employees = response.data.employees.$values;
+
+        // Filter out employees with role 'owner' and match businessId
+        const filteredEmployees = employees
+          .filter(
+            (employee) =>
+              employee.businessId === currentAccount.businessId &&
+              employee.role !== "Owner"
+           // Exclude employees with 'Owner' role
+          )
+          .map((employee) => ({
+            ...employee,
+            businessName: currentAccount.businessName, // Add businessName from currentAccount
+          }));
+
+        setEmployees(filteredEmployees);
+
+        console.log(
+          "Current account businessName:",
+          currentAccount.businessName
+        );
+      } else {
+        throw new Error("Invalid data format");
+      }
+    } catch (error) {
+      console.error("Failed to fetch employees:", error);
+      setError("Failed to fetch employees. Please try again.");
+    }
+  };
+
+  // Call fetchEmployees within useEffect
   useEffect(() => {
     fetchEmployees();
-  }, []);
+  }, [currentAccount]);
 
   // Handle form input changes
   const handleChange = (e) => {
@@ -88,10 +137,6 @@ function BusinessCRUD() {
     }
 
     const filledForm = {
-      businessName: currentAccount.businessName,
-      businessAddress: currentAccount.businessAddress,
-      businessPostalCode: currentAccount.businessPostalCode,
-      kvk: currentAccount.kvk,
       firstName: form.firstName,
       lastName: form.lastName,
       tussenVoegsel: form.tussenVoegsel,
@@ -99,8 +144,6 @@ function BusinessCRUD() {
       email: form.email,
       password: form.password,
     };
-    console.log("currentAccount:", currentAccount);
-    console.log("form:", form);
 
     if (
       !filledForm.firstName ||
@@ -119,7 +162,7 @@ function BusinessCRUD() {
       if (isEditing) {
         // Update Employee (PUT request)
         const response = await axios.put(
-          "https://localhost:7265/api/Customer/updateBusiness",
+          `https://localhost:7265/api/Business/updateEmployee/${form.id}`, // Pass the employee ID in the URL
           filledForm,
           {
             withCredentials: true,
@@ -130,12 +173,14 @@ function BusinessCRUD() {
       } else {
         // Create Employee (POST request)
         const response = await axios.post(
-          `${import.meta.env.VITE_APP_API_URL}/Business/register`,
+          `${import.meta.env.VITE_APP_API_URL}/Business/register-employee`,
           filledForm,
           {
             headers: { "Content-Type": "application/json" },
+            withCredentials: true,
           }
         );
+
         console.log("Employee created:", response.data);
       }
 
@@ -151,8 +196,7 @@ function BusinessCRUD() {
       setIsFormVisible(false);
       fetchEmployees(); // Refresh the employee list after successful operation
     } catch (error) {
-      console.error(error);
-      alert("Er is iets misgegaan bij het opslaan van de medewerker");
+      alert(error.response.data.message);
     } finally {
       setLoading(false);
     }
@@ -271,6 +315,7 @@ function BusinessCRUD() {
                   onChange={handleChange}
                   value={form.role}
                 >
+                  <option value="">Selecteer een rol</option>
                   <option value="Medewerker">Medewerker</option>
                   <option value="Wagenparkbeheerder">Wagenparkbeheerder</option>
                 </select>
@@ -317,9 +362,6 @@ function BusinessCRUD() {
                       <div className="tags">
                         <div className="tag">
                           <strong>Rol:</strong> {employee.role}
-                        </div>
-                        <div className="tag">
-                          <strong>Bedrijfsnaam:</strong> {employee.businessName}
                         </div>
                       </div>
                       <button
