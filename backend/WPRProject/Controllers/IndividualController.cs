@@ -25,7 +25,7 @@ namespace WPRProject.Controllers
         {
             _context = context;
         }
-
+        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Individual>>> GetParticulars()
         {
@@ -33,6 +33,7 @@ namespace WPRProject.Controllers
             var damages = await _context.Individual.ToListAsync();
             return Ok(damages);
         }
+
         [HttpGet("{Id}")]
         public async Task<ActionResult<Individual>> GetOneParticular(int id)
         {

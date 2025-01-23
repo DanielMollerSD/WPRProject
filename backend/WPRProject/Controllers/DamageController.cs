@@ -34,7 +34,7 @@ namespace WPRProject.Controllers
 
             return damage;
         }
-
+      
         [HttpGet("vehicle/{vehicleId}")]
         public IActionResult GetDamagesByVehicle(int vehicleId)
         {
@@ -49,7 +49,7 @@ namespace WPRProject.Controllers
 
             return Ok(damages);
         }
-
+       
         [HttpPost]
         public async Task<ActionResult<Damage>> CreateDamage(Damage damage)
         {
