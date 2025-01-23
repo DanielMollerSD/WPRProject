@@ -1,76 +1,74 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const Rentrequests = () => {
   const [rents, setRents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const apiBaseUrl = "https://localhost:7265/api/rent";
 
-  const apiBaseUrl = "https://localhost:7265/api/rent"; // Zorg ervoor dat je het juiste API endpoint gebruikt
-
-  // Gebruik van useEffect om de huurverzoeken op te halen zodra de component is geladen
+  // Fetch rent requests on component mount
   useEffect(() => {
     const fetchRentDetails = async () => {
       try {
-        const response = await fetch(apiBaseUrl);
-        if (!response.ok) {
-          throw new Error("Failed to fetch rent details");
-        }
-        const data = await response.json();
-        setRents(data); // Zet de gegevens in de state
-        setLoading(false); // Zet de laadstatus uit
+        const response = await axios.get(apiBaseUrl, {
+          withCredentials: true,
+        });
+
+        console.log(response); // Debugging
+        setRents(response.data.$values || []); // Gebruik fallback voor data
+        setLoading(false);
       } catch (err) {
-        setError(err.message); // Stel de foutmelding in
-        setLoading(false); // Zet de laadstatus uit
+        setError("Error: " + (err.response?.data?.message || err.message));
+        setLoading(false);
       }
     };
 
-    fetchRentDetails(); // Roep de functie aan
-  }, []); // Lege dependency array betekent dat de useEffect slechts eenmaal wordt uitgevoerd
+    fetchRentDetails();
+  }, []);
 
-  // Functie om de status van een huurverzoek bij te werken
+  // Update the status of a rent request
   const updateStatus = async (rentId, newStatus) => {
     try {
-      const response = await fetch(`${apiBaseUrl}/${rentId}/status`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newStatus),
-      });
+      const response = await axios.patch(
+        `${apiBaseUrl}/${rentId}/status`,
+        newStatus, // Stuur de status direct als string
+        {
+          headers: {
+            "Content-Type": "application/json", // Zorg voor juiste content type
+          },
+          withCredentials: true, // Verzend cookies indien nodig
+        }
+      );
 
-      if (!response.ok) {
-        throw new Error("Failed to update rent status");
-      }
-
-      const updatedRent = await response.json();
-
-      // Update de lijst door de status van het item bij te werken
+      // Update the local rent list
       setRents((prevRents) =>
         prevRents.map((rent) =>
-          rent.id === updatedRent.id ? updatedRent : rent
+          rent.id === response.data.id ? response.data : rent
         )
       );
 
-      alert(`Rent status updated to: ${updatedRent.status}`);
+      alert(`Rent status updated to: ${response.data.status}`);
     } catch (err) {
-      alert("Error updating rent status");
+      alert(
+        "Error updating rent status: " +
+          (err.response?.data?.message || err.message)
+      );
       console.error(err);
     }
   };
 
-  // Laadindicator weergeven
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  // Foutmelding weergeven als er een probleem is
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className="error">{error}</div>;
   }
 
   return (
     <div className="container">
-      <h1>Rent requests</h1>
+      <h1>Rent Requests</h1>
       <table className="rent-table">
         <thead>
           <tr>
@@ -87,11 +85,15 @@ const Rentrequests = () => {
         <tbody>
           {rents.length > 0 ? (
             rents
-              .filter((rent) => rent.status === "pending") // Alleen items met status "pending"
+              .filter(
+                (rent) =>
+                  rent.status === "pending" &&
+                  new Date(rent.startDate) >= new Date()
+              )
               .map((rent) => (
                 <tr key={rent.id}>
                   <td>{rent.id}</td>
-                  <td>{rent.vehicle ? rent.vehicle.name : "Unknown"}</td>
+                  <td>{rent.vehicle?.name || "Unknown"}</td>
                   <td>{new Date(rent.startDate).toLocaleDateString()}</td>
                   <td>{new Date(rent.endDate).toLocaleDateString()}</td>
                   <td>{rent.firstName}</td>
