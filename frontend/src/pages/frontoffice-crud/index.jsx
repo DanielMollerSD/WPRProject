@@ -189,7 +189,7 @@ function FrontofficeCRUD() {
   };
 
   return (
-    <div className="page page-business-crud">
+    <div className="page page-frontoffice-crud">
       <div className="container">
         <div className="crud-content">
           {!isFormVisible && (

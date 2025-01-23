@@ -38,13 +38,11 @@ function AccountSettings() {
         })
         .then((response) => {
           setData(response.data); // Set the fetched data
-          console.log(response.data);
           setLoading(false);
         })
         .catch((error) => {
           setError(error.message); // Handle the error
           setLoading(false);
-          console.log(error)
         });
     };
 
@@ -92,141 +90,137 @@ function AccountSettings() {
   };
 
   if (loading) {
-    return (
-      <>
-        <div>Loading...</div>
-      </>
-    );
+    return <div>Loading...</div>;
   }
 
   if (error) {
-    return (
-      <>
-        <div>Error!</div>
-      </>
-    );
+    return <div>Error!</div>;
   }
 
   if (!data) {
-    return (
-      <>
-        <div>No data found!</div>
-      </>
-    );
+    return <div>No data found!</div>;
   }
 
   return (
-    <>
-      <header></header>
-      <div className="accountsettings-box">
-        <section className="as-container">
-          <h2> Account Bewerken Individueel </h2>
-          <form onSubmit={handleSubmit}>
-            <div className="as-group">
-              <div>
-                <label>Email:</label>
-                <input
-                  type="text"
-                  className="as-email"
-                  placeholder={data.email}
-                  name="email"
-                  value={userData.email} // Controlled input
-                  onChange={(e) =>
-                    setUserData({ ...userData, email: e.target.value })
-                  } // Update on change
-                />
-              </div>
-              <div>
-                <label>Woonadres:</label>
-                <input
-                  type="text"
-                  className="as-adress"
-                  placeholder={data.address}
-                  name="adres"
-                  value={userData.address} // Controlled input
-                  onChange={(e) =>
-                    setUserData({ ...userData, address: e.target.value })
-                  } // Update on change
-                />
-              </div>
-              <div>
-                <label>Postcode:</label>
-                <input
-                  type="text"
-                  className="as-postalcode"
-                  placeholder={data.postalCode}
-                  name="postcode"
-                  value={userData.postalCode} // Controlled input
-                  onChange={(e) =>
-                    setUserData({ ...userData, postalCode: e.target.value })
-                  } // Update on change
-                />
-              </div>
-              <div>
-                <label>Telefoonnummer:</label>
-                <input
-                  type="text"
-                  className="as-phonenumber"
-                  placeholder={data.phoneNumber}
-                  name="phoneNumber"
-                  value={userData.phoneNumber} // Controlled input
-                  onChange={(e) =>
-                    setUserData({ ...userData, phoneNumber: e.target.value })
-                  } // Update on change
-                />
-              </div>
-              <div>
-                <label>Wachtwoord:</label>
-                <input
-                  type="password"
-                  ref={password1Ref}
-                  placeholder="Voer wachtwoord in"
-                  name="password"
-                  value={userData.password} // Bind to state
-                  onChange={(e) =>
-                    setUserData({ ...userData, password: e.target.value })
-                  } // Update state
-                />
-              </div>
-              <div>
-                <label>Herhaal Wachtwoord:</label>
-                <input
-                  type="password"
-                  ref={password2Ref}
-                  placeholder="Herhaal wachtwoord"
-                  name="repeatPassword"
-                  value={userData.repeatPassword} // Bind to state
-                  onChange={(e) =>
-                    setUserData({ ...userData, repeatPassword: e.target.value })
-                  } // Update state
-                />
-              </div>
-              <div>
-                <input
-                  type="checkbox"
-                  className="chkbx"
-                  onChange={togglePassword}
-                />
-                Toon wachtwoord
-              </div>
-
-              {validationError && (
-                <div style={{ color: "red", marginBottom: "10px" }}>
-                  {validationError}
-                </div>
-              )}
-
-              <div>
-                <button type="submit" className="SignupButton">
-                  Opslaan
-                </button>
-              </div>
+    <div className="accountsettings-box">
+      <section className="as-container">
+        <h2>Account Bewerken Individueel</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="as-group">
+            <div>
+              <label className="inputFieldTitle" htmlFor="email">Email:</label>
+              <input
+                type="text"
+                className="inputField"
+                id="email"
+                placeholder={data.email}
+                name="email"
+                value={userData.email} // Controlled input
+                onChange={(e) =>
+                  setUserData({ ...userData, email: e.target.value })
+                } // Update on change
+              />
             </div>
-          </form>
-        </section>
-      </div>
-      <footer></footer>
-    </>
+            <div>
+              <label className="inputFieldTitle" htmlFor="address">Woonadres:</label>
+              <input
+                type="text"
+                 className="inputField"
+                id="address"
+                placeholder={data.address}
+                name="address"
+                value={userData.address} // Controlled input
+                onChange={(e) =>
+                  setUserData({ ...userData, address: e.target.value })
+                } // Update on change
+              />
+            </div>
+            <div>
+              <label className="inputFieldTitle" htmlFor="postalCode">Postcode:</label>
+              <input
+                type="text"
+                className="inputField"
+                id="postalCode"
+                placeholder={data.postalCode}
+                name="postalCode"
+                value={userData.postalCode} // Controlled input
+                onChange={(e) =>
+                  setUserData({ ...userData, postalCode: e.target.value })
+                } // Update on change
+              />
+            </div>
+            <div>
+              <label className="inputFieldTitle" htmlFor="phoneNumber">Telefoonnummer:</label>
+              <input
+                type="text"
+                 className="inputField"
+                id="phoneNumber"
+                placeholder={data.phoneNumber}
+                name="phoneNumber"
+                value={userData.phoneNumber} // Controlled input
+                onChange={(e) =>
+                  setUserData({ ...userData, phoneNumber: e.target.value })
+                } // Update on change
+              />
+            </div>
+            <div>
+              <label className="inputFieldTitle" htmlFor="password">Wachtwoord:</label>
+              <input
+                type="password"
+                id="password"
+                className="inputField"
+                ref={password1Ref}
+                placeholder="Voer wachtwoord in"
+                name="password"
+                value={userData.password} // Bind to state
+                onChange={(e) =>
+                  setUserData({ ...userData, password: e.target.value })
+                } // Update state
+              />
+            </div>
+            <div>
+              <label className="inputFieldTitle" htmlFor="repeatPassword">Herhaal Wachtwoord:</label>
+              <input
+                type="password"
+                 className="inputField"
+                id="repeatPassword"
+                ref={password2Ref}
+                placeholder="Herhaal wachtwoord"
+                name="repeatPassword"
+                value={userData.repeatPassword} // Bind to state
+                onChange={(e) =>
+                  setUserData({
+                    ...userData,
+                    repeatPassword: e.target.value,
+                  })
+                } // Update state
+              />
+            </div>
+            <div className="show-password-container">
+              <label htmlFor="showPassword">Toon wachtwoord</label>
+              <input
+                type="checkbox"
+                id="showPassword"
+                className="showPasswordBox"
+                onChange={togglePassword}
+              />
+            </div>
+
+            {validationError && (
+              <div style={{ color: "red", marginBottom: "10px" }}>
+                {validationError}
+              </div>
+            )}
+
+            <div>
+              <button type="submit" className="SignupButton">
+                Opslaan
+              </button>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
   );
 }
 

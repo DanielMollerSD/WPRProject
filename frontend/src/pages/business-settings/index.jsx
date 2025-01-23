@@ -3,7 +3,6 @@ import axios from "axios";
 import "./styles.scss";
 
 function BusinessSettings() {
-
   const [data, setData] = useState(null); // Changed from [] to null
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -15,7 +14,6 @@ function BusinessSettings() {
     password: "",
     repeatPassword: "",
   });
-
 
   useEffect(() => {
     const fetchData = () => {
@@ -33,7 +31,6 @@ function BusinessSettings() {
             businessPostalCode: response.data?.businessPostalCode || "",
             businessName: response.data?.businessName || "",
             password: "", // Set to empty or any default value
-        
           });
           setLoading(false);
         })
@@ -66,9 +63,13 @@ function BusinessSettings() {
     };
 
     axios
-      .put("https://localhost:7265/api/Business/updateBusiness", updatedUserData, {
-        withCredentials: true,
-      })
+      .put(
+        "https://localhost:7265/api/Business/updateBusiness",
+        updatedUserData,
+        {
+          withCredentials: true,
+        }
+      )
       .then((response) => {
         console.log("User data updated:", response.data);
         setLoading(false);
@@ -86,7 +87,7 @@ function BusinessSettings() {
   return (
     <>
       <header></header>
-      <div className="accountsettings-box">
+      <div className="businesssettings-box">
         <section className="as-container">
           <h2> Account Bewerken Bedrijf </h2>
           <form onSubmit={handleSubmit}>
@@ -96,7 +97,9 @@ function BusinessSettings() {
                 <input
                   type="text"
                   className="as-adress"
-                  placeholder={data?.businessAddress || "Business Address not available"}
+                  placeholder={
+                    data?.businessAddress || "Business Address not available"
+                  }
                   name="adres"
                   value={userData.businessAddress}
                   onChange={(e) =>
@@ -113,7 +116,9 @@ function BusinessSettings() {
                 <input
                   type="text"
                   className="as-postalcode"
-                  placeholder={data?.businessPostalCode || "Postal Code not available"}
+                  placeholder={
+                    data?.businessPostalCode || "Postal Code not available"
+                  }
                   name="postcode"
                   value={userData.businessPostalCode}
                   onChange={(e) =>
@@ -130,7 +135,9 @@ function BusinessSettings() {
                 <input
                   type="text"
                   className="as-phonenumber"
-                  placeholder={data?.businessName || "Business Name not available"}
+                  placeholder={
+                    data?.businessName || "Business Name not available"
+                  }
                   name="phoneNumber"
                   value={userData.businessName}
                   onChange={(e) =>

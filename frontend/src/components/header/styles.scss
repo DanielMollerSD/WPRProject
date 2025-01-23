@@ -12,7 +12,6 @@
             padding-top: 15px;
             padding-bottom: 15px;
 
-
             nav {
                 display: flex;
                 justify-content: flex-end;
@@ -26,7 +25,6 @@
                     font-size: 20px;
                     font-weight: 600;
                     text-decoration: none;
-
 
                     &:hover {
                         color: rgb(70, 70, 70);
@@ -98,7 +96,7 @@
                         &:last-child {
                             background-color: $secondary-button-color;
                             color: white;
-    
+
                             &:hover {
                                 background-color: $secondary-button-hover-color;
                             }
