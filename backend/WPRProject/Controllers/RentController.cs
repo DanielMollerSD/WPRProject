@@ -88,6 +88,11 @@ namespace WPRProject.Controllers
         [HttpPatch("{id}/status")]
         public async Task<IActionResult> UpdateStatus(int id, [FromBody] string newStatus)
         {
+            if (string.IsNullOrWhiteSpace(newStatus))
+            {
+                return BadRequest("Status cannot be empty.");
+            }
+
             var rent = await _context.Rent.FindAsync(id);
 
             if (rent == null)

@@ -1,75 +1,85 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const RentOverview = () => {
   const [rents, setRents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [editMode, setEditMode] = useState(null); // Houdt bij welk huurverzoek in bewerkingsmodus is
+  const [editMode, setEditMode] = useState(null); // Keeps track of which rent request is in edit mode
 
-  const apiBaseUrl = "https://localhost:7265/api/rent"; // Zorg ervoor dat je het juiste API endpoint gebruikt
+  const apiBaseUrl = "https://localhost:7265/api/rent"; // Ensure this URL points to your API
 
-  // Haal alle huurverzoeken op bij het laden van de pagina
+  // Fetch all rent requests when the component loads
   useEffect(() => {
     const fetchRentDetails = async () => {
       try {
-        const response = await fetch(apiBaseUrl);
-        if (!response.ok) {
-          throw new Error("Failed to fetch rent details");
+        const response = await axios.get(apiBaseUrl, {
+          withCredentials: true, // Send cookies if required
+        });
+
+        console.log("API response:", response.data); // Log full API response for debugging
+        if (response.data?.$values) {
+          setRents(response.data.$values); // If data is in $values, use it
+        } else {
+          setRents(response.data); // Otherwise, use the data directly
         }
-        const data = await response.json();
-        setRents(data); // Zet de data in de state
-        setLoading(false); // Zet de laadstatus uit
+
+        setLoading(false); // Turn off loading state
       } catch (err) {
-        setError(err.message);
-        setLoading(false);
+        console.error("Error fetching rent details:", err);
+        setError(err.response?.data?.message || "An error occurred while fetching data");
+        setLoading(false); // Turn off loading state
       }
     };
 
     fetchRentDetails();
   }, []);
 
-  // Functie om de status van een huurverzoek bij te werken
+  // Function to update the status of a rent request
   const updateStatus = async (rentId, newStatus) => {
     try {
-      const response = await fetch(`${apiBaseUrl}/${rentId}/status`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newStatus), // stuur de nieuwe status (bijv. "accepted", "declined" of "pending")
-      });
+      const response = await axios.patch(
+        `${apiBaseUrl}/${rentId}/status`,
+        JSON.stringify(newStatus), // Send the new status as a JSON string
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
 
-      if (!response.ok) {
-        throw new Error("Failed to update rent status");
-      }
-
-      const updatedRent = await response.json();
+      // Update the rent list by replacing the updated item
       setRents((prevRents) =>
         prevRents.map((rent) =>
-          rent.id === updatedRent.id ? updatedRent : rent
+          rent.id === response.data.id ? response.data : rent
         )
       );
-      alert(`Rent status updated to: ${updatedRent.status}`);
+
+      alert(`Rent status updated to: ${response.data.status}`);
+      setEditMode(null); // Exit edit mode after successful update
     } catch (err) {
-      alert("Error updating rent status");
+      const errorMessage =
+        err.response?.data?.message || "An error occurred while updating the status.";
+      alert(errorMessage);
       console.error(err);
     }
   };
 
-  // Laadindicator tonen
+  // Toggle edit mode for a specific rent request
+  const toggleEditMode = (rentId) => {
+    setEditMode(editMode === rentId ? null : rentId);
+  };
+
+  // Render loading indicator
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  // Toon foutmelding als er een probleem is
+  // Render error message if something goes wrong
   if (error) {
     return <div>Error: {error}</div>;
   }
-
-  // Functie om editmode in of uit te schakelen
-  const toggleEditMode = (rentId) => {
-    setEditMode(editMode === rentId ? null : rentId); // Zet editmode aan of uit
-  };
 
   return (
     <div className="container">
@@ -109,7 +119,7 @@ const RentOverview = () => {
                 <td>{rent.pickupLocation || "Not specified"}</td>
                 <td>{rent.dropoffLocation || "Not specified"}</td>
                 <td>
-                  {/* Voeg een knop toe om editmode aan te zetten */}
+                  {/* Button to toggle edit mode */}
                   <button
                     className="btn btn-primary"
                     onClick={() => toggleEditMode(rent.id)}
@@ -117,9 +127,9 @@ const RentOverview = () => {
                     {editMode === rent.id ? "Cancel" : "Edit"}
                   </button>
 
-                  {/* Toon de andere knoppen alleen als editmode is ingeschakeld */}
+                  {/* Show status update buttons only if in edit mode */}
                   {editMode === rent.id && (
-                    <div>
+                    <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
                       <button
                         className="btn btn-success"
                         onClick={() => updateStatus(rent.id, "accepted")}
