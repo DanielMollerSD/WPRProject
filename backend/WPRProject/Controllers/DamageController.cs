@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WPRProject.Tables;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WPRProject.Controllers
 {
@@ -15,6 +16,7 @@ namespace WPRProject.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "Frontoffice")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Damage>>> GetDamages()
         {
@@ -22,6 +24,7 @@ namespace WPRProject.Controllers
             return Ok(damages);
         }
 
+        [Authorize(Roles = "Backoffice, Frontoffice")]
         [HttpGet("{Id}")]
         public async Task<ActionResult<Damage>> GetOneDamage(int id)
         {
@@ -34,7 +37,8 @@ namespace WPRProject.Controllers
 
             return damage;
         }
-      
+
+        [Authorize(Roles = "Backoffice, Frontoffice")]
         [HttpGet("vehicle/{vehicleId}")]
         public IActionResult GetDamagesByVehicle(int vehicleId)
         {
@@ -50,6 +54,7 @@ namespace WPRProject.Controllers
             return Ok(damages);
         }
        
+        [Authorize(Roles = "Frontoffice")]
         [HttpPost]
         public async Task<ActionResult<Damage>> CreateDamage(Damage damage)
         {
@@ -64,6 +69,7 @@ namespace WPRProject.Controllers
             return CreatedAtAction(nameof(GetOneDamage), new { id = damage.Id }, damage);
         }
 
+        [Authorize(Roles = "Backoffice")]
         [HttpPut("{id}/approve")]
         public async Task<IActionResult> ApproveDamage(int id)
         {
@@ -80,6 +86,7 @@ namespace WPRProject.Controllers
             return Ok(damage);
         }
 
+        [Authorize(Roles = "Backoffice")]
         [HttpPut("{id}/pending")]
         public async Task<IActionResult> SetDamageToPending(int id)
         {

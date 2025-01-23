@@ -30,7 +30,7 @@ namespace WPRProject.Controllers
 
         
 
-        [Authorize (Roles = "Individual , BusinessEmployee")]
+        [Authorize (Roles = "Owner, Wagenparkbeheerder")]
         [HttpGet]
         public async Task<ActionResult<Customer>> GetCustomers()
         {

@@ -60,7 +60,7 @@ namespace WPRProject.Controllers
             }
 
             var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
-            if (userRole != "Individual")
+            if (userRole == "Medewerker")
             {
                 query = query.Where(v => v.VehicleType == "Car");
             }

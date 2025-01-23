@@ -1,6 +1,7 @@
 import './styles.scss';
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function FrontOfficeVehicleOverview() {
     const [vehicles, setVehicles] = useState([]);
@@ -11,10 +12,10 @@ function FrontOfficeVehicleOverview() {
 
     async function fetchVehicles() {
         try {
-            const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/Vehicle`);
-            if (!response.ok) throw new Error("Failed to fetch vehicles");
-            const data = await response.json();
-            setVehicles(data);
+            const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/Vehicle`, {
+                withCredentials: true
+            });
+            setVehicles(response.data.$values);
         } catch (e) {
             console.error(e.message);
         }
@@ -22,40 +23,37 @@ function FrontOfficeVehicleOverview() {
 
     async function updateVehicleStatus(id, newStatus) {
         try {
-            const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/Vehicle/${id}/status`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(newStatus),
-            });
-    
-            if (!response.ok) throw new Error("Failed to update status");
+            await axios.patch(
+                `${import.meta.env.VITE_APP_API_URL}/Vehicle/${id}/status`,
+                newStatus,
+                {
+                    headers: { "Content-Type": "application/json" },
+                    withCredentials: true
+                }
+            );
             await fetchVehicles();
             setEditingStatusId(null);
         } catch (e) {
             console.error(e.message);
         }
     }
-    
+
     async function updateVehicleNote(id, newNote) {
         try {
-            const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/Vehicle/${id}/note`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(newNote),
-            });
-    
-            if (!response.ok) throw new Error("Failed to update note");
-            await fetchVehicles(); 
+            await axios.patch(
+                `${import.meta.env.VITE_APP_API_URL}/Vehicle/${id}/note`,
+                newNote,
+                {
+                    headers: { "Content-Type": "application/json" },
+                    withCredentials: true
+                }
+            );
+            await fetchVehicles();
             setEditingNoteId(null);
         } catch (e) {
             console.error(e.message);
         }
     }
-    
 
     useEffect(() => {
         fetchVehicles();
@@ -96,7 +94,7 @@ function FrontOfficeVehicleOverview() {
                                                         placeholder="Update Status"
                                                     />
                                                     <button
-                                                        onClick={() => updateVehicleStatus(vehicle.id, statusInput)}
+                                                        onClick={() => updateVehicleStatus(vehicle.id, { status: statusInput })}
                                                     >
                                                         Save
                                                     </button>
@@ -126,7 +124,7 @@ function FrontOfficeVehicleOverview() {
                                                         placeholder="Update Note"
                                                     />
                                                     <button
-                                                        onClick={() => updateVehicleNote(vehicle.id, noteInput)}
+                                                        onClick={() => updateVehicleNote(vehicle.id, { note: noteInput })}
                                                     >
                                                         Save
                                                     </button>

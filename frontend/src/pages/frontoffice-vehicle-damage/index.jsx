@@ -1,26 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 import './styles.scss';
 
 function VehicleDamage() {
   const { id } = useParams();
   const [vehicle, setVehicle] = useState(null);
-  const [damages, setDamages] = useState([]); 
+  const [damages, setDamages] = useState([]);
   const [damageDescription, setDamageDescription] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchVehicleAndDamages() {
       try {
-        // Fetch vehicle data
-        const vehicleResponse = await fetch(`${import.meta.env.VITE_APP_API_URL}/Vehicle/${id}`);
-        const vehicleData = await vehicleResponse.json();
-        setVehicle(vehicleData);
+        const vehicleResponse = await axios.get(`${import.meta.env.VITE_APP_API_URL}/Vehicle/${id}`, {
+          withCredentials: true,
+        });
+        setVehicle(vehicleResponse.data);
 
-        // Fetch damages for the specific vehicle
-        const damageResponse = await fetch(`${import.meta.env.VITE_APP_API_URL}/Damage/vehicle/${id}`);
-        const damageData = await damageResponse.json();
-        setDamages(Array.isArray(damageData) ? damageData : []); //initialize
+        const damageResponse = await axios.get(`${import.meta.env.VITE_APP_API_URL}/Damage/vehicle/${id}`, {
+          withCredentials: true,
+        });
+        setDamages(Array.isArray(damageResponse.data) ? damageResponse.data : []);
       } catch (error) {
         console.error("Error fetching data:", error.message);
       } finally {
@@ -34,19 +35,14 @@ function VehicleDamage() {
   const handleDamageSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/Damage`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ description: damageDescription, vehicleId: parseInt(id, 10) }),
-      });
-      if (response.ok) {
-        const newDamage = await response.json();
-        setDamages((prevDamages) => Array.isArray(prevDamages) ? [...prevDamages, newDamage] : [newDamage]); // Ensure prevDamages is an array
-        setDamageDescription(""); // Clear input field
-        alert("Damage pending for approval!");
-      } else {
-        alert("Error adding damage!");
-      }
+      const response = await axios.post(
+        `${import.meta.env.VITE_APP_API_URL}/Damage`,
+        { description: damageDescription, vehicleId: parseInt(id, 10) },
+        { withCredentials: true }
+      );
+      setDamages((prevDamages) => Array.isArray(prevDamages) ? [...prevDamages, response.data] : [response.data]);
+      setDamageDescription("");
+      alert("Damage pending for approval!");
     } catch (error) {
       console.error("Error submitting damage:", error);
       alert("Error adding damage!");
