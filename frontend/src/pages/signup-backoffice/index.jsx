@@ -27,8 +27,16 @@ function SignUpBackoffice() {
       Role: "Backoffice",
     };
 
+    if (formData.Password.length < 8) {
+      alert("Password must be at least 8 characters long.");
+      return;
+    }
+
     console.log("Sending request to backend...");
-    console.log("Request URL:", `${import.meta.env.VITE_APP_API_URL}/Employee/register-carsandall`);
+    console.log(
+      "Request URL:",
+      `${import.meta.env.VITE_APP_API_URL}/Employee/register-carsandall`
+    );
     console.log("Request Body:", JSON.stringify(formData));
 
     try {

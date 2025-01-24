@@ -29,10 +29,15 @@ function SignUpParticular() {
             PhoneNumber: e.target.telefoonnummer.value,
             Password: e.target.password.value,
         };
+
+        if (formData.Password.length < 8) {
+            alert("Password must be at least 8 characters long.");
+            return;
+        }
     
-        console.log("Sending request to backend...");
-        console.log("Request URL:", `${import.meta.env.VITE_APP_API_URL}/Individual/register`);
-        console.log("Request Body:", JSON.stringify(formData));
+        // console.log("Sending request to backend...");
+        // console.log("Request URL:", `${import.meta.env.VITE_APP_API_URL}/Individual/register`);
+        // console.log("Request Body:", JSON.stringify(formData));
     
         try {
             const response = await axios.post(

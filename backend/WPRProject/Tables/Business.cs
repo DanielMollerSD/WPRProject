@@ -6,15 +6,17 @@ namespace WPRProject.Tables
     public class Business 
     {
         [Key]public int BusinessId {get;set;} 
-        
+
+        [Required]
         public string BusinessName { get; set; }
 
         [Range(8, int.MaxValue, ErrorMessage = "Voer een geldig KVK-nummer in.")]
         public int Kvk { get; set; }
 
-       
+        [Required]
         public string BusinessAddress { get; set; }
 
+        [Required]
         public string BusinessPostalCode { get; set; }
 
         [JsonIgnore]
