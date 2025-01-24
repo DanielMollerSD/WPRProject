@@ -10,11 +10,13 @@ function PrivacyEditPage() {
     useEffect(() => {
         const fetchPrivacy = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/Privacy`);
-                const data = response.data;
+                const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/Privacy`, {
+                    withCredentials: true, 
+                });
+                const data = response.data.$values;
 
                 if (data.length > 0) {
-                    setDescription(data[0].description); 
+                    setDescription(data[0].description);
                 } else {
                     setDescription('');
                 }
@@ -32,10 +34,16 @@ function PrivacyEditPage() {
         setSuccess(false);
 
         try {
-            await axios.put(`${import.meta.env.VITE_APP_API_URL}/Privacy/1`, {
-                id: 1,
-                description: description,
-            });
+            await axios.put(
+                `${import.meta.env.VITE_APP_API_URL}/Privacy/1`,
+                {
+                    id: 1,
+                    description: description,
+                },
+                {
+                    withCredentials: true, 
+                }
+            );
 
             setSuccess(true);
         } catch (err) {

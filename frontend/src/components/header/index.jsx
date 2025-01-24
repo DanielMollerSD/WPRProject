@@ -49,8 +49,8 @@ function Header() {
 
                             {!isLoggedIn && (
                                 <>
-                                    <Link to="/login">Login</Link>
                                     <Link to="/signup-select">Register</Link>
+                                    <Link to="/login">Login</Link>
                                 </>
                             )}
 
@@ -93,15 +93,15 @@ function Header() {
                                     <Link to="/rent-requests">Aanvragen</Link>
                                     <Link to="/backoffice-subscription">Abbonementen</Link>
                                     <Link to="/vehicle-crud">Voertuigen</Link>
-                                    <Link to="/frontoffice-crud">Frontoffice beheren</Link>
-                                    <Link to="/backoffice-privacy-page">Privacy beheren</Link>
+                                    <Link to="/frontoffice-crud">Frontoffice Beheren</Link>
+                                    <Link to="/backoffice-privacy-page">Privacy</Link>
                                 </>
                             )}
 
 
                             {isLoggedIn && userRole === "Frontoffice" && (
                                 <>
-                                    <Link to="/frontoffice-vehicle-overview">Voertuigen beheren</Link>
+                                    <Link to="/frontoffice-vehicle-overview">Voertuigen Beheren</Link>
                                 </>
                             )}
 

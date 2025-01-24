@@ -67,45 +67,6 @@ function BusinessSettings() {
     }
   };
 
-  const handleDelete = async (id) => {
-    if (!window.confirm("Weet u zeker dat u uw bedrijf wilt verwijderen?"))
-      return;
-
-    try {
-      // Make the DELETE request using axios
-      const response = await axios.delete(
-        `${import.meta.env.VITE_APP_API_URL}/Business/delete-business/${id}`,
-        {
-          withCredentials: true, // Include credentials (e.g., cookies)
-        }
-      );
-      handleLogout();
-      console.log("Account deleted successfully:", response.data);
-      alert("Account verwijderd");
-    } catch (error) {
-      // Handle errors properly
-      console.error(
-        "Error during account deletion:",
-        error.response?.data?.message || error.message
-      );
-    }
-  };
-
-  const handleLogout = () => {
-    axios
-      .delete(`${import.meta.env.VITE_APP_API_URL}/Logout`, {
-        withCredentials: true,
-      })
-      .then((response) => {
-        console.log("Logout successful", response);
-        localStorage.clear();
-
-        window.location.href = "/";
-      })
-      .catch((error) => {
-        console.error("Error during logout:", error);
-      });
-  };
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   if (!data) return <div>No data found!</div>;
@@ -184,14 +145,6 @@ function BusinessSettings() {
               <div>
                 <button type="submit" className="SignupButton">
                   Opslaan
-                </button>
-              </div>
-              <div>
-                <button
-                  className="delete-button"
-                  onClick={() => handleDelete(data.businessId)}
-                >
-                  Verwijder Bedrijf
                 </button>
               </div>
             </div>

@@ -19,6 +19,7 @@ namespace WPRProject.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "Backoffice, Wagenparkbeheerder")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SubscriptionDiscount>>> GetEmployees()
         {
@@ -26,6 +27,8 @@ namespace WPRProject.Controllers
             var discounts = await _context.SubscriptionDiscount.ToListAsync();
             return Ok(discounts);
         }
+
+        [Authorize(Roles = "Backoffice, Wagenparkbeheerder")]
         [HttpGet("{Id}")]
         public async Task<ActionResult<SubscriptionDiscount>> GetOneDiscount(int id)
         {

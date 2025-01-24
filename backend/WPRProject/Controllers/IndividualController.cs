@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using System.Security.Cryptography;
 using System.Text;
 using BCrypt.Net;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace WPRProject.Controllers
@@ -26,6 +27,7 @@ namespace WPRProject.Controllers
             _context = context;
         }
         
+        [Authorize(Roles = "Individual")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Individual>>> GetParticulars()
         {
@@ -34,6 +36,7 @@ namespace WPRProject.Controllers
             return Ok(damages);
         }
 
+        [Authorize(Roles = "Individual")]
         [HttpGet("{Id}")]
         public async Task<ActionResult<Individual>> GetOneParticular(int id)
         {

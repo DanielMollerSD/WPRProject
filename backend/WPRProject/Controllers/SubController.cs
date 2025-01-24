@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WPRProject.Tables;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WPRProject.Controllers
 
@@ -17,6 +18,7 @@ namespace WPRProject.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "Backoffice, Wagenparkbeheerder")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Subscription>>> GetSubscriptions()
         {
@@ -24,6 +26,8 @@ namespace WPRProject.Controllers
             var subscriptions = await _context.Subscription.ToListAsync();
             return Ok(subscriptions);
         }
+
+        [Authorize(Roles = "Backoffice, Wagenparkbeheerder")]
         [HttpGet("{Id}")]
         public async Task<ActionResult<Subscription>> GetOneSubscription(int id)
         {

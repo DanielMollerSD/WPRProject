@@ -17,6 +17,7 @@ namespace WPRProject.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "Backoffice, Wagenparkbeheerder")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<object>>> GetOrders()
         {
@@ -37,6 +38,7 @@ namespace WPRProject.Controllers
             return Ok(orders);
         }
 
+        [Authorize(Roles = "Backoffice, Wagenparkbeheerder")]
         [HttpGet("{Id}")]
         public async Task<ActionResult<SubscriptionOrder>> GetOrder(int id)
         {
@@ -50,7 +52,7 @@ namespace WPRProject.Controllers
             return order;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Wagenparkbeheerder")]
         [HttpPost]
         public async Task<IActionResult> CreateSubscriptionOrder([FromBody] SubscriptionOrder order)
         {
@@ -108,7 +110,7 @@ namespace WPRProject.Controllers
             }
         }
     
-    
+        [Authorize(Roles = "Backoffice")]
         [HttpPatch("{id}/approve")]
         public async Task<IActionResult> ApproveOrder(int id)
         {
@@ -136,6 +138,8 @@ namespace WPRProject.Controllers
             }
         }
 
+
+        [Authorize(Roles = "Backoffice")]
         [HttpPatch("{id}/decline")]
         public async Task<IActionResult> DeclineOrder(int id)
         {
@@ -163,7 +167,7 @@ namespace WPRProject.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = "Wagenparkbeheerder")]
         [HttpDelete("delete-active")]
         public async Task<IActionResult> DeleteActiveSubscription()
         {
