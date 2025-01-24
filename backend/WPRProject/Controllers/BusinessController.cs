@@ -311,7 +311,7 @@ namespace WPRProject.Controllers
         public async Task<IActionResult> DeleteCustomer(int id)
         {
 
-            Console.WriteLine("inside controller");    
+   
             var business = await _context.Business.FindAsync(id);
             if (business == null)
             {

@@ -53,18 +53,51 @@ function BusinessSettings() {
     };
 
     try {
-      const response = await axios.put(
+      await axios.put(
         `${import.meta.env.VITE_APP_API_URL}/Business/updateBusiness`,
         updatedUserData,
         { withCredentials: true }
       );
-
-      alert("Data succesfully updated!");
+      alert("Business data succesfully updated!")
     } catch (err) {
       setError(err.response?.data?.message || "Failed to update business data");
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm("Weet u zeker dat u uw account wilt verwijderen?"))
+      return;
+
+    try {
+      await axios.delete(
+        `${import.meta.env.VITE_APP_API_URL}/Business/delete-business/${id}`,
+        { withCredentials: true }
+      );
+      
+      handleLogout(); // Assuming the business has been deleted, log the user out
+      alert("Business successfully deleted!");
+    } catch (error) {
+      console.error("Error during business deletion:", error);
+      alert("Failed to delete business.");
+    }
+  };
+
+  const handleLogout = () => {
+    axios
+      .delete(`${import.meta.env.VITE_APP_API_URL}/Logout`, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log("Logout successful", response);
+        localStorage.clear();
+
+        window.location.href = "/";
+      })
+      .catch((error) => {
+        console.error("Error during logout:", error);
+      });
   };
 
   if (loading) return <div>Loading...</div>;
@@ -143,12 +176,21 @@ function BusinessSettings() {
               )}
 
               <div>
-                <button type="submit" className="SignupButton">
+                <button onClick={handleSubmit} className="SignupButton">
                   Opslaan
                 </button>
               </div>
+              <div>
+  
+              </div>
             </div>
           </form>
+          <button
+                  className="delete-button"
+                  onClick={() => handleDelete(data.businessId)}
+                >
+                  Bedrijf Verwijderen
+                </button>
         </section>
       </div>
       <footer></footer>
