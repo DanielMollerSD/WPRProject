@@ -243,21 +243,22 @@ namespace WPRProject.Controllers
             }
 
             var business = await _context.Business
-                .FirstOrDefaultAsync(b => b.BusinessName == updateBusinessDto.BusinessName);
+                .FirstOrDefaultAsync(b => b.BusinessId == updateBusinessDto.BusinessId);
 
+            
             if (business == null)
             {
                 return NotFound(new { Message = "Business not found." });
             }
 
-            // Update the business properties if the provided value is not null
+        
             business.BusinessName = updateBusinessDto.BusinessName ?? business.BusinessName;
             business.BusinessAddress = updateBusinessDto.BusinessAddress ?? business.BusinessAddress;
             business.BusinessPostalCode = updateBusinessDto.BusinessPostalCode ?? business.BusinessPostalCode;
 
             await _context.SaveChangesAsync();
 
-            return Ok(business);
+           return Ok(new { Message = "Business updated successfully", Business = business });
         }
 
         [Authorize (Roles = "Owner, Wagenparkbeheerder")]

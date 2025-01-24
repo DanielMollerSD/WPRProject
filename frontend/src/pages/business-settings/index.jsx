@@ -46,18 +46,20 @@ function BusinessSettings() {
     setValidationError("");
 
     const updatedUserData = {
+      businessId: data.businessId,
       businessAddress: userData.businessAddress,
       businessPostalCode: userData.businessPostalCode,
       businessName: userData.businessName,
     };
 
     try {
-      await axios.put(
+      const response = await axios.put(
         `${import.meta.env.VITE_APP_API_URL}/Business/updateBusiness`,
         updatedUserData,
         { withCredentials: true }
       );
-      nav("/business-settings");
+
+      alert("Data succesfully updated!");
     } catch (err) {
       setError(err.response?.data?.message || "Failed to update business data");
     } finally {
@@ -158,11 +160,11 @@ function BusinessSettings() {
                 <label>Bedrijfsnaam:</label>
                 <input
                   type="text"
-                  className="as-phonenumber"
+                  className="as-businessname"
                   placeholder={
                     data?.businessName || "Business Name not available"
                   }
-                  name="phoneNumber"
+                  name="businessName"
                   value={userData.businessName}
                   onChange={(e) =>
                     setUserData({
