@@ -68,7 +68,8 @@ namespace WPRProject.Controllers
             var vehicles = await query.ToListAsync();
             return Ok(vehicles);
         }
-
+        
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Vehicle>> GetVehicleById(int id)
         {
@@ -81,6 +82,7 @@ namespace WPRProject.Controllers
         }
 
         // POST: api/vehicle (Create)
+        [Authorize(Roles = "Backoffice")]
         [HttpPost]
         public async Task<ActionResult<Vehicle>> CreateVehicle(Vehicle vehicle)
         {
@@ -96,6 +98,7 @@ namespace WPRProject.Controllers
         }
 
         // PUT: api/vehicle/{id} (Update)
+        [Authorize(Roles = "Backoffice")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateVehicle(int id, Vehicle vehicle)
         {
@@ -126,6 +129,7 @@ namespace WPRProject.Controllers
         }
 
         // DELETE: api/vehicle/{id} (Delete)
+        [Authorize(Roles = "Backoffice")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteVehicle(int id)
         {
@@ -141,6 +145,7 @@ namespace WPRProject.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "Frontoffice")]
         [HttpPatch("{id}/status")]
         public async Task<IActionResult> UpdateVehicleStatus(int id, [FromBody] string newStatus)
         {
@@ -164,6 +169,7 @@ namespace WPRProject.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "Frontoffice")]
         [HttpPatch("{id}/note")]
         public async Task<IActionResult> UpdateVehicleNote(int id, [FromBody] string newNote)
         {

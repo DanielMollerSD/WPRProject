@@ -61,9 +61,6 @@ function BusinessCRUD() {
       const response = await axios.get(
         `${import.meta.env.VITE_APP_API_URL}/Business/employees`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
           withCredentials: true,
         }
       );
@@ -72,7 +69,7 @@ function BusinessCRUD() {
         const filteredEmployees = response.data.employees.$values.filter(
           (employee) =>
             employee.businessId === currentAccount.businessId &&
-            employee.role !== "Owner"
+            employee.role !== currentAccount.role && employee.role !== "Owner"
         );
         setEmployees(filteredEmployees);
       }

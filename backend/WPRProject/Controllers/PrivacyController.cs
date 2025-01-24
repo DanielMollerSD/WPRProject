@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using WPRProject.Tables;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WPRProject.Controllers
 {
@@ -23,6 +24,7 @@ namespace WPRProject.Controllers
             return await _context.Set<Privacy>().ToListAsync();
         }
 
+        [Authorize(Roles = "Backoffice")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdatePrivacy(int id, [FromBody] Privacy privacy)
         {

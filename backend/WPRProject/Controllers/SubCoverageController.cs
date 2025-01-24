@@ -20,6 +20,7 @@ namespace WPRProject.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "Backoffice, Wagenparkbeheerder")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SubscriptionCoverage>>> GetCoverage()
         {
@@ -27,6 +28,8 @@ namespace WPRProject.Controllers
             var coverages = await _context.SubscriptionCoverage.ToListAsync();
             return Ok(coverages);
         }
+
+        [Authorize(Roles = "Backoffice, Wagenparkbeheerder")]
         [HttpGet("{Id}")]
         public async Task<ActionResult<SubscriptionCoverage>> GetOneCoverage(int id)
         {

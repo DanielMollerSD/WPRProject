@@ -22,7 +22,7 @@ namespace WPRProject.Controllers
         }
 
         // GET all rents (Authenticated users)
-        [Authorize(Roles = "Backoffice")]
+        [Authorize(Roles = "Backoffice, Wagenparkbeheerder, Medewerker, Individual")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Rent>>> GetAllRents()
         {
@@ -31,7 +31,7 @@ namespace WPRProject.Controllers
         }
 
         // GET a specific rent (Authenticated users)
-        [Authorize(Roles = "Backoffice")]
+        [Authorize(Roles = "Backoffice, Wagenparkbeheerder, Medewerker, Individual")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRent(int id)
         {
@@ -44,7 +44,7 @@ namespace WPRProject.Controllers
         }
 
         // POST a new rent (Authenticated users)
-        [Authorize(Roles = "Backoffice , Individual , Medewerker")]
+        [Authorize(Roles = "Individual, Medewerker")]
         [HttpPost]
         public async Task<IActionResult> CreateRent([FromBody] Rent rent)
         {
@@ -130,7 +130,7 @@ namespace WPRProject.Controllers
             return Ok(rent);
         }
 
-        [Authorize(Roles = "Backoffice")]
+        [Authorize(Roles = "Backoffice, Wagenparkbeheerder, Medewerker, Individual")]
         [HttpGet("requests")]
         public async Task<ActionResult<IEnumerable<object>>> GetAllRentRequests()
         {
