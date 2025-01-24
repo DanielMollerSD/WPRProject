@@ -57,7 +57,6 @@ function BusinessSettings() {
         updatedUserData,
         { withCredentials: true }
       );
-      console.log(data);
       window.alert("Business data updated successfully");
       console.log("Business data updated successfully");
     } catch (err) {

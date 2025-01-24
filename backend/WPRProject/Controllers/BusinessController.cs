@@ -305,6 +305,31 @@ namespace WPRProject.Controllers
             // Return the updated employee details
             return Ok(new { Message = "Employee updated successfully", Employee = employee });
         }
+        [Authorize(Roles = "Owner")]
+        [HttpDelete("delete-business/{id}")]
+        public async Task<IActionResult> DeleteCustomer(int id)
+        {
+
+            Console.WriteLine("inside controller");    
+            var business = await _context.Business.FindAsync(id);
+            if (business == null)
+            {
+                return NotFound();
+            }
+
+            _context.Business.Remove(business);
+            await _context.SaveChangesAsync();
+
+             Response.Cookies.Delete("access_token", new CookieOptions
+            {
+                Path = "/",
+                HttpOnly = true,
+                Secure = Request.IsHttps,
+                SameSite = SameSiteMode.None,
+            });
+
+            return NoContent();
+        }
     }
 
 }

@@ -130,10 +130,11 @@ namespace WPRProject.Controllers
         }
 
 
-        [Authorize(Roles = "Owner, Wagenparkbeheerder")]
+        [Authorize(Roles = "Owner, Wagenparkbeheerder, Individual")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomer(int id)
         {
+
             var customer = await _context.Customer.FindAsync(id);
             if (customer == null)
             {
@@ -142,6 +143,14 @@ namespace WPRProject.Controllers
 
             _context.Customer.Remove(customer);
             await _context.SaveChangesAsync();
+
+             Response.Cookies.Delete("access_token", new CookieOptions
+            {
+                Path = "/",
+                HttpOnly = true,
+                Secure = Request.IsHttps,
+                SameSite = SameSiteMode.None,
+            });
 
             return NoContent();
         }
