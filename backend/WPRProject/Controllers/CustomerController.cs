@@ -49,6 +49,7 @@ namespace WPRProject.Controllers
             {
                 return NotFound(new { Message = "Customer not found." });
             }
+            
 
             return Ok(customer); // Return the logged-in user data
         }
