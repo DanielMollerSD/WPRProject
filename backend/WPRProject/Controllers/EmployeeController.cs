@@ -29,7 +29,8 @@ namespace WPRProject.Controllers
             var employees = await _context.Employee.ToListAsync();
             return Ok(employees);
         }
-         [Authorize(Roles = "Owner, Wagenparkbeheerder")]
+
+        [Authorize(Roles = "Backoffice")]
         [HttpGet("{Id}")]
         public async Task<ActionResult<Employee>> GetOneEmployee(int id)
         {
@@ -44,7 +45,8 @@ namespace WPRProject.Controllers
 
             return employee;
         }
-        [Authorize(Roles = "Owner, Wagenparkbeheerder")]
+        
+        [Authorize(Roles = "Backoffice")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFrontoficeAccount(int id)
         {
@@ -58,7 +60,7 @@ namespace WPRProject.Controllers
 
             return Ok(new { message = "Account deleted successfully" });
         }
-        [Authorize(Roles = "Owner, Wagenparkbeheerder")]
+
         [HttpPost("register-carsandall")]
         public async Task<IActionResult> Register([FromBody] EmployeeRegisterDto registerDto)
         {

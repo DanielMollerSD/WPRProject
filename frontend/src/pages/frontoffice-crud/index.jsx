@@ -109,25 +109,25 @@ function FrontofficeCRUD() {
       setLoading(true);
       setError(null);
 
-      if (isEditing) {
-        const response = await axios.put(
-          `${import.meta.env.VITE_APP_API_URL}/Employee`,
-          filledForm,
-          {
-            withCredentials: true,
-          }
-        );
-        console.log("User data updated:", response.data);
-      } else {
-        const response = await axios.post(
-          `${import.meta.env.VITE_APP_API_URL}/Employee/register-carsandall`,
-          filledForm,
-          {
-            headers: { "Content-Type": "application/json" },
-          }
-        );
-        console.log("Employee created:", response.data);
-      }
+      // if (isEditing) {
+      //   const response = await axios.put(
+      //     `${import.meta.env.VITE_APP_API_URL}/Employee`,
+      //     filledForm,
+      //     {
+      //       withCredentials: true,
+      //     }
+      //   );
+      //   console.log("User data updated:", response.data);
+      // } else {
+      //   const response = await axios.post(
+      //     `${import.meta.env.VITE_APP_API_URL}/Employee/register-carsandall`,
+      //     filledForm,
+      //     {
+      //       headers: { "Content-Type": "application/json" },
+      //     }
+      //   );
+      //   console.log("Employee created:", response.data);
+      // }
 
       setForm({
         email: "",
@@ -153,18 +153,22 @@ function FrontofficeCRUD() {
       return;
 
     try {
-      const response = await fetch(
+      const response = await axios.delete(
         `${import.meta.env.VITE_APP_API_URL}/Employee/${id}`,
-        { method: "DELETE" }
+        {
+          withCredentials: true,
+        }
       );
 
-      if (!response.ok) throw new Error("Failed to delete employee");
+      if (response.status !== 200) throw new Error("Failed to delete employee");
 
       fetchEmployees();
     } catch (error) {
-      console.error(error);
+      console.error("Error deleting employee:", error.message);
+      alert("Er is een fout opgetreden bij het verwijderen van de medewerker.");
     }
   };
+
 
   // Show the form for adding a new employee
   const handleAddNewEmployee = () => {
