@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import './styles.scss';
 
 function RentScreen() {
   const { id } = useParams();
   const [vehicle, setVehicle] = useState(null);
+  const today = new Date();
+  const [unavailableDates, setUnavailableDates] = useState([]);
   const [formData, setFormData] = useState({
     travelPurpose: "",
     furthestDestination: "",
@@ -21,10 +25,14 @@ function RentScreen() {
           withCredentials: true
         });
 
-        setVehicle(response.data || []);
-        setLoading(false);
+        const vehicleData = response.data;
+        setVehicle(vehicleData || []);
+
+        const unavailableDates = vehicleData.unavailableDates?.$values || [];
+        const formattedUnavailableDates = unavailableDates.map(date => new Date(date));
+        setUnavailableDates(formattedUnavailableDates);
       } catch (e) {
-        console.error("Error fetching vehicle:", error.message);
+        console.error("Error fetching vehicle:", e.message);
       }
     }
 
@@ -75,6 +83,41 @@ function RentScreen() {
     }
   };
 
+  const getMinAvailableDateStartInput = () => {
+
+    if (!formData.endDate) {
+      return today;
+    }
+
+    const unavailableBeforeEndDate = unavailableDates.filter(date => {
+      return date instanceof Date && !isNaN(date) && date < new Date(formData.endDate);
+    });
+
+    if (unavailableBeforeEndDate.length > 0) {
+      return new Date(Math.max(...unavailableBeforeEndDate.map(date => date.getTime())));
+    }
+
+    return today;
+
+  };
+
+  const getMaxAvailableDateEndInput = () => {
+
+    if (!formData.startDate) {
+      return undefined;
+    }
+  
+    // Filter unavailable dates to find the first one after the start date
+    const unavailableAfterStartDate = unavailableDates.filter(date => {
+      return date instanceof Date && !isNaN(date) && date > new Date(formData.startDate);
+    });
+  
+    // Return the earliest unavailable date after the start date
+    if (unavailableAfterStartDate.length > 0) {
+      return new Date(Math.min(...unavailableAfterStartDate.map(date => date.getTime())));
+    }
+  };
+
   return (
     <div className="rent-screen">
       <div className="form-container">
@@ -96,22 +139,24 @@ function RentScreen() {
               </div>
               <div className="form-group">
                 <label>Start Date:</label>
-                <input
-                  type="date"
-                  name="startDate"
-                  value={formData.startDate}
-                  onChange={handleChange}
-                  required
+                  <DatePicker
+                  selected={formData.startDate}
+                  minDate={getMinAvailableDateStartInput()}
+                  maxDate={formData.endDate}
+                  excludeDates={unavailableDates}
+                  placeholderText="Select start date"
+                  onChange={(date) => setFormData({ ...formData, startDate: date })}
                 />
               </div>
               <div className="form-group">
                 <label>End Date:</label>
-                <input
-                  type="date"
-                  name="endDate"
-                  value={formData.endDate}
-                  onChange={handleChange}
-                  required
+                <DatePicker
+                  selected={formData.endDate}
+                  minDate={formData.startDate || today}
+                  maxDate={getMaxAvailableDateEndInput()}
+                  excludeDates={unavailableDates}
+                  placeholderText="Select end date"
+                  onChange={(date) => setFormData({ ...formData, endDate: date })}
                 />
               </div>
               <button type="submit" className="submit-btn">Rent</button>

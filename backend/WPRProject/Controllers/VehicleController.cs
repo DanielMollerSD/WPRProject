@@ -68,17 +68,50 @@ namespace WPRProject.Controllers
             var vehicles = await query.ToListAsync();
             return Ok(vehicles);
         }
-        
+
         [Authorize]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Vehicle>> GetVehicleById(int id)
+        public async Task<ActionResult<VehicleWithUnavailableDatesDto>> GetVehicleById(int id)
         {
             var vehicle = await _context.Vehicle.FindAsync(id);
             if (vehicle == null)
             {
                 return NotFound();
             }
-            return Ok(vehicle);
+
+            // Make a list of unavaiable dates for the date picker
+            var rentals = await _context.Rent
+                .Where(r => r.VehicleId == id)
+                .ToListAsync();
+
+            var unavailableDates = new List<string>();
+            foreach (var rental in rentals)
+            {
+                var startDate = rental.StartDate.Date;
+                var endDate = rental.EndDate.Date;
+
+                for (var date = startDate; date <= endDate; date = date.AddDays(1))
+                {
+                    unavailableDates.Add(date.ToString("yyyy-MM-dd"));
+                }
+            }
+
+            var vehicleDto = new VehicleWithUnavailableDatesDto
+            {
+                Id = vehicle.Id,
+                LicensePlate = vehicle.LicensePlate,
+                Brand = vehicle.Brand,
+                Model = vehicle.Model,
+                Color = vehicle.Color,
+                Status = vehicle.Status,
+                Note = vehicle.Note,
+                Price = vehicle.Price,
+                PurchaseYear = vehicle.PurchaseYear,
+                VehicleType = vehicle.VehicleType,
+                UnavailableDates = unavailableDates
+            };
+
+            return Ok(vehicleDto);
         }
 
         // POST: api/vehicle (Create)
