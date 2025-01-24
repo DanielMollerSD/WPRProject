@@ -253,7 +253,6 @@ function BusinessCRUD() {
                   type="password"
                   name="password"
                   placeholder="Wachtwoord"
-                  value={form.password}
                   onChange={handleChange}
                   ref={password1Ref}
                   required
