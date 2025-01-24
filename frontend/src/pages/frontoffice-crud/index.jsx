@@ -109,25 +109,25 @@ function FrontofficeCRUD() {
       setLoading(true);
       setError(null);
 
-      // if (isEditing) {
-      //   const response = await axios.put(
-      //     `${import.meta.env.VITE_APP_API_URL}/Employee`,
-      //     filledForm,
-      //     {
-      //       withCredentials: true,
-      //     }
-      //   );
-      //   console.log("User data updated:", response.data);
-      // } else {
-      //   const response = await axios.post(
-      //     `${import.meta.env.VITE_APP_API_URL}/Employee/register-carsandall`,
-      //     filledForm,
-      //     {
-      //       headers: { "Content-Type": "application/json" },
-      //     }
-      //   );
-      //   console.log("Employee created:", response.data);
-      // }
+      if (isEditing) {
+        const response = await axios.put(
+          `${import.meta.env.VITE_APP_API_URL}/Employee`,
+          filledForm,
+          {
+            withCredentials: true,
+          }
+        );
+        console.log("User data updated:", response.data);
+      } else {
+        const response = await axios.post(
+          `${import.meta.env.VITE_APP_API_URL}/Employee/register-carsandall`,
+          filledForm,
+          {
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        console.log("Employee created:", response.data);
+      }
 
       setForm({
         email: "",

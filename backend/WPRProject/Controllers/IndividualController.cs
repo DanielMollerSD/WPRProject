@@ -64,6 +64,11 @@ namespace WPRProject.Controllers
                     return BadRequest(new { message = "Email is al in gebruik" });
                 }
 
+                 if (registerDto.Password.Length < 8)
+                    {
+                        return BadRequest(new { message = "Password must be at least 8 characters long." });
+                    }
+
                 var hashedPassword = BCrypt.Net.BCrypt.HashPassword(registerDto.Password);
 
                 var newIndividual = new Individual

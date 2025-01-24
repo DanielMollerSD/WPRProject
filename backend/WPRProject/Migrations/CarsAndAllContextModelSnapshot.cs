@@ -47,7 +47,7 @@ namespace WPRProject.Migrations
 
                     b.HasKey("BusinessId");
 
-                    b.ToTable("Business", (string)null);
+                    b.ToTable("Business");
                 });
 
             modelBuilder.Entity("WPRProject.Tables.Customer", b =>
@@ -77,7 +77,8 @@ namespace WPRProject.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("TussenVoegsel")
                         .HasColumnType("nvarchar(max)");
@@ -131,7 +132,8 @@ namespace WPRProject.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("Role")
                         .IsRequired()

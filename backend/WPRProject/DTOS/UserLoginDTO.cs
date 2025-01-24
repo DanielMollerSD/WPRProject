@@ -11,7 +11,7 @@ namespace WPRProject.DTOS
 
       
     [Required(ErrorMessage = "Password is required.")]
-
+        
         public string Password { get; set; }
     }
 }
