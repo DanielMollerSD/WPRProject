@@ -34,10 +34,12 @@ function VehicleCRUD() {
         fetchVehicles();
     }, []);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
+ const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name !== "status" && name !== "note") {
         setForm({ ...form, [name]: value });
-    };
+    }
+};
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -156,11 +158,22 @@ function VehicleCRUD() {
                                 <input type="text" name="brand" placeholder="Merk" value={form.brand} onChange={handleChange} required />
                                 <input type="text" name="model" placeholder="Model" value={form.model} onChange={handleChange} required />
                                 <input type="text" name="color" placeholder="Kleur" value={form.color} onChange={handleChange} />
-                                <input type="text" name="status" placeholder="Status" value={form.status} onChange={handleChange} />
+
+                                <select name="status" value={form.status} onChange={handleChange} required>
+                                <option value="Beschikbaar">Beschikbaar</option>
+                                <option value="In service">In service</option>
+                                </select>
+
                                 <textarea name="note" placeholder="Notitie" value={form.note} onChange={handleChange}></textarea>
                                 <input type="number" name="price" placeholder="Prijs" value={form.price} onChange={handleChange} required />
                                 <input type="number" name="purchaseYear" placeholder="Koop Jaar" value={form.purchaseYear} onChange={handleChange} required />
-                                <input type="text" name="vehicleType" placeholder="Type" value={form.vehicleType} onChange={handleChange} required />
+                                
+                                <select name="vehicleType" value={form.vehicleType} onChange={handleChange} required>
+                                <option value="Auto">Auto</option>
+                                <option value="Caravan">Caravan</option>
+                                <option value="Camper">Camper</option>
+                                </select>
+                                
                                 <button type="submit" className="save-button">{isEditing ? 'Bewerk Opslaan' : 'Nieuw Opslaan'}</button>
                                 <button type="button" className="cancel-button" onClick={handleCancel}>Annuleren</button>
                             </form>
