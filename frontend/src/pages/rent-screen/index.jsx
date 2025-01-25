@@ -106,12 +106,12 @@ function RentScreen() {
     if (!formData.startDate) {
       return undefined;
     }
-  
+
     // Filter unavailable dates to find the first one after the start date
     const unavailableAfterStartDate = unavailableDates.filter(date => {
       return date instanceof Date && !isNaN(date) && date > new Date(formData.startDate);
     });
-  
+
     // Return the earliest unavailable date after the start date
     if (unavailableAfterStartDate.length > 0) {
       return new Date(Math.min(...unavailableAfterStartDate.map(date => date.getTime())));
@@ -139,7 +139,7 @@ function RentScreen() {
               </div>
               <div className="form-group">
                 <label>Start Datum:</label>
-                  <DatePicker
+                <DatePicker
                   selected={formData.startDate}
                   minDate={getMinAvailableDateStartInput()}
                   maxDate={formData.endDate}
@@ -161,7 +161,7 @@ function RentScreen() {
               </div>
               <div className="form-group">
                 <div className="total-price">
-                <label>Totale prijs:</label>
+                  <label>Totale prijs:</label>
                   {formData.startDate && formData.endDate
                     ? "€" + vehicle.price * (new Date(formData.endDate) - new Date(formData.startDate)) / (1000 * 60 * 60 * 24)
                     : 0}

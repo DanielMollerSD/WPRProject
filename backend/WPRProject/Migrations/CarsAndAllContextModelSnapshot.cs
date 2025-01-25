@@ -47,7 +47,7 @@ namespace WPRProject.Migrations
 
                     b.HasKey("BusinessId");
 
-                    b.ToTable("Business");
+                    b.ToTable("Business", (string)null);
                 });
 
             modelBuilder.Entity("WPRProject.Tables.Customer", b =>
@@ -285,6 +285,9 @@ namespace WPRProject.Migrations
 
                     b.Property<string>("Color")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LicensePlate")

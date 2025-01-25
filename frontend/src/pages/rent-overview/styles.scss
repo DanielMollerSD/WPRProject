@@ -1,42 +1,165 @@
-.container {
+.page.page-rent-overview {
+  position: relative;
+  margin: 50px;
+
+  .container {
+    background-color: white;
     padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+
+    h1 {
+      font-size: 30px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+
+      th,
+      td {
+        padding: 12px 15px;
+        font-size: 14px;
+        color: #333;
+        border-bottom: 1px solid #eee;
+
+        &:last-child {
+          text-align: center;
+        }
+      }
+
+      th {
+        background-color: #f4f4f4;
+      }
+
+      tr:nth-child(even) {
+        background-color: #fafafa;
+      }
+
+      tr:hover {
+        background-color: #f1f1f1;
+      }
+    }
+
+    .approve-button,
+    .decline-button,
+    .pending-button,
+    .status-button {
+      margin-top: 5px;
+      margin-left: 5px;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+    .approve-button {
+      background-color: #28a745;
+      color: white;
+      &:hover {
+        background-color: #218838;
+      }
+    }
+
+    .decline-button {
+      background-color: #dc3545;
+      color: white;
+      &:hover {
+        background-color: #c82333;
+      }
+    }
+
+    .pending-button {
+      background-color: #ffc107;
+      color: white;
+      &:hover {
+        background-color: #e0a800;
+      }
+    }
+
+    .status-button {
+      background-color: #007bff;
+      color: white;
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+
+    td {
+      .buttons-container {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+      }
+    }
   }
-  
-  .rent-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+
+  @media (max-width: 768px) {
+    margin: 20px;
+
+    .container {
+      padding: 15px;
+      width: 100%;
+      box-shadow: none;
+
+      h1 {
+        font-size: 24px;
+      }
+
+      table {
+        th,
+        td {
+          font-size: 12px;
+          padding: 10px;
+        }
+      }
+
+      .approve-button,
+      .decline-button,
+      .pending-button,
+      .status-button {
+        padding: 6px 12px;
+        font-size: 12px;
+      }
+    }
   }
-  
-  .rent-table th,
-  .rent-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
+
+  @media (max-width: 480px) {
+    margin: 10px;
+
+    .container {
+      padding: 10px;
+
+      h1 {
+        font-size: 20px;
+      }
+
+      table {
+        th,
+        td {
+          font-size: 10px;
+          padding: 8px;
+        }
+      }
+
+      .approve-button,
+      .decline-button,
+      .pending-button,
+      .status-button {
+        padding: 5px 10px;
+        font-size: 10px;
+      }
+    }
   }
-  
-  .rent-table th {
-    background-color: #f4f4f4;
-    font-weight: bold;
-  }
-  
-  .btn {
-    padding: 5px 10px;
-    margin: 0 5px;
-    cursor: pointer;
-  }
-  
-  .btn-approve {
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 3px;
-  }
-  
-  .btn-decline {
-    background-color: #f44336;
-    color: white;
-    border: none;
-    border-radius: 3px;
-  }
-  
+}
