@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "./styles.scss"; // Zorg ervoor dat je de juiste SCSS file importeert
 
 const Rentrequests = () => {
   const [rents, setRents] = useState([]);
@@ -60,61 +61,63 @@ const Rentrequests = () => {
   }
 
   return (
-    <div className="container">
-      <h1>Rent Requests</h1>
-      <table className="rent-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Car Name</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rents.length > 0 ? (
-            rents
-              .filter(
-                (rent) =>
-                  rent.status === "pending" &&
-                  new Date(rent.startDate) >= new Date()
-              )
-              .map((rent) => (
-                <tr key={rent.id}>
-                  <td>{rent.id}</td>
-                  <td>{rent.vehicle?.brand + " " + rent.vehicle?.model || "Unknown"}</td>
-                  <td>{new Date(rent.startDate).toLocaleDateString()}</td>
-                  <td>{new Date(rent.endDate).toLocaleDateString()}</td>
-                  <td>{rent.customer?.firstName}</td>
-                  <td>{rent.customer?.lastName}</td>
-                  <td>{rent.status}</td>
-                  <td>
-                    <button
-                      className="btn btn-success"
-                      onClick={() => updateStatus(rent.id, "accepted")}
-                    >
-                      Approve
-                    </button>
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => updateStatus(rent.id, "declined")}
-                    >
-                      Decline
-                    </button>
-                  </td>
-                </tr>
-              ))
-          ) : (
+    <div className="page page-rent-requests">
+      <div className="container">
+        <h1>Rent Requests</h1>
+        <table className="rent-table">
+          <thead>
             <tr>
-              <td colSpan="8">No rent requests available.</td>
+              <th>ID</th>
+              <th>Car Name</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Status</th>
+              <th>Actions</th>
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {rents.length > 0 ? (
+              rents
+                .filter(
+                  (rent) =>
+                    rent.status === "pending" &&
+                    new Date(rent.startDate) >= new Date()
+                )
+                .map((rent) => (
+                  <tr key={rent.id}>
+                    <td>{rent.id}</td>
+                    <td>{rent.vehicle?.brand + " " + rent.vehicle?.model || "Unknown"}</td>
+                    <td>{new Date(rent.startDate).toLocaleDateString()}</td>
+                    <td>{new Date(rent.endDate).toLocaleDateString()}</td>
+                    <td>{rent.customer?.firstName}</td>
+                    <td>{rent.customer?.lastName}</td>
+                    <td>{rent.status}</td>
+                    <td>
+                      <button
+                        className="approve-button"
+                        onClick={() => updateStatus(rent.id, "accepted")}
+                      >
+                        Approve
+                      </button>
+                      <button
+                        className="decline-button"
+                        onClick={() => updateStatus(rent.id, "declined")}
+                      >
+                        Decline
+                      </button>
+                    </td>
+                  </tr>
+                ))
+            ) : (
+              <tr>
+                <td colSpan="8">No rent requests available.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

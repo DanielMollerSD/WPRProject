@@ -12,8 +12,8 @@ function VehicleCRUD() {
         color: '',
         status: '',
         note: '',
-        price: 0,
-        purchaseYear: 0,
+        price: '', // Leeg in plaats van 0
+        purchaseYear: '', // Leeg in plaats van 0
         vehicleType: ''
     });
     const [isEditing, setIsEditing] = useState(false);
@@ -77,8 +77,8 @@ function VehicleCRUD() {
                 color: '',
                 status: '',
                 note: '',
-                price: 0,
-                purchaseYear: 0,
+                price: '', // Leeg in plaats van 0
+                purchaseYear: '', // Leeg in plaats van 0
                 vehicleType: ''
             });
             setIsEditing(false);
@@ -119,8 +119,8 @@ function VehicleCRUD() {
             color: '',
             status: '',
             note: '',
-            price: 0,
-            purchaseYear: 0,
+            price: '', // Leeg in plaats van 0
+            purchaseYear: '', // Leeg in plaats van 0
             vehicleType: ''
         });
     };
@@ -134,8 +134,8 @@ function VehicleCRUD() {
             color: '',
             status: '',
             note: '',
-            price: 0,
-            purchaseYear: 0,
+            price: '', // Leeg in plaats van 0
+            purchaseYear: '', // Leeg in plaats van 0
             vehicleType: ''
         });
     };
@@ -151,29 +151,29 @@ function VehicleCRUD() {
                     )}
 
                     {isFormVisible && (
-                        <div>
-                        <h2>{isEditing ? 'Bewerk Voertuig' : 'Nieuw Voertuig Toevoegen'}</h2>
-                        <form className="vehicle-form" onSubmit={handleSubmit}>
-                            <input type="text" name="licensePlate" placeholder="Kenteken" value={form.licensePlate} onChange={handleChange} required />
-                            <input type="text" name="brand" placeholder="Merk" value={form.brand} onChange={handleChange} required />
-                            <input type="text" name="model" placeholder="Model" value={form.model} onChange={handleChange} required />
-                            <input type="text" name="color" placeholder="Kleur" value={form.color} onChange={handleChange} />
-                            <select name="status" value={form.status} onChange={handleChange} disabled={isEditing} required>
-                                <option value="Beschikbaar">Beschikbaar</option>
-                                <option value="In service">In service</option>
-                            </select>
-                            <textarea name="note" placeholder="Notitie" value={form.note} onChange={handleChange} disabled={isEditing}></textarea>
-                            <input type="number" name="price" placeholder="Prijs" value={form.price} onChange={handleChange} required />
-                            <input type="number" name="purchaseYear" placeholder="Koop Jaar" value={form.purchaseYear} onChange={handleChange} required />
-                            <select name="vehicleType" value={form.vehicleType} onChange={handleChange} required>
-                                <option value="Auto">Auto</option>
-                                <option value="Caravan">Caravan</option>
-                                <option value="Camper">Camper</option>
-                            </select>
-                            <button type="submit" className="save-button">{isEditing ? 'Bewerk Opslaan' : 'Nieuw Opslaan'}</button>
-                            <button type="button" className="cancel-button" onClick={handleCancel}>Annuleren</button>
-                        </form>
-                    </div>
+                        <div className="form-container">
+                            <h2>{isEditing ? 'Bewerk Voertuig' : 'Nieuw Voertuig Toevoegen'}</h2>
+                            <form className="vehicle-form" onSubmit={handleSubmit}>
+                                <input type="text" name="licensePlate" placeholder="Kenteken" value={form.licensePlate} onChange={handleChange} required />
+                                <input type="text" name="brand" placeholder="Merk" value={form.brand} onChange={handleChange} required />
+                                <input type="text" name="model" placeholder="Model" value={form.model} onChange={handleChange} required />
+                                <input type="text" name="color" placeholder="Kleur" value={form.color} onChange={handleChange} />
+                                <select name="status" value={form.status} onChange={handleChange} disabled={isEditing} required>
+                                    <option value="Beschikbaar">Beschikbaar</option>
+                                    <option value="In service">In service</option>
+                                </select>
+                                <textarea name="note" placeholder="Notitie" value={form.note} onChange={handleChange} disabled={isEditing}></textarea>
+                                <input type="number" name="price" placeholder="Vul prijs in" value={form.price} onChange={handleChange} required />
+                                <input type="number" name="purchaseYear" placeholder="Kies koopjaar" value={form.purchaseYear} onChange={handleChange} required />
+                                <select name="vehicleType" value={form.vehicleType} onChange={handleChange} required>
+                                    <option value="Auto">Auto</option>
+                                    <option value="Caravan">Caravan</option>
+                                    <option value="Camper">Camper</option>
+                                </select>
+                                <button type="submit" className="save-button">{isEditing ? 'Bewerk Opslaan' : 'Nieuw Opslaan'}</button>
+                                <button type="button" className="cancel-button" onClick={handleCancel}>Annuleren</button>
+                            </form>
+                        </div>
                     )}
 
                     <div className="cards-container">
@@ -190,11 +190,13 @@ function VehicleCRUD() {
                                                 <div className="tag"><strong>Prijs:</strong> €{vehicle.price}</div>
                                                 <div className="tag"><strong>Status:</strong> {vehicle.status}</div>
                                             </div>
+                                        </div>
+                                        <div className="buttons-container">
+                                            <Link to={`/backoffice-damage/${vehicle.id}`}>
+                                                <button className="btn btn-primary">Bekijk schade</button>
+                                            </Link>
                                             <button className="edit-button" onClick={() => handleEdit(vehicle)}>Bewerk</button>
                                             <button className="delete-button" onClick={() => handleDelete(vehicle.id)}>Verwijder</button>
-                                            <Link to={`/backoffice-damage/${vehicle.id}`}>
-                                                <button className="btn btn-primary">Bekijk</button>
-                                            </Link>
                                         </div>
                                     </div>
                                 </div>
