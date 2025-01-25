@@ -1,6 +1,5 @@
 .accountsettings-box {
     font-family: Arial, sans-serif;
-    background-color: #d6d1c7;
     color: #333;
     display: flex;
     // justify-content: center;
@@ -9,6 +8,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     image-rendering: optimizeQuality;
+    padding: 70px;
 }
 
 .accountsettings-box .as-container {
@@ -17,16 +17,16 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     max-width: 450px;
-    height: 750px;
+    height: 720px;
     width: 90%;
     text-align: center;
-    margin-top: 20px;
     margin-bottom: 20px;
     margin-left: auto;
     margin-right: auto;
     flex-direction: column;
     justify-content: flex-start;
     display: flex;
+    
 
 }
 
@@ -84,6 +84,8 @@
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-bottom: -7px;
+    font-weight: bold;
 
 }
 
@@ -113,6 +115,7 @@
 .accountsettings-box .delete-button {
     margin-top: 20px;
     margin: 0;
+    font-weight: bold;
     width: 100%;
     padding: 12px 15px;
     font-size: 1rem;
@@ -134,8 +137,10 @@
     outline-offset: 2px;
 }
 
+h2{
+    font-weight: bold;
+}
 
-/* Media Query for responsiveness */
 @media (max-width: 768px) {
     .accountsettings-box .as-container {
         padding: 15px;

@@ -1,14 +1,13 @@
-.page.page-subscription-orders {
+.page.page-subscription-orders { 
     position: relative;
-    background-color: #d6d1c7;
-    padding-top: 100px;
-    padding-bottom: 100px;
+    margin: 50px;
 
     .container {
         background-color: white;
         padding: 20px 30px;
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: auto;
 
         h1 {
             font-size: 30px;
@@ -56,73 +55,63 @@
             }
         }
 
-        .approve-button {
+        .approve-button,
+        .decline-button,
+        .status-button,
+        .cancel-button {
             margin-top: 3px;
             margin-left: 5px;
-            background-color: #0ba12c;
-            color: white;
+            padding: 8px 14px;
             font-size: 14px;
             font-weight: bold;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            padding: 8px 14px;
+            
+            &:hover {
+                opacity: 0.9;
+            }
+        }
 
+        .approve-button {
+            background-color: #0ba12c;
+            color: white;
             &:hover {
                 background-color: #0c8025;
             }
         }
 
         .decline-button {
-            margin-left: 5px;
             background-color: #ce1616;
             color: white;
-            font-size: 14px;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            padding: 8px 14px;
-
             &:hover {
                 background-color: #b11515;
             }
         }
 
         .status-button {
-            margin-top: 3px;
-            margin-left: 5px;
             background-color: #0066cc;
             color: white;
-            font-size: 14px;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            padding: 8px 14px;
-
             &:hover {
                 background-color: #0052a3;
             }
         }
 
         .cancel-button {
-            margin-left: 5px;
             background-color: #a50b0b;
             color: white;
-            font-size: 14px;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            padding: 8px 14px;
-
             &:hover {
                 background-color: #880c0c;
+            }
+        }
+
+        td {
+            .buttons-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px;
             }
         }
 
@@ -138,6 +127,77 @@
         td div {
             max-width: 400px;
             word-wrap: break-word;
+        }
+    }
+
+    @media (max-width: 768px) {
+        margin: 20px;
+
+        .container {
+            padding: 15px;
+            width: 100%;
+            box-shadow: none;
+
+            h1 {
+                font-size: 24px;
+            }
+
+            table {
+                th,
+                td {
+                    font-size: 12px;
+                    padding: 10px;
+                }
+
+                td div {
+                    max-width: 200px;
+                }
+            }
+
+            .approve-button,
+            .decline-button,
+            .status-button,
+            .cancel-button {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            .note-input {
+                height: auto;
+            }
+        }
+    }
+
+    @media (max-width: 480px) {
+        margin: 10px;
+
+        .container {
+            padding: 10px;
+
+            h1 {
+                font-size: 20px;
+            }
+
+            table {
+                th,
+                td {
+                    font-size: 10px;
+                    padding: 8px;
+                }
+            }
+
+            .approve-button,
+            .decline-button,
+            .status-button,
+            .cancel-button {
+                padding: 5px 10px;
+                font-size: 10px;
+            }
+
+            .note-input {
+                height: auto;
+                font-size: 12px;
+            }
         }
     }
 }

@@ -123,39 +123,39 @@ function RentScreen() {
       <div className="form-container">
         {vehicle ? (
           <>
-            <h1>Rent {vehicle.brand} {vehicle.model}</h1>
+            <h1>Huur {vehicle.brand} {vehicle.model}</h1>
             <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <label>Travel Purpose:</label>
+                <label>Reisdoel:</label>
                 <input type="text" name="travelPurpose" value={formData.travelPurpose} onChange={handleChange} required />
               </div>
               <div className="form-group">
-                <label>Furthest Destination:</label>
+                <label>Verste bestemming:</label>
                 <input type="text" name="furthestDestination" value={formData.furthestDestination} onChange={handleChange} required />
               </div>
               <div className="form-group">
-                <label>Expected Distance (km):</label>
+                <label>Verwachte Afstand (km):</label>
                 <input type="number" name="expectedDistance" value={formData.expectedDistance} onChange={handleChange} required />
               </div>
               <div className="form-group">
-                <label>Start Date:</label>
+                <label>Start Datum:</label>
                   <DatePicker
                   selected={formData.startDate}
                   minDate={getMinAvailableDateStartInput()}
                   maxDate={formData.endDate}
                   excludeDates={unavailableDates}
-                  placeholderText="Select start date"
+                  placeholderText="Selecteer start datum"
                   onChange={(date) => setFormData({ ...formData, startDate: date })}
                 />
               </div>
               <div className="form-group">
-                <label>End Date:</label>
+                <label>Einde Datum:</label>
                 <DatePicker
                   selected={formData.endDate}
                   minDate={formData.startDate || today}
                   maxDate={getMaxAvailableDateEndInput()}
                   excludeDates={unavailableDates}
-                  placeholderText="Select end date"
+                  placeholderText="Selecteer einde datum"
                   onChange={(date) => setFormData({ ...formData, endDate: date })}
                 />
               </div>
