@@ -52,19 +52,21 @@ function PrivacyEditPage() {
     };
 
     return (
-        <div className="privacy-edit-page">
-            <h1>Edit Privacy Policy</h1>
-            {error && <p className="error">{error}</p>}
-            {success && <p className="success">Description updated successfully!</p>}
-            <form onSubmit={handleUpdate}>
-                <textarea
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    placeholder="Edit privacy description"
-                    rows="10"
-                ></textarea>
-                <button type="submit">Update</button>
-            </form>
+        <div className="page page-privacy-page">
+            <div className="container">
+                <h1>Edit Privacy Verklaring</h1>
+                {error && <p className="error">{error}</p>}
+                {success && <p className="success">Description updated successfully!</p>}
+                <form onSubmit={handleUpdate}>
+                    <textarea className='privacy-textarea'
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        placeholder="Edit privacy description"
+                        rows="10"
+                    ></textarea>
+                    <button className='privacy-submit' type="submit">Update</button>
+                </form>
+            </div>
         </div>
     );
 }

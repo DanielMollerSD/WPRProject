@@ -38,12 +38,12 @@ function FrontOfficeVehicleOverview() {
         }
     }
 
-    async function updateVehicleStatus(id, newStatus) {
+    async function updateVehicleNote(id, newNote) {
         try {
-            console.log("Updating status with payload:", newStatus);
+            console.log("Updating status with payload:", newNote);
             const response = await axios.patch(
-                `${import.meta.env.VITE_APP_API_URL}/Vehicle/${id}/status`,
-                newStatus,
+                `${import.meta.env.VITE_APP_API_URL}/Vehicle/${id}/note`,
+                newNote,
                 {
                     headers: { "Content-Type": "application/json" },
                     withCredentials: true,
@@ -51,7 +51,7 @@ function FrontOfficeVehicleOverview() {
             );
             console.log("Response from server:", response.data);
             await fetchVehicles();
-            setEditingStatusId(null);
+            setEditingNoteId(null);
         } catch (e) {
             console.error("Error updating status:", e.message);
         }
@@ -83,63 +83,62 @@ function FrontOfficeVehicleOverview() {
                             <tbody>
                                 {vehicles.map((vehicle) => (
                                     <tr key={vehicle.id}>
-                                        <td>{vehicle.brand}</td>
-                                        <td>{vehicle.model}</td>
-                                        <td>{vehicle.vehicleType}</td>
-                                        <td>{vehicle.purchaseYear}</td>
-                                        <td>
-                                        {editingStatusId === vehicle.id ? (
-                                            <div>
-                                                <select
-                                                    //type="text"
-                                                    value={statusInput}
-                                                    onChange={(e) => setStatusInput(e.target.value)}
-                                                >
-                                                    <option value="Beschikbaar">Beschikbaar</option>
-                                                    <option value="In service">In service</option>
-                                                </select>
-                                                <button
-                                                    onClick={() => updateVehicleStatus(vehicle.id, statusInput)}
-                                                >
-                                                    Save
-                                                </button>
-                                                <button onClick={() => setEditingStatusId(null)}>Cancel</button>
-                                            </div>
-                                        ) : (
-                                            <div>
-                                                {vehicle.status}{" "}
-                                                <button
-                                                    onClick={() => {
-                                                        setEditingStatusId(vehicle.id);
-                                                        setStatusInput(vehicle.status);
-                                                    }}
-                                                >
-                                                    Edit
-                                                </button>
-                                            </div>
-                                        )}
-                                    </td>
-
-                                        <td>
-                                            {editingNoteId === vehicle.id ? (
+                                            <td>{vehicle.brand}</td>
+                                            <td>{vehicle.model}</td>
+                                            <td>{vehicle.vehicleType}</td>
+                                            <td>{vehicle.purchaseYear}</td>
+                                            <td>
+                                            {editingStatusId === vehicle.id ? (
                                                 <div>
-                                                    <input
-                                                        type="text"
-                                                        value={noteInput}
-                                                        onChange={(e) => setNoteInput(e.target.value)}
-                                                        placeholder="Update Note"
-                                                    />
-                                                    <button
-                                                        onClick={() => updateVehicleNote(vehicle.id, { note: noteInput })}
+                                                    <select
+                                                        //type="text"
+                                                        value={statusInput}
+                                                        onChange={(e) => setStatusInput(e.target.value)}
+                                                    >
+                                                        <option value="Beschikbaar">Beschikbaar</option>
+                                                        <option value="In service">In service</option>
+                                                    </select>
+                                                    <button className='status-button'
+                                                        onClick={() => updateVehicleStatus(vehicle.id, statusInput)}
                                                     >
                                                         Save
                                                     </button>
-                                                    <button onClick={() => setEditingNoteId(null)}>Cancel</button>
+                                                    <button className='cancel-button' onClick={() => setEditingStatusId(null)}>Cancel</button>
+                                                </div>
+                                            ) : (
+                                                <div>
+                                                    {vehicle.status}{" "}
+                                                    <button className='status-button'
+                                                        onClick={() => {
+                                                            setEditingStatusId(vehicle.id);
+                                                            setStatusInput(vehicle.status);
+                                                        }}
+                                                    >
+                                                        Edit
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </td>
+                                        <td>
+                                            {editingNoteId === vehicle.id ? (
+                                                <div>
+                                                    <textarea className='note-input'
+                                                        type="text"
+                                                        value={noteInput}
+                                                        onChange={(e) => setNoteInput(e.target.value)}
+                                                        placeholder="Edit Note"
+                                                    />
+                                                    <button className='status-button'
+                                                        onClick={() => updateVehicleNote(vehicle.id, noteInput )}
+                                                    >
+                                                        Save
+                                                    </button>
+                                                    <button className='cancel-button' onClick={() => setEditingNoteId(null)}>Cancel</button>
                                                 </div>
                                             ) : (
                                                 <div>
                                                     {vehicle.note}{" "}
-                                                    <button
+                                                    <button className='status-button'
                                                         onClick={() => {
                                                             setEditingNoteId(vehicle.id);
                                                             setNoteInput(vehicle.note);
@@ -152,7 +151,7 @@ function FrontOfficeVehicleOverview() {
                                         </td>
                                         <td>€{vehicle.price} /dag</td>
                                         <td>
-                                            <Link to={`/damage/${vehicle.id}`}>Bekijk</Link>
+                                            <Link to={`/damage/${vehicle.id}`}>Voeg toe</Link>
                                         </td>
                                     </tr>
                                 ))}
