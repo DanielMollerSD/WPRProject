@@ -42,37 +42,40 @@ function SubscriptionSelection() {
     return (
         <div className="page page-subscription-selection">
             <div className="container">
-                <div className="SelectionBody">
-                    <main className="SelectionName">
-                            <h2>Abonnementen</h2>
-                            {error && <p className="error">{error}</p>}
-                            <div id="form-group-select">
-                                {subscriptions.coverage.map((sub) => (
-                                    <button
-                                        key={sub.id}
-                                        className="SelectionButtons coverage-icon"
-                                        onClick={() => handleSelection(sub)}
-                                        disabled={loading}
-                                    >
-                                        <h3 className="buttonTitle">{sub.name}</h3>
-                                        <p className="buttonDescription">{sub.description}</p>
-                                    </button>
-                                ))}
-
-                                {subscriptions.discount.map((sub) => (
-                                    <button
-                                        key={sub.id}
-                                        className="SelectionButtons discount-icon"
-                                        onClick={() => handleSelection(sub)}
-                                        disabled={loading}
-                                    >
-                                        <h3 className="buttonTitle">{sub.name}</h3>
-                                        <p className="buttonDescription">{sub.description}</p>
-                                    </button>
-                                ))}
+                <main className="SelectionName">
+                        <h2>Abonnementen</h2>
+                        {error && <p className="error">{error}</p>}
+                        <div id="form-group-select">
+                            <div className="row">
+                                <div className="col-md-6 sub-coverage">
+                                    {subscriptions.coverage.map((sub) => (
+                                        <button
+                                            key={sub.id}
+                                            className="SelectionButtons coverage-icon"
+                                            onClick={() => handleSelection(sub)}
+                                            disabled={loading}
+                                        >
+                                            <h3 className="buttonTitle">{sub.name}</h3>
+                                            <p className="buttonDescription">{sub.description}</p>
+                                        </button>
+                                    ))}
+                                </div>
+                                <div className="col-md-6 sub-discount">
+                                    {subscriptions.discount.map((sub) => (
+                                        <button
+                                            key={sub.id}
+                                            className="SelectionButtons discount-icon"
+                                            onClick={() => handleSelection(sub)}
+                                            disabled={loading}
+                                        >
+                                            <h3 className="buttonTitle">{sub.name}</h3>
+                                            <p className="buttonDescription">{sub.description}</p>
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
-                    </main>
-                </div>
+                        </div>
+                </main>
             </div>
         </div>
     );

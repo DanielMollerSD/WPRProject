@@ -79,23 +79,21 @@ function BackofficeSubscription() {
     return (
         <div className="page page-subscription-orders">
             <div className="container">
-                <h1>Subscription Orders</h1>
+                <h1>Abonnement Aanvragen</h1>
                 <table>
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>User</th>
-                            <th>Subscription Name</th>
+                            <th>Gebruiker</th>
+                            <th>Abonnement</th>
                             <th>Status</th>
-                            <th>Actions</th>
+                            <th>Acties</th>
                         </tr>
                     </thead>
                     <tbody>
                         {Array.isArray(orders) && orders.length > 0 ? (
                             orders.map((order) => (
                                 <tr key={order.id}>
-                                    <td>{order.id}</td>
-                                    <td>{order.userEmail || "N/A"}</td>
+                                    <td>{order.businessName || "N/A"}</td>
                                     <td>{order.subscriptionName}</td>
                                     <td>{order.status}</td>
                                     <td>

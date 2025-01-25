@@ -74,7 +74,7 @@ function FrontOfficeVehicleOverview() {
                                 <th>Type</th>
                                 <th>Koop Jaar</th>
                                 <th>Status</th>
-                                <th>Note</th>
+                                <th>Opmerkingen</th>
                                 <th>Prijs</th>
                                 <th>Schade</th>
                             </tr>

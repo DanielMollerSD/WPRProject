@@ -1,8 +1,11 @@
+main{
+    min-height: calc(100vh - 300px);
+
 .page.page-subscription-selection {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px;
+    padding: 100px;
 
     .container {
         background: #ffffff;
@@ -12,7 +15,7 @@
         max-width: 900px;
         width: 100%;
         text-align: center;
-        max-height: 30vh;
+        max-height: 290px;
 
         h2 {
             font-size: 28px;
@@ -79,18 +82,26 @@
     }
 
     @media (max-width: 768px) {
+        padding: 20px;
+
         .container {
             padding: 20px;
-
+            max-width: 100%;
+            max-height: auto;
             h2 {
                 font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+            .sub-discount{
+                margin-top: 10px;
             }
 
             #form-group-select {
                 gap: 15px;
 
                 .SelectionButtons {
-                    width: 100%;
+                    width: 100%; 
                     padding: 15px;
 
                     .buttonTitle {
@@ -104,4 +115,33 @@
             }
         }
     }
+
+    @media (max-width: 480px) {
+        
+
+        .container {
+            h2 {
+                font-size: 20px;
+                margin-bottom: 15px;
+            }
+
+            #form-group-select {
+                gap: 10px;
+
+                .SelectionButtons {
+                    width: 100%; 
+                    padding: 10px;
+
+                    .buttonTitle {
+                        font-size: 16px;
+                    }
+
+                    .buttonDescription {
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    }
+}
 }
