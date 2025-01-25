@@ -118,8 +118,8 @@ function Header() {
 
                             {isLoggedIn && userRole === "Backoffice" && (
                                 <>
-                                    <Link to="/rent-overview">Overzicht</Link>
                                     <Link to="/rent-requests">Aanvragen</Link>
+                                    <Link to="/rent-overview">Overzicht</Link>
                                     <Link to="/backoffice-subscription">Abonnementen</Link>
                                     <Link to="/vehicle-crud">Voertuigen</Link>
                                     <Link to="/frontoffice-crud">Frontoffice</Link>
@@ -146,7 +146,7 @@ function Header() {
                     </header>
 
                     <div className="header-banner">
-                        
+
                         {isLoggedIn ? (
                             <h1 className="header-title">Welkom {loadingUsername ? "Loading..." : userData.firstName}</h1>
                         ) : (
@@ -154,10 +154,7 @@ function Header() {
                         )}
 
                         <p className="header-description">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor
-                            dicta possimus consequatur eveniet officia iusto. Modi aspernatur
-                            aliquam impedit vero facilis! Neque dolor modi aperiam odit sit
-                            reprehenderit quia facere!
+                            CarsAndAll biedt een breed scala aan voertuigen voor elke reis. Huur een auto, camper of caravan en ontdek de vrijheid van de weg. Eenvoudig, snel en betrouwbaar.
                         </p>
                     </div>
                 </div>
