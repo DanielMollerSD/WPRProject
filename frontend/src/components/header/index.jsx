@@ -91,6 +91,7 @@ function Header() {
                                 <>
 
                                     <Link to="/vehicle-overview">Voertuigen</Link>
+                                    <Link to="/individual/rents">Overzicht</Link>
                                     <Link to="/account-settings">Profiel</Link>
                                 </>
                             )}
@@ -105,7 +106,7 @@ function Header() {
                             {isLoggedIn && userRole === "Wagenparkbeheerder" && (
                                 <>
                                     <Link to="/business-account-crud">Medewerkers</Link>
-                                    <Link to="/subscription-select">Abbonementen</Link>
+                                    <Link to="/subscription-select">Abonnementen</Link>
                                 </>
                             )}
 
@@ -119,9 +120,9 @@ function Header() {
                                 <>
                                     <Link to="/rent-overview">Overzicht</Link>
                                     <Link to="/rent-requests">Aanvragen</Link>
-                                    <Link to="/backoffice-subscription">Abbonementen</Link>
+                                    <Link to="/backoffice-subscription">Abonnementen</Link>
                                     <Link to="/vehicle-crud">Voertuigen</Link>
-                                    <Link to="/frontoffice-crud">Frontoffice Beheren</Link>
+                                    <Link to="/frontoffice-crud">Frontoffice</Link>
                                     <Link to="/backoffice-privacy-page">Privacy</Link>
                                 </>
                             )}

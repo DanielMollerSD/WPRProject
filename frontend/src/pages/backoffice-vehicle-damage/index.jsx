@@ -64,46 +64,48 @@ function BackofficeVehicleDamage() {
   }
 
   return (
-    <div className="vehicle-overview">
-      {vehicle ? (
-        <>
-          <h1>
-            {vehicle.brand} {vehicle.model}
-          </h1>
+    <div className="page page-backoffice-vehicle-damage">
+        <div className="container">
+        {vehicle ? (
+          <>
+            <h1 className="vehicle">
+              {vehicle.brand} {vehicle.model}
+            </h1>
 
-          <div>
-            <h2>Damages:</h2>
-            {damages.length > 0 ? (
-              <ul>
-                {damages.map((damage) => (
-                  <li key={damage.id}>
-                    {damage.description} - <strong>{damage.status}</strong>
-                    
-                    {(damage.status !== "Accepted" && damage.status !== "Declined") && (
-                      <>
-                        <button
-                          onClick={() => updateDamageStatus(damage.id, "Approved")}
-                        >
-                          Approve
-                        </button>
-                        <button
-                          onClick={() => updateDamageStatus(damage.id, "Decline")}
-                        >
-                          Decline
-                        </button>
-                      </>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>No damages.</p>
-            )}
-          </div>
-        </>
-      ) : (
-        <p>No vehicle damage.</p>
-      )}
+            <div>
+              <h1>Schade:</h1>
+              {damages.length > 0 ? (
+                <ul>
+                  {damages.map((damage) => (
+                    <li key={damage.id}>
+                      {damage.description} - <strong>{damage.status}</strong>
+                      
+                      {(damage.status !== "Accepted" && damage.status !== "Declined") && (
+                        <>
+                          <button className="approve-button"
+                            onClick={() => updateDamageStatus(damage.id, "Approved")}
+                          >
+                            Approve
+                          </button>
+                          <button className="decline-button"
+                            onClick={() => updateDamageStatus(damage.id, "Decline")}
+                          >
+                            Decline
+                          </button>
+                        </>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No damages.</p>
+              )}
+            </div>
+          </>
+        ) : (
+          <p>No vehicle damage.</p>
+        )}
+      </div>
     </div>
   );
 }

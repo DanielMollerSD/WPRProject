@@ -1,93 +1,104 @@
-.page-subscription-selection {
-    .SelectionBody {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #d6d1c7;
-        color: #333;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: calc(100vh - 70px);
-        background-repeat: no-repeat;
-        background-size: cover;
-        image-rendering: optimizeQuality;
+.page.page-subscription-selection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
 
-        .selection-container {
-            background: #fff;
-            padding: 20px 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
-            width: 100%;
-            text-align: center;
+    .container {
+        background: #ffffff;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        max-width: 900px;
+        width: 100%;
+        text-align: center;
+        max-height: 30vh;
 
-            #form-group-select {
+        h2 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #333333;
+            font-weight: bold;
+        }
+
+        #form-group-select {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 22px;
+
+            .SelectionButtons {
+                background-color: #007bff;
+                color: #ffffff;
+                height: auto;
+                width: 280px;
+                padding: 20px;
+                border: none;
+                border-radius: 10px;
                 display: flex;
-                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-between;
+                text-align: center;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
 
-                a {
-                    text-decoration: none;
+                &:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+                    background-color: #0056b3;
+                }
 
-                    .SelectionButtons {
-                        background-color: $primary-button-color;
-                        color: #fff;
-                        height: 200px;
-                        width: 200px;
-                        margin: 10px;
-                        position: relative;
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        justify-content: space-between;
-                        border: none;
-                        border-radius: 8px;
-                        padding: 10px;
-                        text-align: center;
+                &.coverage-icon {
+                    background-color: #17a2b8;
 
-                        &.coverage-icon {
-                            background-repeat: no-repeat;
-                            background-position: 50% 50%;
-                            background-size: 50%;
-                        }
-
-                        &.discount-icon {
-                            background-repeat: no-repeat;
-                            background-position: 50% 50%;
-                            background-size: 50%;
-                        }
-
-                        &:hover {
-                            background-color: $primary-button-hover-color;
-                        }
-
-                        .lowerButtonText {
-                            margin-top: auto;
-                            padding-top: 10px;
-                            font-size: 14px;
-                        }
+                    &:hover {
+                        background-color: #117a8b;
                     }
+                }
+
+                &.discount-icon {
+                    background-color: #2bc987;
+
+                    &:hover {
+                        background-color: #27a772;
+                    }
+                }
+
+                .buttonTitle {
+                    font-size: 20px;
+                    font-weight: bold;
+                    margin-bottom: 10px;
+                }
+
+                .buttonDescription {
+                    font-size: 16px;
+                    color: #f8f9fa;
                 }
             }
         }
     }
 
     @media (max-width: 768px) {
-        .selection-container {
-            padding: 15px;
+        .container {
+            padding: 20px;
+
+            h2 {
+                font-size: 24px;
+            }
 
             #form-group-select {
-                flex-direction: column;
                 gap: 15px;
 
                 .SelectionButtons {
                     width: 100%;
-                    max-width: 300px;
-                    height: auto;
-                    padding: 20px;
+                    padding: 15px;
 
-                    .lowerButtonText {
-                        font-size: 16px;
+                    .buttonTitle {
+                        font-size: 18px;
+                    }
+
+                    .buttonDescription {
+                        font-size: 14px;
                     }
                 }
             }

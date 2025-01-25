@@ -52,7 +52,7 @@ function PrivacyEditPage() {
     };
 
     return (
-        <div className="page page-privacy-page">
+        <div className="page page-backoffice-privacy-page">
             <div className="container">
                 <h1>Edit Privacy Verklaring</h1>
                 {error && <p className="error">{error}</p>}

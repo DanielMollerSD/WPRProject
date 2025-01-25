@@ -106,12 +106,12 @@ function RentScreen() {
     if (!formData.startDate) {
       return undefined;
     }
-  
+
     // Filter unavailable dates to find the first one after the start date
     const unavailableAfterStartDate = unavailableDates.filter(date => {
       return date instanceof Date && !isNaN(date) && date > new Date(formData.startDate);
     });
-  
+
     // Return the earliest unavailable date after the start date
     if (unavailableAfterStartDate.length > 0) {
       return new Date(Math.min(...unavailableAfterStartDate.map(date => date.getTime())));
@@ -123,45 +123,45 @@ function RentScreen() {
       <div className="form-container">
         {vehicle ? (
           <>
-            <h1>Rent {vehicle.brand} {vehicle.model}</h1>
+            <h1>Huur {vehicle.brand} {vehicle.model}</h1>
             <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <label>Travel Purpose:</label>
+                <label>Reisdoel:</label>
                 <input type="text" name="travelPurpose" value={formData.travelPurpose} onChange={handleChange} required />
               </div>
               <div className="form-group">
-                <label>Furthest Destination:</label>
+                <label>Verste bestemming:</label>
                 <input type="text" name="furthestDestination" value={formData.furthestDestination} onChange={handleChange} required />
               </div>
               <div className="form-group">
-                <label>Expected Distance (km):</label>
+                <label>Verwachte Afstand (km):</label>
                 <input type="number" name="expectedDistance" value={formData.expectedDistance} onChange={handleChange} required />
               </div>
               <div className="form-group">
-                <label>Start Date:</label>
+                <label>Start Datum:</label>
                 <DatePicker
                   selected={formData.startDate}
                   minDate={getMinAvailableDateStartInput()}
                   maxDate={formData.endDate}
                   excludeDates={unavailableDates}
-                  placeholderText="Select start date"
+                  placeholderText="Selecteer start datum"
                   onChange={(date) => setFormData({ ...formData, startDate: date })}
                 />
               </div>
               <div className="form-group">
-                <label>End Date:</label>
+                <label>Einde Datum:</label>
                 <DatePicker
                   selected={formData.endDate}
                   minDate={formData.startDate || today}
                   maxDate={getMaxAvailableDateEndInput()}
                   excludeDates={unavailableDates}
-                  placeholderText="Select end date"
+                  placeholderText="Selecteer einde datum"
                   onChange={(date) => setFormData({ ...formData, endDate: date })}
                 />
               </div>
               <div className="form-group">
                 <div className="total-price">
-                <label>Totale prijs:</label>
+                  <label>Totale prijs:</label>
                   {formData.startDate && formData.endDate
                     ? vehicle.price * (new Date(formData.endDate) - new Date(formData.startDate)) / (1000 * 60 * 60 * 24)
                     : 0}

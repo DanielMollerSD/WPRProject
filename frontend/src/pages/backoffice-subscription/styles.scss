@@ -1,48 +1,203 @@
-.page-subscription-orders {
-    padding: 20px;
+.page.page-subscription-orders { 
+    position: relative;
+    margin: 50px;
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
+    .container {
+        background-color: white;
+        padding: 20px 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: auto;
 
-        th, td {
-            padding: 10px;
+        h1 {
+            font-size: 30px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+
+            th,
+            td {
+                padding: 12px 15px;
+                font-size: 14px;
+                color: #333;
+                border-bottom: 1px solid #eee;
+
+                &:last-child {
+                    text-align: center;
+                }
+            }
+
+            th {
+                background-color: #f4f4f4;
+            }
+
+            tr:nth-child(even) {
+                background-color: #fafafa;
+            }
+        }
+
+        thead {
+            tr {
+                background-color: #f4f4f4;
+
+                th {
+                    text-align: left;
+                    padding: 12px 15px;
+                    font-size: 14px;
+                    color: #3f3f3f;
+                    border-bottom: 2px solid #ccc;
+                }
+            }
+        }
+
+        .approve-button,
+        .decline-button,
+        .status-button,
+        .cancel-button {
+            margin-top: 3px;
+            margin-left: 5px;
+            padding: 8px 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            
+            &:hover {
+                opacity: 0.9;
+            }
+        }
+
+        .approve-button {
+            background-color: #0ba12c;
+            color: white;
+            &:hover {
+                background-color: #0c8025;
+            }
+        }
+
+        .decline-button {
+            background-color: #ce1616;
+            color: white;
+            &:hover {
+                background-color: #b11515;
+            }
+        }
+
+        .status-button {
+            background-color: #0066cc;
+            color: white;
+            &:hover {
+                background-color: #0052a3;
+            }
+        }
+
+        .cancel-button {
+            background-color: #a50b0b;
+            color: white;
+            &:hover {
+                background-color: #880c0c;
+            }
+        }
+
+        td {
+            .buttons-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px;
+            }
+        }
+
+        .note-input {
             border: 1px solid #ccc;
-            text-align: left;
+            border-radius: 5px;
+            width: 100%;
+            height: 60%;
+            margin-bottom: 5px;
+            padding: 5px;
         }
 
-        th {
-            background-color: #f4f4f4;
+        td div {
+            max-width: 400px;
+            word-wrap: break-word;
         }
+    }
 
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
+    @media (max-width: 768px) {
+        margin: 20px;
+
+        .container {
+            padding: 15px;
+            width: 100%;
+            box-shadow: none;
+
+            h1 {
+                font-size: 24px;
+            }
+
+            table {
+                th,
+                td {
+                    font-size: 12px;
+                    padding: 10px;
+                }
+
+                td div {
+                    max-width: 200px;
+                }
+            }
+
+            .approve-button,
+            .decline-button,
+            .status-button,
+            .cancel-button {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            .note-input {
+                height: auto;
+            }
         }
     }
 
-    .approve-button {
-        padding: 5px 10px;
-        background-color: #4caf50;
-        color: white;
-        border: none;
-        cursor: pointer;
-        border-radius: 3px;
+    @media (max-width: 480px) {
+        margin: 10px;
 
-        &:hover {
-            background-color: #45a049;
-        }
-    }
-    .decline-button {
-        padding: 5px 10px;
-        background-color: #af4242;
-        color: white;
-        border: none;
-        cursor: pointer;
-        border-radius: 3px;
+        .container {
+            padding: 10px;
 
-        &:hover {
-            background-color: #ac3232;
+            h1 {
+                font-size: 20px;
+            }
+
+            table {
+                th,
+                td {
+                    font-size: 10px;
+                    padding: 8px;
+                }
+            }
+
+            .approve-button,
+            .decline-button,
+            .status-button,
+            .cancel-button {
+                padding: 5px 10px;
+                font-size: 10px;
+            }
+
+            .note-input {
+                height: auto;
+                font-size: 12px;
+            }
         }
     }
 }
