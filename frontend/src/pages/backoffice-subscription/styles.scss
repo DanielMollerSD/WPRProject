@@ -1,48 +1,143 @@
-.page-subscription-orders {
-    padding: 20px;
+.page.page-subscription-orders {
+    position: relative;
+    background-color: #d6d1c7;
+    padding-top: 100px;
+    padding-bottom: 100px;
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
+    .container {
+        background-color: white;
+        padding: 20px 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
-        th, td {
-            padding: 10px;
+        h1 {
+            font-size: 30px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+
+            th,
+            td {
+                padding: 12px 15px;
+                font-size: 14px;
+                color: #333;
+                border-bottom: 1px solid #eee;
+
+                &:last-child {
+                    text-align: center;
+                }
+            }
+
+            th {
+                background-color: #f4f4f4;
+            }
+
+            tr:nth-child(even) {
+                background-color: #fafafa;
+            }
+        }
+
+        thead {
+            tr {
+                background-color: #f4f4f4;
+
+                th {
+                    text-align: left;
+                    padding: 12px 15px;
+                    font-size: 14px;
+                    color: #3f3f3f;
+                    border-bottom: 2px solid #ccc;
+                }
+            }
+        }
+
+        .approve-button {
+            margin-top: 3px;
+            margin-left: 5px;
+            background-color: #0ba12c;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            padding: 8px 14px;
+
+            &:hover {
+                background-color: #0c8025;
+            }
+        }
+
+        .decline-button {
+            margin-left: 5px;
+            background-color: #ce1616;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            padding: 8px 14px;
+
+            &:hover {
+                background-color: #b11515;
+            }
+        }
+
+        .status-button {
+            margin-top: 3px;
+            margin-left: 5px;
+            background-color: #0066cc;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            padding: 8px 14px;
+
+            &:hover {
+                background-color: #0052a3;
+            }
+        }
+
+        .cancel-button {
+            margin-left: 5px;
+            background-color: #a50b0b;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            padding: 8px 14px;
+
+            &:hover {
+                background-color: #880c0c;
+            }
+        }
+
+        .note-input {
             border: 1px solid #ccc;
-            text-align: left;
+            border-radius: 5px;
+            width: 100%;
+            height: 60%;
+            margin-bottom: 5px;
+            padding: 5px;
         }
 
-        th {
-            background-color: #f4f4f4;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-    }
-
-    .approve-button {
-        padding: 5px 10px;
-        background-color: #4caf50;
-        color: white;
-        border: none;
-        cursor: pointer;
-        border-radius: 3px;
-
-        &:hover {
-            background-color: #45a049;
-        }
-    }
-    .decline-button {
-        padding: 5px 10px;
-        background-color: #af4242;
-        color: white;
-        border: none;
-        cursor: pointer;
-        border-radius: 3px;
-
-        &:hover {
-            background-color: #ac3232;
+        td div {
+            max-width: 400px;
+            word-wrap: break-word;
         }
     }
 }

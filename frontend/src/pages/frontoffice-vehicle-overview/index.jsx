@@ -98,7 +98,7 @@ function FrontOfficeVehicleOverview() {
                                                         <option value="Beschikbaar">Beschikbaar</option>
                                                         <option value="In service">In service</option>
                                                     </select>
-                                                    <button className='status-button'
+                                                    <button className='approve-button'
                                                         onClick={() => updateVehicleStatus(vehicle.id, statusInput)}
                                                     >
                                                         Save
@@ -128,7 +128,7 @@ function FrontOfficeVehicleOverview() {
                                                         onChange={(e) => setNoteInput(e.target.value)}
                                                         placeholder="Edit Note"
                                                     />
-                                                    <button className='status-button'
+                                                    <button className='approve-button'
                                                         onClick={() => updateVehicleNote(vehicle.id, noteInput )}
                                                     >
                                                         Save

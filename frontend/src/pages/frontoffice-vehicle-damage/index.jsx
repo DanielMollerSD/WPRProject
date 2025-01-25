@@ -54,42 +54,43 @@ function VehicleDamage() {
   }
 
   return (
-    <div className="vehicle-overview">
-      {vehicle ? (
-        <>
-          <h1>{vehicle.brand} {vehicle.model}</h1>
-          <div>
-            <h2>Add Damage</h2>
-            <form onSubmit={handleDamageSubmit}>
-              <div className="form-group">
-                <label>Description:</label>
-                <textarea
-                  value={damageDescription}
-                  onChange={(e) => setDamageDescription(e.target.value)}
-                  required
-                ></textarea>
-              </div>
-              <button type="submit" className="submit-btn">Add Damage</button>
-            </form>
-          </div>
-          <div>
-            <h2>Damages:</h2>
-            {damages.length > 0 ? (
-              <ul>
-                {damages.map((damage) => (
-                  <li key={damage.id}>
-                    {damage.description} - <strong>{damage.status}</strong>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>No damages.</p>
-            )}
-          </div>
-        </>
-      ) : (
-        <p>Vehicle details not found.</p>
-      )}
+    <div className="page page-frontoffice-vehicle-damage">
+      <div className="container">
+        {vehicle ? (
+          <>
+            <h1 className="vehicle">{vehicle.brand} {vehicle.model}</h1>
+            <div>
+              <form onSubmit={handleDamageSubmit}>
+                <div className="form-group">
+                  <label>Beschrijving:</label>
+                  <textarea
+                    value={damageDescription}
+                    onChange={(e) => setDamageDescription(e.target.value)}
+                    required
+                  ></textarea>
+                </div>
+                <button type="submit" className="submit-btn">Voeg schade toe</button>
+              </form>
+            </div>
+            <div>
+              <h1>Schade:</h1>
+              {damages.length > 0 ? (
+                <ul>
+                  {damages.map((damage) => (
+                    <li key={damage.id}>
+                      {damage.description} - <strong>{damage.status}</strong>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No damages.</p>
+              )}
+            </div>
+          </>
+        ) : (
+          <p>Vehicle details not found.</p>
+        )}
+      </div>
     </div>
   );
 }
