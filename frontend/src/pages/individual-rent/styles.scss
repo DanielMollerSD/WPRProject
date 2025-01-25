@@ -1,0 +1,126 @@
+.page.page-rent-screen {
+    position: relative;
+    background-color: #d6d1c7;
+    padding-top: 40px;
+    padding-bottom: 100px;
+  
+    .rent-screen-content {
+        background-color: white;
+        padding: 20px 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
+        .vehicle-list {
+            margin-top: 20px;
+  
+            .vehicle-table {
+                width: 100%;
+                border-collapse: collapse;
+  
+                thead {
+                    tr {
+                        background-color: #f4f4f4;
+  
+                        th {
+                            text-align: left;
+                            padding: 12px 15px;
+                            font-size: 14px;
+                            color: #3f3f3f;
+                            border-bottom: 2px solid #ccc;
+                        }
+                    }
+                }
+  
+                tbody {
+                    tr {
+                        &:nth-child(even) {
+                            background-color: #fafafa;
+                        }
+                        &:hover {
+                            background-color: #f0f0f0;
+                        }
+  
+                        td {
+                            padding: 12px 15px;
+                            font-size: 14px;
+                            color: #333;
+                            border-bottom: 1px solid #eee;
+  
+                            &:last-child {
+                                text-align: center;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+  
+        .status-button{
+            margin-top: 3px;
+            margin-left: 5px;
+            background-color: #0066cc;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            padding: 8px 14px;
+  
+            &:hover {
+                background-color: #0052a3;
+            }
+        }
+  
+        .cancel-button{
+            margin-left: 5px;
+            background-color: #a50b0b;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            padding: 8px 14px;
+  
+            &:hover {
+                background-color: #880c0c;
+            }
+        }
+  
+        .approve-button {
+            margin-top: 3px;
+            margin-left: 5px;
+            background-color: #0ba12c;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            padding: 8px 14px;
+  
+            &:hover {
+                background-color: #0c8025;
+            }
+        }
+  
+        .note-input{
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            height: 60%;
+            margin-bottom: 5px;
+            padding: 5px;
+        }
+  
+        td div {
+            max-width: 400px; 
+            word-wrap: break-word; 
+        }
+  
+    }
+  }
