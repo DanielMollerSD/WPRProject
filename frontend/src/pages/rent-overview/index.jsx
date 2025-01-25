@@ -69,28 +69,26 @@ const RentOverview = () => {
   return (
     <div className="page page-rent-overview">
       <div className="container">
-        <h1>Rent Overview</h1>
+        <h1>Huur Overzicht</h1>
         <table>
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Car Name</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>First Name</th>
-              <th>Last Name</th>
+              <th>Voertuig</th>
+              <th>Start Datum</th>
+              <th>Eind Datum</th>
+              <th>Voornaam</th>
+              <th>Achternaam</th>
               <th>Email</th>
-              <th>Phone</th>
-              <th>Total Price</th>
+              <th>Telefoon</th>
+              <th>Bedrag</th>
               <th>Status</th>
-              <th>Actions</th>
+              <th>Acties</th>
             </tr>
           </thead>
           <tbody>
             {rents.length > 0 ? (
               rents.map((rent) => (
                 <tr key={rent.id}>
-                  <td>{rent.id}</td>
                   <td>{rent.vehicle?.brand + " " + rent.vehicle?.model || "Unknown"}</td>
                   <td>{new Date(rent.startDate).toLocaleDateString()}</td>
                   <td>{new Date(rent.endDate).toLocaleDateString()}</td>

@@ -63,18 +63,17 @@ const Rentrequests = () => {
   return (
     <div className="page page-rent-requests">
       <div className="container">
-        <h1>Rent Requests</h1>
+        <h1>Huur Verzoeken</h1>
         <table className="rent-table">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Car Name</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>First Name</th>
-              <th>Last Name</th>
+              <th>Voertuig</th>
+              <th>Start Datum</th>
+              <th>Eind Datum</th>
+              <th>Voornaam</th>
+              <th>Achternaam</th>
               <th>Status</th>
-              <th>Actions</th>
+              <th>Acties</th>
             </tr>
           </thead>
           <tbody>
@@ -87,7 +86,6 @@ const Rentrequests = () => {
                 )
                 .map((rent) => (
                   <tr key={rent.id}>
-                    <td>{rent.id}</td>
                     <td>{rent.vehicle?.brand + " " + rent.vehicle?.model || "Unknown"}</td>
                     <td>{new Date(rent.startDate).toLocaleDateString()}</td>
                     <td>{new Date(rent.endDate).toLocaleDateString()}</td>

@@ -48,15 +48,15 @@ const IndividualRentOverview = () => {
 
   return (
     <div className="page individual-rent-overview">
-      <div className="individual-rent-overview-content">
-        <h1>Individual Rent Overview</h1>
+      <div className="container">
+        <h1>Huur Overzicht</h1>
         <div className="vehicle-list">
           <table className="vehicle-table">
             <thead>
               <tr>
-                <th>Car Name</th>
-                <th>Start Date</th>
-                <th>End Date</th>
+                <th>Voertuig</th>
+                <th>Start Datum</th>
+                <th>Eind Datum</th>
               </tr>
             </thead>
             <tbody>
