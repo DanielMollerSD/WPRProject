@@ -32,6 +32,11 @@ function SignUpBackoffice() {
       return;
     }
 
+    if (password1Ref.current.value !== password2Ref.current.value) {
+      alert("Passwords do not match.");
+      return;
+    }
+
     console.log("Sending request to backend...");
     console.log(
       "Request URL:",

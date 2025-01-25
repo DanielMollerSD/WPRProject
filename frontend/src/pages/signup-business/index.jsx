@@ -40,10 +40,18 @@ function SignUpBusiness() {
     if (formData.businessEmployee.Password.length < 8) {
       alert("Password must be at least 8 characters long.");
       return;
-  }
+    }
+
+    if (password1Ref.current.value !== password2Ref.current.value) {
+      alert("Passwords do not match.");
+      return;
+    }
 
     console.log("Sending request to backend...");
-    console.log("Request URL:", `${import.meta.env.VITE_APP_API_URL}/Business/register`);
+    console.log(
+      "Request URL:",
+      `${import.meta.env.VITE_APP_API_URL}/Business/register`
+    );
     console.log("Request Body:", JSON.stringify(formData));
 
     try {
@@ -211,7 +219,6 @@ function SignUpBusiness() {
 
               <script src="togglePassword.js"></script>
             </section>
-
           </main>
         </div>
       </div>
