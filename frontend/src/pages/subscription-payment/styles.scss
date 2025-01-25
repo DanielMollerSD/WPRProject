@@ -1,0 +1,108 @@
+.page.payment-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 100px;
+
+    .container {
+        background: #ffffff;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        width: 100%;
+        text-align: center;
+
+        h2 {
+            font-size: 30px;
+            color: #333;
+            margin-bottom: 11px;
+        }
+
+        p{
+            font-size: 18px;
+            color: #313131;
+            margin-bottom: 10px;
+        };
+
+        .payment-actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+
+        }
+
+        .cancel-button,
+        .approve-button {
+            margin-top: 3px;
+            margin-left: 5px;
+            padding: 8px 14px;
+            width: 120px;
+            height: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+        }
+
+        .cancel-button {
+            background-color: #a50b0b;
+            color: white;
+
+            &:hover {
+                background-color: #880c0c;
+            }
+        }
+
+        .approve-button {
+            background-color: #0ba12c;
+            color: white;
+
+            &:hover {
+                background-color: #0c8025;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        padding: 20px;
+
+        .payment-container {
+            padding: 20px;
+            h2 {
+                font-size: 24px;
+            }
+            p {
+                font-size: 14px;
+            }
+            .payment-actions {
+                flex-direction: column;
+                gap: 10px;
+
+                button {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 480px) {
+        .payment-container {
+            padding: 15px;
+            h2 {
+                font-size: 20px;
+            }
+            p {
+                font-size: 12px;
+            }
+            .payment-actions button {
+                font-size: 14px;
+                padding: 8px 15px;
+            }
+        }
+    }
+}

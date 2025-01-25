@@ -78,53 +78,53 @@ function BackofficeSubscription() {
 
     return (
         <div className="page page-subscription-orders">
-            <h2>Subscription Orders</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>User</th>
-                        <th>Subscription Name</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {Array.isArray(orders) && orders.length > 0 ? (
-                        orders.map((order) => (
-                            <tr key={order.id}>
-                                <td>{order.id}</td>
-                                <td>{order.userEmail || "N/A"}</td>
-                                <td>{order.subscriptionName}</td>
-                                <td>{order.status}</td>
-                                <td>
-                                    {order.status !== "Approved" &&
-                                        order.status !== "Declined" && (
-                                            <>
-                                                <button
-                                                    className="approve-button"
-                                                    onClick={() => approveOrder(order.id)}
-                                                >
-                                                    Approve
-                                                </button>
-                                                <button
-                                                    className="decline-button"
-                                                    onClick={() => declineOrder(order.id)}
-                                                >
-                                                    Decline
-                                                </button>
-                                            </>
-                                        )}
-                                </td>
-                            </tr>
-                        ))
-                    ) : (
+            <div className="container">
+                <h1>Abonnement Aanvragen</h1>
+                <table>
+                    <thead>
                         <tr>
-                            <td colSpan="5">No orders available.</td>
+                            <th>Gebruiker</th>
+                            <th>Abonnement</th>
+                            <th>Status</th>
+                            <th>Acties</th>
                         </tr>
-                    )}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {Array.isArray(orders) && orders.length > 0 ? (
+                            orders.map((order) => (
+                                <tr key={order.id}>
+                                    <td>{order.businessName || "N/A"}</td>
+                                    <td>{order.subscriptionName}</td>
+                                    <td>{order.status}</td>
+                                    <td>
+                                        {order.status !== "Approved" &&
+                                            order.status !== "Declined" && (
+                                                <>
+                                                    <button
+                                                        className="approve-button"
+                                                        onClick={() => approveOrder(order.id)}
+                                                    >
+                                                        Approve
+                                                    </button>
+                                                    <button
+                                                        className="decline-button"
+                                                        onClick={() => declineOrder(order.id)}
+                                                    >
+                                                        Decline
+                                                    </button>
+                                                </>
+                                            )}
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="5">No orders available.</td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 }

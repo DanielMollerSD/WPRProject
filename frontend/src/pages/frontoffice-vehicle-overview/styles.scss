@@ -1,10 +1,8 @@
-.page.page-rent-screen {
+.page.page-frontoffice-vehicle-overview {
     position: relative;
-    background-color: #d6d1c7;
-    padding-top: 100px;
-    padding-bottom: 100px;
+    padding: 40px;
 
-    .rent-screen-content {
+    .container {
         background-color: white;
         padding: 20px 30px;
         border-radius: 8px;
@@ -16,6 +14,8 @@
             .vehicle-table {
                 width: 100%;
                 border-collapse: collapse;
+                overflow-x: auto;
+                display: block; 
 
                 thead {
                     tr {
@@ -52,6 +52,132 @@
                         }
                     }
                 }
+            }
+        }
+
+        .status-button,
+        .cancel-button,
+        .approve-button {
+            margin-top: 3px;
+            margin-left: 5px;
+            padding: 8px 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .status-button {
+            background-color: #0066cc;
+            color: white;
+
+            &:hover {
+                background-color: #0052a3;
+            }
+        }
+
+        .cancel-button {
+            background-color: #a50b0b;
+            color: white;
+
+            &:hover {
+                background-color: #880c0c;
+            }
+        }
+
+        .approve-button {
+            background-color: #0ba12c;
+            color: white;
+
+            &:hover {
+                background-color: #0c8025;
+            }
+        }
+
+        .note-input {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            height: 60%;
+            margin-bottom: 5px;
+            padding: 5px;
+        }
+
+        td div {
+            max-width: 400px;
+            word-wrap: break-word;
+        }
+
+    }
+}
+
+@media (max-width: 768px) {
+    .page.page-rent-screen {
+        padding: 20px;
+
+        .rent-screen-content {
+            padding: 15px;
+            width: 100%;
+            box-shadow: none;
+
+            .vehicle-list {
+                margin-top: 15px;
+
+                .vehicle-table {
+                    font-size: 12px;
+                    padding: 10px;
+
+                    td {
+                        padding: 8px 12px;
+                    }
+                }
+            }
+
+            .status-button,
+            .cancel-button,
+            .approve-button {
+                padding: 6px 12px;
+                font-size: 12px;
+                margin-left: 3px;
+            }
+
+            .note-input {
+                height: auto;
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .page.page-rent-screen {
+        padding: 10px;
+
+        .rent-screen-content {
+            padding: 10px;
+
+            .vehicle-list {
+                .vehicle-table {
+                    font-size: 10px;
+                    td {
+                        padding: 6px 10px;
+                    }
+                }
+            }
+
+            .status-button,
+            .cancel-button,
+            .approve-button {
+                padding: 5px 10px;
+                font-size: 10px;
+                margin-left: 3px;
+            }
+
+            .note-input {
+                height: auto;
+                font-size: 12px;
             }
         }
     }

@@ -109,11 +109,11 @@ function BusinessSettings() {
       <header></header>
       <div className="businesssettings-box">
         <section className="as-container">
-          <h2> Account Bewerken Bedrijf </h2>
+          <h2>Account Bewerken Bedrijf </h2>
           <form onSubmit={handleSubmit}>
             <div className="as-group">
               <div>
-                <label>BedrijfsAdres:</label>
+                <label>Adres:</label>
                 <input
                   type="text"
                   className="as-adress"

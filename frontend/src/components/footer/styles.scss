@@ -1,27 +1,97 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-.component.component-footer {  
+
+.component.component-footer {
     * {
         margin: 0;
         padding: 0;
     }
 
-    .container {
-        max-width: 1170px;
-        margin: auto;
-    }
-
-    ul {
-        list-style: none;
-    }
-
     .footer {
         background-color: #24262b;
-        padding: 70px 0;
-        bottom: 0; 
+        padding-top: 70px;
+        padding-bottom: 40px;
+        bottom: 0;
         width: 100%;
+        padding-left: 75px;
+        padding-right: 75px;
+
+        .container {
+            max-width: 1170px;
+            margin: auto;
+
+            .footer-column {
+
+                &:first-child {
+                    padding-right: 40px;
+                }
+
+                .footer-title {
+                    color: white;
+                    margin-bottom: 5px;
+                }
+
+                .footer-items {
+                    color: white;
+                    .footer-item {
+                        list-style: none;
+
+                        a {
+                            text-decoration: none;
+                            color: white;
+                        }
+                    }
+                }
+            }
+
+            .copyright {
+                border-top: 1px solid rgb(82, 82, 82);
+                padding-top: 25px;
+                margin-top: 25px;
+                color: white;
+                text-align: center;
+            }
+        }
     }
 
-    .footerText{
-        color: white;
+    //for small laptops
+    @media (max-width: 1199px) {}
+
+    // for tablets
+    @media (max-width: 991px) {}
+
+    // for phones
+    @media (max-width: 767px) {
+        .footer {
+            padding-left: 30px;
+            padding-right: 30px;
+            .container {
+                .footer-column {
+                    margin-bottom: 20px;
+
+                    &:first-child {
+                        padding-right: 0;
+                    }
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+
+                    .footer-title {
+                        text-align: center;
+                    }
+                    .footer-items {
+                        .footer-item {
+                            text-align: center;
+                            a {
+                            }
+                        }
+                    }
+                }
+
+                .copyright {
+                    white-space: nowrap;
+                }
+            }
+        }
     }
 }

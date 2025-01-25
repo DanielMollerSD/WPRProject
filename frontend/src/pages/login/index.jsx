@@ -26,7 +26,7 @@ function Login() {
             if (response.status === 200) {
                 const { token } = response.data;
                 localStorage.setItem("access_token", token);
-                navigate('/vehicle-overview');
+                navigate('/');
             }
         } catch (error) {
             if (error.response && error.response.data) {

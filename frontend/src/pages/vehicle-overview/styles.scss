@@ -1,10 +1,8 @@
-.page.page-rent-screen {
+.page.page-vehicle-overview {
     position: relative;
-    background-color: #d6d1c7;
-    padding-top: 100px;
-    padding-bottom: 100px;
+    padding: 40px;
 
-    .rent-screen-content {
+    .container {
         background-color: white;
         padding: 20px 30px;
         border-radius: 8px;
@@ -70,6 +68,8 @@
                     .card-img-top {
                         background-color: gray;
                         height: 200px;
+                        object-fit: cover;
+                        object-position: center;
                     }
 
                     .card-body {

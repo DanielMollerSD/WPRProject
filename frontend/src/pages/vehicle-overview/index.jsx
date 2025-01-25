@@ -96,9 +96,8 @@ function VehicleOverview() {
   }
 
   return (
-    <div className="page page-rent-screen">
-      <div className="container">
-        <div className="rent-screen-content">
+    <div className="page page-vehicle-overview">
+        <div className="container">
           <div className="vehicle-filters">
             <div className="filter-item">
               <div className="filter-title">Voertuigcategorieën:</div>
@@ -140,7 +139,7 @@ function VehicleOverview() {
                 type="number"
                 name="minPrice"
                 id="minPrice"
-                placeholder="Min Price"
+                placeholder="Min Prijs"
                 value={minPrice || ""}
                 onChange={handleMinPriceChange}
               />
@@ -152,7 +151,7 @@ function VehicleOverview() {
                 type="number"
                 name="maxPrice"
                 id="maxPrice"
-                placeholder="Max Price"
+                placeholder="Max Prijs"
                 value={maxPrice || ""}
                 onChange={handleMaxPriceChange}
               />
@@ -195,8 +194,8 @@ function VehicleOverview() {
                     <div className="card">
                       <img
                         className="card-img-top"
-                        src="https://via.placeholder.com/500x300"
-                        alt="Card image"
+                        src={vehicle.imageUrl || "https://via.placeholder.com/500x300" }
+                        alt={`image ${vehicle.brand} ${vehicle.model}`}
                       />
                       <div className="card-body">
                         <h5 className="card-title">
@@ -212,6 +211,9 @@ function VehicleOverview() {
                           </div>
                           <div className="tag">
                             <strong>Model:</strong> {vehicle.model}
+                          </div>
+                          <div className="tag">
+                            <strong>Kleur:</strong> {vehicle.color}
                           </div>
                           <div className="tag">
                             <strong>Koop Jaar:</strong> {vehicle.purchaseYear}
@@ -231,7 +233,6 @@ function VehicleOverview() {
             </div>
           </div>
         </div>
-      </div>
     </div>
   );
 }

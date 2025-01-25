@@ -38,12 +38,12 @@ function FrontOfficeVehicleOverview() {
         }
     }
 
-    async function updateVehicleStatus(id, newStatus) {
+    async function updateVehicleNote(id, newNote) {
         try {
-            console.log("Updating status with payload:", newStatus);
+            console.log("Updating status with payload:", newNote);
             const response = await axios.patch(
-                `${import.meta.env.VITE_APP_API_URL}/Vehicle/${id}/status`,
-                newStatus,
+                `${import.meta.env.VITE_APP_API_URL}/Vehicle/${id}/note`,
+                newNote,
                 {
                     headers: { "Content-Type": "application/json" },
                     withCredentials: true,
@@ -51,7 +51,7 @@ function FrontOfficeVehicleOverview() {
             );
             console.log("Response from server:", response.data);
             await fetchVehicles();
-            setEditingStatusId(null);
+            setEditingNoteId(null);
         } catch (e) {
             console.error("Error updating status:", e.message);
         }
@@ -63,26 +63,25 @@ function FrontOfficeVehicleOverview() {
     }, []);
 
     return (
-        <div className="page page-rent-screen">
+        <div className="page page-frontoffice-vehicle-overview">
             <div className="container">
-                <div className="rent-screen-content">
-                    <div className="vehicle-list">
-                        <table className="vehicle-table">
-                            <thead>
-                                <tr>
-                                    <th>Merk</th>
-                                    <th>Model</th>
-                                    <th>Type</th>
-                                    <th>Koop Jaar</th>
-                                    <th>Status</th>
-                                    <th>Note</th>
-                                    <th>Prijs</th>
-                                    <th>Schade</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {vehicles.map((vehicle) => (
-                                    <tr key={vehicle.id}>
+                <div className="vehicle-list">
+                    <table className="vehicle-table">
+                        <thead>
+                            <tr>
+                                <th>Merk</th>
+                                <th>Model</th>
+                                <th>Type</th>
+                                <th>Koop Jaar</th>
+                                <th>Status</th>
+                                <th>Opmerkingen</th>
+                                <th>Prijs</th>
+                                <th>Schade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {vehicles.map((vehicle) => (
+                                <tr key={vehicle.id}>
                                         <td>{vehicle.brand}</td>
                                         <td>{vehicle.model}</td>
                                         <td>{vehicle.vehicleType}</td>
@@ -98,17 +97,17 @@ function FrontOfficeVehicleOverview() {
                                                     <option value="Beschikbaar">Beschikbaar</option>
                                                     <option value="In service">In service</option>
                                                 </select>
-                                                <button
+                                                <button className='approve-button'
                                                     onClick={() => updateVehicleStatus(vehicle.id, statusInput)}
                                                 >
                                                     Save
                                                 </button>
-                                                <button onClick={() => setEditingStatusId(null)}>Cancel</button>
+                                                <button className='cancel-button' onClick={() => setEditingStatusId(null)}>Cancel</button>
                                             </div>
                                         ) : (
                                             <div>
                                                 {vehicle.status}{" "}
-                                                <button
+                                                <button className='status-button'
                                                     onClick={() => {
                                                         setEditingStatusId(vehicle.id);
                                                         setStatusInput(vehicle.status);
@@ -119,46 +118,44 @@ function FrontOfficeVehicleOverview() {
                                             </div>
                                         )}
                                     </td>
-
-                                        <td>
-                                            {editingNoteId === vehicle.id ? (
-                                                <div>
-                                                    <input
-                                                        type="text"
-                                                        value={noteInput}
-                                                        onChange={(e) => setNoteInput(e.target.value)}
-                                                        placeholder="Update Note"
-                                                    />
-                                                    <button
-                                                        onClick={() => updateVehicleNote(vehicle.id, { note: noteInput })}
-                                                    >
-                                                        Save
-                                                    </button>
-                                                    <button onClick={() => setEditingNoteId(null)}>Cancel</button>
-                                                </div>
-                                            ) : (
-                                                <div>
-                                                    {vehicle.note}{" "}
-                                                    <button
-                                                        onClick={() => {
-                                                            setEditingNoteId(vehicle.id);
-                                                            setNoteInput(vehicle.note);
-                                                        }}
-                                                    >
-                                                        Edit
-                                                    </button>
-                                                </div>
-                                            )}
-                                        </td>
-                                        <td>€{vehicle.price} /dag</td>
-                                        <td>
-                                            <Link to={`/damage/${vehicle.id}`}>Bekijk</Link>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                                    <td>
+                                        {editingNoteId === vehicle.id ? (
+                                            <div>
+                                                <textarea className='note-input'
+                                                    type="text"
+                                                    value={noteInput}
+                                                    onChange={(e) => setNoteInput(e.target.value)}
+                                                    placeholder="Edit Note"
+                                                />
+                                                <button className='approve-button'
+                                                    onClick={() => updateVehicleNote(vehicle.id, noteInput )}
+                                                >
+                                                    Save
+                                                </button>
+                                                <button className='cancel-button' onClick={() => setEditingNoteId(null)}>Cancel</button>
+                                            </div>
+                                        ) : (
+                                            <div>
+                                                {vehicle.note}{" "}
+                                                <button className='status-button'
+                                                    onClick={() => {
+                                                        setEditingNoteId(vehicle.id);
+                                                        setNoteInput(vehicle.note);
+                                                    }}
+                                                >
+                                                    Edit
+                                                </button>
+                                            </div>
+                                        )}
+                                    </td>
+                                    <td>€{vehicle.price} /dag</td>
+                                    <td>
+                                        <Link to={`/damage/${vehicle.id}`}>Voeg toe</Link>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
