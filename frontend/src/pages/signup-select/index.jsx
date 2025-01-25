@@ -4,11 +4,8 @@ import './styles.scss';
 function SignupSelectionScreen() {
     return (
         <>
-            <header></header>
-
             <div className="page page-signup-selection">
-                <div className="SelectionBody">
-                    <main className="SelectionName">
+                    <div className="SelectionName">
                         <section className="selection-container">
                             <h2>Selecteer uw type account</h2>
                             <div id="form-group-select">
@@ -25,11 +22,8 @@ function SignupSelectionScreen() {
                                 </Link>
                             </div>
                         </section>
-                    </main>
-                </div>
+                    </div>
             </div>
-
-            <footer></footer>
         </>
     );
 }

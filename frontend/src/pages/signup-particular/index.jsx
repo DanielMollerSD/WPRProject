@@ -188,17 +188,6 @@ function SignUpParticular() {
                                     <button type="submit" className="SignupButton">Registreren</button>
                                 </div>
                             </form>
-
-                            <Link to="/rent-overview">
-                                <button className="btn-go-to-rent-overview">Go to Rent Overview</button>
-                            </Link>
-
-                            <Link to="/vehicle-overview">
-                                <button>Next Page</button>
-                            </Link>
-                            <Link to="/vehicle-crud">
-                                <button>crud page</button>
-                            </Link>
                         </section>
                     </main>
                 </div>

@@ -26,13 +26,15 @@ function PrivacyPage() {
     }, []);
 
     return (
-        <div className="privacy-page">
-            <h1>Privacy Policy</h1>
-            {error ? (
-                <p className="error">{error}</p>
-            ) : (
-                <p>{description}</p>
-            )}
+        <div className="page page-privacy-page">
+            <div className="container">
+                <h1>Privacy Verklaring</h1>
+                {error ? (
+                    <p className="error">{error}</p>
+                ) : (
+                    <p>{description}</p>
+                )}
+            </div>
         </div>
     );
 }

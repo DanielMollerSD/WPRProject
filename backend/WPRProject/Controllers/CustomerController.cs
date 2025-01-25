@@ -53,6 +53,30 @@ namespace WPRProject.Controllers
 
             return Ok(customer); // Return the logged-in user data
         }
+        [Authorize]
+        [HttpGet("fetch-name")]
+        public async Task<ActionResult> GetCustomerName()
+        {
+            
+            var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                return Unauthorized(new { Message = "User is not authenticated." });
+            }
+
+        
+            var customer = await _context.Customer
+                                        .FirstOrDefaultAsync(c => c.Email == userEmail);
+
+            if (customer == null)
+            {
+                return NotFound(new { Message = "Customer not found." });
+            }
+
+        
+            return Ok(new { FirstName = customer.FirstName });
+        }
 
         [Authorize(Roles = "Owner, Wagenparkbeheerder, Individual")]
         [HttpGet("{Id}")]

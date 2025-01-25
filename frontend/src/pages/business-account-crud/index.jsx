@@ -112,6 +112,8 @@ function BusinessCRUD() {
     try {
       setLoading(true);
       if (isEditing) {
+
+        
         await axios.put(
           `${import.meta.env.VITE_APP_API_URL}/Business/updateEmployee/${form.id}`,
           filledForm,
@@ -253,7 +255,6 @@ function BusinessCRUD() {
                   type="password"
                   name="password"
                   placeholder="Wachtwoord"
-                  value={form.password}
                   onChange={handleChange}
                   ref={password1Ref}
                   required

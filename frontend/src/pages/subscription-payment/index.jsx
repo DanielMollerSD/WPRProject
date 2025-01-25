@@ -48,7 +48,9 @@ function SubscriptionPayment() {
                 <h2>Payment Confirmation</h2>
                 <p>Are you sure you want to purchase this subscription?</p>
                 <p>
-                    <strong>{subscription.name}</strong>
+                    <strong>Abbonement: {subscription.name}</strong>
+                    <br/>
+                    <strong>Prijs: €{subscription.price}</strong>
                 </p>
                 <p>{subscription.description}</p>
                 {error && <p className="error">{error}</p>}
