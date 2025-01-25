@@ -76,7 +76,7 @@ function Header() {
 
                 <>
                    <h2 className="headerUsername">
-              Welkom {userData.firstName ? userData.firstName : "Loading..."}
+              Welkom: {userData.firstName ? userData.firstName : "Loading..."}
             </h2>
                 </>
               )}
