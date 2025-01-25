@@ -139,7 +139,7 @@ function RentScreen() {
               </div>
               <div className="form-group">
                 <label>Start Date:</label>
-                  <DatePicker
+                <DatePicker
                   selected={formData.startDate}
                   minDate={getMinAvailableDateStartInput()}
                   maxDate={formData.endDate}

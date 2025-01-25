@@ -70,6 +70,8 @@
                     .card-img-top {
                         background-color: gray;
                         height: 200px;
+                        object-fit: cover;
+                        object-position: center;
                     }
 
                     .card-body {
