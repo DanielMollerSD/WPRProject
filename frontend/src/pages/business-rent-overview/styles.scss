@@ -1,0 +1,42 @@
+.container {
+    padding: 20px;
+  }
+  
+  .rent-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .rent-table th,
+  .rent-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .rent-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  .btn {
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+  
+  .btn-approve {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 3px;
+  }
+  
+  .btn-decline {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 3px;
+  }
+  
