@@ -119,7 +119,7 @@ function Header() {
 
                             {isLoggedIn && userRole === "Backoffice" && (
                                 <>
-                                    <Link to="/rent-requests">Aanvragen</Link>
+                                    <Link to="/rent-requests">Verzoeken</Link>
                                     <Link to="/rent-overview">Overzicht</Link>
                                     <Link to="/backoffice-subscription">Abonnementen</Link>
                                     <Link to="/vehicle-crud">Voertuigen</Link>

@@ -70,7 +70,7 @@
                 input:focus,
                 select:focus,
                 textarea:focus {
-                    border-color: #4CAF50;
+                    border-color: #7c7c7c;
                 }
 
                 .save-button,
@@ -82,20 +82,23 @@
                     width: 100%;
                     transition: background-color 0.3s ease;
                     border: none;
-
-                    &:first-child {
-                        background-color: #4CAF50;
-                        color: white;
-                    }
-
-                    &:last-child {
-                        background-color: #f44336;
-                        color: white;
-                    }
+                    transition: opacity 0.3s ease;
 
                     &:hover {
-                        opacity: 0.8;
+                        opacity: 0.9;
                     }
+                }
+
+                .save-button {
+                    font-weight: bold;
+                    background-color: #0066cc;
+                    color: white;
+                }
+
+                .cancel-button {
+                    font-weight: bold;
+                    background-color: #da3a2f;
+                    color: white;
                 }
             }
         }

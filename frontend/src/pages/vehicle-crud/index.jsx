@@ -193,7 +193,7 @@ function VehicleCRUD() {
                                         </div>
                                         <div className="buttons-container">
                                             <Link to={`/backoffice-damage/${vehicle.id}`}>
-                                                <button className="btn btn-primary">Bekijk schade</button>
+                                                <button className="edit-button">Bekijk Schade</button>
                                             </Link>
                                             <button className="edit-button" onClick={() => handleEdit(vehicle)}>Bewerk</button>
                                             <button className="delete-button" onClick={() => handleDelete(vehicle.id)}>Verwijder</button>

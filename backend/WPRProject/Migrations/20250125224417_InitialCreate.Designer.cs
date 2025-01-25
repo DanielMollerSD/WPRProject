@@ -12,8 +12,8 @@ using WPRProject;
 namespace WPRProject.Migrations
 {
     [DbContext(typeof(CarsAndAllContext))]
-    [Migration("20250125154604_initialMigration")]
-    partial class initialMigration
+    [Migration("20250125224417_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

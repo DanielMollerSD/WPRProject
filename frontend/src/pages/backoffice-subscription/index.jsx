@@ -79,11 +79,11 @@ function BackofficeSubscription() {
     return (
         <div className="page page-subscription-orders">
             <div className="container">
-                <h1>Abonnement Aanvragen</h1>
+                <h1>Abonnementen</h1>
                 <table>
                     <thead>
                         <tr>
-                            <th>Gebruiker</th>
+                            <th>Naam</th>
                             <th>Abonnement</th>
                             <th>Status</th>
                             <th>Acties</th>
