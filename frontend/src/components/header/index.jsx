@@ -105,6 +105,7 @@ function Header() {
 
                             {isLoggedIn && userRole === "Wagenparkbeheerder" && (
                                 <>
+                                    <Link to="/business/rents">Overzicht</Link>
                                     <Link to="/business-account-crud">Medewerkers</Link>
                                     <Link to="/subscription-select">Abonnementen</Link>
                                 </>
