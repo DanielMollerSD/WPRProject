@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const BusinessRentOverview = () => {
+const IndividualRentOverview = () => {
   const [rents, setRents] = useState([]); // Huurgegevens
   const [loading, setLoading] = useState(true); // Laadindicator
   const [error, setError] = useState(""); // Foutmelding
@@ -11,7 +11,7 @@ const BusinessRentOverview = () => {
       try {
         // Nieuwe API-oproep zonder businessId in de URL
         const response = await axios.get(
-          `${import.meta.env.VITE_APP_API_URL}/rent/businessrents`, // Endpoint zonder businessId
+          `${import.meta.env.VITE_APP_API_URL}/rent/individual`, // Endpoint zonder businessId
           {
             withCredentials: true, // Nodig voor authenticatiecookies
           }
@@ -57,8 +57,8 @@ const BusinessRentOverview = () => {
                 <th>Car Name</th>
                 <th>Start Date</th>
                 <th>End Date</th>
-                <th>Employee Name</th>
-                <th>Employee Email</th>
+                <th>Name</th>
+                <th>Email</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -92,4 +92,4 @@ const BusinessRentOverview = () => {
   );
 };
 
-export default BusinessRentOverview;
+export default IndividualRentOverview;

@@ -29,6 +29,7 @@ import RentOverview from './pages/rent-overview';
 import BackofficeSubscription from "./pages/backoffice-subscription";
 import SubscriptionPayment from "./pages/subscription-payment";
 import  BusinessRentOverview from "./pages/business-rent-overview";
+import  IndividualRentOverview from "./pages/individual-rent";
 
 function AppRoutes() {
   return (
@@ -64,6 +65,7 @@ function AppRoutes() {
             <Route path="/backoffice-subscription" element={<BackofficeSubscription />} />
             <Route path="/subscription-payment" element={<SubscriptionPayment />} />
             <Route path="/business/rents" element={<BusinessRentOverview />} />
+            <Route path="/individual/rents" element={<IndividualRentOverview />} />
           </Routes>
         </main>
 
