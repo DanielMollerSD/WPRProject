@@ -163,11 +163,11 @@ function RentScreen() {
                 <div className="total-price">
                   <label>Totale prijs:</label>
                   {formData.startDate && formData.endDate
-                    ? vehicle.price * (new Date(formData.endDate) - new Date(formData.startDate)) / (1000 * 60 * 60 * 24)
+                    ? "€" + vehicle.price * (new Date(formData.endDate) - new Date(formData.startDate)) / (1000 * 60 * 60 * 24)
                     : 0}
                 </div>
               </div>
-              <button type="submit" className="submit-btn">Rent</button>
+              <button type="submit" className="submit-btn">Huur</button>
             </form>
           </>
         ) : (

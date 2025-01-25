@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "./styles.scss"; // Zorg ervoor dat de juiste SCSS file geïmporteerd wordt
 
 const BusinessRentOverview = () => {
   const [rents, setRents] = useState([]); // Huurgegevens
@@ -37,17 +38,17 @@ const BusinessRentOverview = () => {
 
   // Render loading-indicator
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="loading">Loading...</div>;
   }
 
   // Render foutmelding als iets misgaat
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className="error-message">Error: {error}</div>;
   }
 
   return (
-    <div className="page page-rent-screen">
-      <div className="rent-screen-content">
+    <div className="page business-rent-overview">
+      <div className="business-rent-overview-content">
         <h1>Business Rent Overview</h1>
         <div className="vehicle-list">
           <table className="vehicle-table">

@@ -44,21 +44,20 @@ function SubscriptionPayment() {
     
     return (
         <div className="page payment-page">
-            <div className="payment-container">
-                <h2>Payment Confirmation</h2>
-                <p>Are you sure you want to purchase this subscription?</p>
+            <div className="container">
+                <h2>Conformatie Betaling</h2>
                 <p>
-                    <strong>Abbonement: {subscription.name}</strong>
+                    <strong>Abonnement: {subscription.name}</strong>
                     <br/>
                     <strong>Prijs: €{subscription.price}</strong>
                 </p>
                 <p>{subscription.description}</p>
                 {error && <p className="error">{error}</p>}
                 <div className="payment-actions">
-                    <button onClick={handleConfirm} disabled={loading}>
-                        {loading ? "Processing..." : "Confirm"}
+                    <button className="approve-button" onClick={handleConfirm} disabled={loading}>
+                        {loading ? "Processing..." : "Betaal"}
                     </button>
-                    <button onClick={handleCancel} disabled={loading}>
+                    <button className="cancel-button" onClick={handleCancel} disabled={loading}>
                         Cancel
                     </button>
                 </div>

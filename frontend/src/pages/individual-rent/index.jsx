@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "./styles.scss"; // Zorg ervoor dat je de juiste SCSS file importeert
 
 const IndividualRentOverview = () => {
   const [rents, setRents] = useState([]); // Huurgegevens
@@ -37,36 +38,31 @@ const IndividualRentOverview = () => {
 
   // Render loading-indicator
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="loading">Loading...</div>;
   }
 
   // Render foutmelding als iets misgaat
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className="error-message">Error: {error}</div>;
   }
 
   return (
-    <div className="page page-rent-screen">
-      <div className="rent-screen-content">
-        <h1>Business Rent Overview</h1>
+    <div className="page individual-rent-overview">
+      <div className="individual-rent-overview-content">
+        <h1>Individual Rent Overview</h1>
         <div className="vehicle-list">
           <table className="vehicle-table">
             <thead>
               <tr>
-                <th>ID</th>
                 <th>Car Name</th>
                 <th>Start Date</th>
                 <th>End Date</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Status</th>
               </tr>
             </thead>
             <tbody>
               {rents.length > 0 ? (
                 rents.map((rent) => (
                   <tr key={rent.id}>
-                    <td>{rent.id}</td>
                     <td>
                       {rent.vehicle?.brand && rent.vehicle?.model
                         ? rent.vehicle.brand + " " + rent.vehicle.model
@@ -74,14 +70,11 @@ const IndividualRentOverview = () => {
                     </td>
                     <td>{rent.startDate ? new Date(rent.startDate).toLocaleDateString() : "N/A"}</td>
                     <td>{rent.endDate ? new Date(rent.endDate).toLocaleDateString() : "N/A"}</td>
-                    <td>{rent.customer?.name || "Unknown"}</td>
-                    <td>{rent.customer?.email || "N/A"}</td>
-                    <td>{rent.status || "Unknown"}</td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan="7">No rent requests available.</td>
+                  <td colSpan="3">No rent requests available.</td>
                 </tr>
               )}
             </tbody>
