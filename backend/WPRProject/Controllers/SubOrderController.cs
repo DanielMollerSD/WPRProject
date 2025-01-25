@@ -12,9 +12,12 @@ namespace WPRProject.Controllers
     {
         private readonly CarsAndAllContext _context;
 
-        public SubOrderController(CarsAndAllContext context)
+        private readonly EmailService _emailService;
+
+        public SubOrderController(CarsAndAllContext context, EmailService emailService)
         {
             _context = context;
+            _emailService = emailService;
         }
 
         [Authorize(Roles = "Backoffice, Wagenparkbeheerder")]
@@ -97,7 +100,25 @@ namespace WPRProject.Controllers
                     _context.SubscriptionOrder.Remove(existingOrder);
                 }
 
-                // Set the new order status to Active
+                var subject = "Abonnement bevestiging - CarsAndAll";
+                var subscriptionName = await _context.Subscription
+                    .Where(s => s.Id == order.SubscriptionId)
+                    .Select(s => s.Name)
+                    .FirstOrDefaultAsync();
+
+                if (string.IsNullOrEmpty(subscriptionName))
+                {
+                    return BadRequest(new { Message = "Invalid subscription ID." });
+                }
+
+                //email for subscription confirmation
+                // var message = $"<h1>Uw abonnement is bevestigd!</h1>" +
+                //             $"<p>Abonnement: {subscriptionName}</p>" +
+                //             $"<p>Periode: {order.StartDate:yyyy-MM-dd} tot {order.EndDate:yyyy-MM-dd}</p>";
+
+                // await _emailService.SendEmailAsync(userEmail, subject, message);
+
+
                 order.Status = "Pending";
                 _context.SubscriptionOrder.Add(order);
                 await _context.SaveChangesAsync();
@@ -114,7 +135,10 @@ namespace WPRProject.Controllers
         [HttpPatch("{id}/approve")]
         public async Task<IActionResult> ApproveOrder(int id)
         {
-            var order = await _context.SubscriptionOrder.FindAsync(id);
+            var order = await _context.SubscriptionOrder
+                .Include(o => o.Business)
+                .Include(o => o.Subscription)
+                .FirstOrDefaultAsync(o => o.Id == id);
 
             if (order == null)
             {
@@ -126,6 +150,23 @@ namespace WPRProject.Controllers
             try
             {
                 await _context.SaveChangesAsync();
+
+                var userEmail = await _context.BusinessEmployee
+                    .Where(e => e.BusinessId == order.BusinessId)
+                    .Select(e => e.Email)
+                    .FirstOrDefaultAsync();
+
+                if (!string.IsNullOrEmpty(userEmail))
+                {
+                    var subject = "Abonnement bevestiging - CarsAndAll";
+                    var message = $"<h1>Uw abonnement is goedgekeurd!</h1>" +
+                                $"<p>Abonnement: {order.Subscription.Name}</p>" +
+                                $"<p>Periode: {order.StartDate:yyyy-MM-dd} tot {order.EndDate:yyyy-MM-dd}</p>" +
+                                $"<p>Bedankt voor het kiezen van CarsAndAll!</p>";
+
+                    await _emailService.SendEmailAsync(userEmail, subject, message);
+                }
+
                 return Ok(new { message = "Order approved successfully." });
             }
             catch (Exception ex)
@@ -138,12 +179,14 @@ namespace WPRProject.Controllers
             }
         }
 
-
         [Authorize(Roles = "Backoffice")]
         [HttpPatch("{id}/decline")]
         public async Task<IActionResult> DeclineOrder(int id)
         {
-            var order = await _context.SubscriptionOrder.FindAsync(id);
+            var order = await _context.SubscriptionOrder
+                .Include(o => o.Business)
+                .Include(o => o.Subscription)
+                .FirstOrDefaultAsync(o => o.Id == id);
 
             if (order == null)
             {
@@ -155,13 +198,29 @@ namespace WPRProject.Controllers
             try
             {
                 await _context.SaveChangesAsync();
-                return Ok(new { message = "Order declined successfully." });
+
+                var userEmail = await _context.BusinessEmployee
+                    .Where(e => e.BusinessId == order.BusinessId)
+                    .Select(e => e.Email)
+                    .FirstOrDefaultAsync();
+
+                if (!string.IsNullOrEmpty(userEmail))
+                {
+                    var subject = "Abonnement afgewezen - CarsAndAll";
+                    var message = $"<h1>Uw abonnement is afgewezen!</h1>" +
+                                $"<p>Abonnement: {order.Subscription.Name}</p>" +
+                                $"<p>Bedankt voor het kiezen van CarsAndAll!</p>";
+
+                    await _emailService.SendEmailAsync(userEmail, subject, message);
+                }
+
+                return Ok(new { message = "Order declined." });
             }
             catch (Exception ex)
             {
                 return StatusCode(500, new
                 {
-                    message = "An error occurred while declining the order.",
+                    message = "An error occurred while approving the order.",
                     details = ex.Message
                 });
             }

@@ -91,10 +91,10 @@ namespace WPRProject.Controllers
 
             try
             {
-                var subject = "Rental Confirmation";
-                var message = $"<h1>Your rental has been confirmed</h1>" +
-                              $"<p>Vehicle: {vehicle.Brand} {vehicle.Model}</p>" +
-                              $"<p>Rental Period: {rent.StartDate:yyyy-MM-dd} to {rent.EndDate:yyyy-MM-dd}</p>";
+                var subject = "Huur bevestiging - CarsAndAll";
+                var message = $"<h1>Uw huur is bevestigd!</h1>" +
+                              $"<p>Voertuig: {vehicle.Brand} {vehicle.Model}</p>" +
+                              $"<p>Huur periode: {rent.StartDate:yyyy-MM-dd} tot {rent.EndDate:yyyy-MM-dd}</p>";
 
                 await _emailService.SendEmailAsync(userEmail, subject, message);
 
