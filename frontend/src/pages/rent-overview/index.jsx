@@ -89,7 +89,11 @@ const RentOverview = () => {
             {rents.length > 0 ? (
               rents.map((rent) => (
                 <tr key={rent.id}>
-                  <td>{rent.vehicle?.brand + " " + rent.vehicle?.model || "Unknown"}</td>
+                  <td>
+                    {rent.vehicle?.brand && rent.vehicle?.model
+                      ? `${rent.vehicle.brand} ${rent.vehicle.model}`
+                      : "Unknown"}
+                  </td>
                   <td>{new Date(rent.startDate).toLocaleDateString()}</td>
                   <td>{new Date(rent.endDate).toLocaleDateString()}</td>
                   <td>{rent.customer?.firstName}</td>
