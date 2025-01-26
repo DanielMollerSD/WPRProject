@@ -51,7 +51,7 @@ describe("Login Component", () => {
     cy.get("#password").type("password123");
     cy.get("#LoginButton").click();
 
-    // Wait for the request and verify the request body
+    
     // cy.wait("@loginRequest").then((interception) => {
     //   expect(interception.request.body).to.deep.equal({
     //     email: "testuser@example.com",

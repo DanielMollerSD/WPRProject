@@ -1,10 +1,10 @@
 import { mount } from "cypress/react";
 import { MemoryRouter } from "react-router-dom";
-import SignUpParticular from "../pages/signup-particular"; // Adjust the import path as necessary
+import SignUpParticular from "../pages/signup-particular"; 
 
 describe("SignUpParticular Component", () => {
   beforeEach(() => {
-    // Mount the SignUpParticular component before each test
+   
     mount(
       <MemoryRouter>
         <SignUpParticular />
@@ -32,14 +32,14 @@ describe("SignUpParticular Component", () => {
   });
 
   it("accepts user input for the sign-up form", () => {
-    // Simulate typing into the input fields
+  
     cy.get("input[name='voornaam']").type("Test").debug();
     cy.get("input[name='achternaam']").type("User").debug();
     cy.get("input[name='email']").type("testuser@example.com").debug();
     cy.get("input[name='password']").type("password123").debug();
     cy.get("input[name='password-repeat']").type("password123").debug();
 
-    // Verify that the values are correctly entered
+   
     cy.get("input[name='voornaam']").should("have.value", "Test").debug();
     cy.get("input[name='achternaam']").should("have.value", "User").debug();
     cy.get("input[name='email']")
@@ -48,7 +48,7 @@ describe("SignUpParticular Component", () => {
   });
 
   it("triggers the form submission and checks the request", () => {
-    // Mock the request using cy.intercept() and log the intercept
+  
     cy.intercept("POST", "/Individual/register", (req) => {
       console.log("Intercepted request body:", req.body);
       req.reply({
@@ -57,17 +57,17 @@ describe("SignUpParticular Component", () => {
       });
     }).as("signUpRequest");
 
-    // Fill in the form
+
     cy.get("input[name='voornaam']").type("Test").debug();
     cy.get("input[name='achternaam']").type("User").debug();
     cy.get("input[name='email']").type("testuser@example.com").debug();
     cy.get("input[name='password']").type("password123").debug();
     cy.get("input[name='password-repeat']").type("password123").debug();
 
-    // Submit the form
+    
     cy.get("button[type='submit']").click();
 
-    // Log the network request and check the request body
+    
     // // cy.wait("@signUpRequest")
     //   .then((interception) => {
     //     console.log("Request body sent to backend:", interception.request.body);
@@ -82,11 +82,11 @@ describe("SignUpParticular Component", () => {
   });
 
   it("shows error for weak password", () => {
-    // Fill in a weak password (less than 8 characters)
+   
     cy.get("input[name='password']").type("short").debug();
     cy.get("input[name='password-repeat']").type("short").debug();
 
-    // Submit the form and check for validation error
+    
     cy.get("button[type='submit']").click();
     cy.on("window:alert", (alertText) => {
       expect(alertText).to.contains(
