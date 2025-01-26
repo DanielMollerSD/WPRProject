@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WPRxUnit")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+26ab2d835d8fabb3fc8db9e83685de5089b4c54d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fb528bbb88e42a85daa2dda27de4b492ddef6991")]
 [assembly: System.Reflection.AssemblyProductAttribute("WPRxUnit")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WPRxUnit")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
