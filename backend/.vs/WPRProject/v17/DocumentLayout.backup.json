@@ -1,7 +1,39 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\",
+  "WorkspaceRootPath": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\",
   "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{756F8C05-1D9E-4BB0-9720-8858BCC46638}|WPRxUnit\\WPRxUnit.csproj|c:\\users\\gleyv\\content\\professional coding projects\\wprproject\\backend\\wprxunit\\wprxunit.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{756F8C05-1D9E-4BB0-9720-8858BCC46638}|WPRxUnit\\WPRxUnit.csproj|solutionrelative:wprxunit\\wprxunit.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\gleyv\\content\\professional coding projects\\wprproject\\backend\\wprproject\\wprproject.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\wprproject.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\gleyv\\content\\professional coding projects\\wprproject\\backend\\wprproject\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\gleyv\\content\\professional coding projects\\wprproject\\backend\\wprproject\\appsettings.json copy.example||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\appsettings.json copy.example||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\gleyv\\content\\professional coding projects\\wprproject\\backend\\wprproject\\wprproject.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\wprproject.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\gleyv\\content\\professional coding projects\\wprproject\\backend\\wprproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\gleyv\\content\\professional coding projects\\wprproject\\backend\\wprproject\\wprproject.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\wprproject.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{756F8C05-1D9E-4BB0-9720-8858BCC46638}|WPRxUnit\\WPRxUnit.csproj|c:\\users\\gleyv\\content\\professional coding projects\\wprproject\\backend\\wprxunit\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{756F8C05-1D9E-4BB0-9720-8858BCC46638}|WPRxUnit\\WPRxUnit.csproj|solutionrelative:wprxunit\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Alex\\AppData\\Local\\Temp\\.vsdbgsrc\\33aba55612ddf5f3a5396af6427961cc87e2dd94d38bb6e63bee3260fd5bc000\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -9,100 +41,73 @@
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\alex\\source\\repos\\wprproject-1\\backend\\wprproject\\models\\business.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\models\\business.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\alex\\source\\repos\\wprproject-1\\backend\\wprproject\\controllers\\rentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\gleyv\\content\\professional coding projects\\wprproject\\backend\\wprproject\\controllers\\rentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\controllers\\rentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\alex\\source\\repos\\wprproject-1\\backend\\wprproject\\dtos\\customerlogindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\dtos\\customerlogindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\alex\\source\\repos\\wprproject-1\\backend\\wprproject\\models\\customer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\models\\customer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\alex\\source\\repos\\wprproject-1\\backend\\wprproject\\models\\damage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\models\\damage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\alex\\source\\repos\\wprproject-1\\backend\\wprproject\\models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\alex\\source\\repos\\wprproject-1\\backend\\wprproject\\models\\individual.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\models\\individual.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\alex\\source\\repos\\wprproject-1\\backend\\wprproject\\models\\rent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\models\\rent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\alex\\source\\repos\\wprproject-1\\backend\\wprproject\\models\\mail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\models\\mail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\alex\\source\\repos\\wprproject-1\\backend\\wprproject\\models\\subscriptioncoverage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\models\\subscriptioncoverage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\alex\\source\\repos\\wprproject-1\\backend\\wprproject\\models\\subscriptiondiscount.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\models\\subscriptiondiscount.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\alex\\source\\repos\\wprproject-1\\backend\\wprproject\\models\\subscriptionorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\models\\subscriptionorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\alex\\source\\repos\\wprproject-1\\backend\\wprproject\\models\\businessemployee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\models\\businessemployee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\alex\\source\\repos\\wprproject-1\\backend\\wprproject\\models\\subscription.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\models\\subscription.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\alex\\source\\repos\\wprproject-1\\backend\\wprproject\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\alex\\source\\repos\\wprproject-1\\backend\\wprproject\\migrations\\20241209152455_initialupdate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\migrations\\20241209152455_initialupdate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\alex\\source\\repos\\wprproject-1\\backend\\wprproject\\migrations\\carsandallcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\gleyv\\content\\professional coding projects\\wprproject\\backend\\wprproject\\migrations\\carsandallcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\migrations\\carsandallcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\alex\\source\\repos\\wprproject-1\\backend\\wprproject\\migrations\\20241118124733_intialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\migrations\\20241118124733_intialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\alex\\source\\repos\\wprproject-1\\backend\\wprproject\\migrations\\20241202131258_updateannotations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\migrations\\20241202131258_updateannotations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\alex\\source\\repos\\wprproject-1\\backend\\wprproject\\migrations\\20241202135407_removedrequiredannotation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\migrations\\20241202135407_removedrequiredannotation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\alex\\source\\repos\\wprproject-1\\backend\\wprproject\\wprproject.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\wprproject.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\alex\\source\\repos\\wprproject-1\\backend\\wprproject\\carsandallcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\gleyv\\content\\professional coding projects\\wprproject\\backend\\wprproject\\carsandallcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\carsandallcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\alex\\source\\repos\\wprproject-1\\backend\\wprproject\\weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\DTOS\\CustomerLoginDTO.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|c:\\users\\alex\\source\\repos\\wprproject-1\\backend\\wprproject\\models\\vehicle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86B4E385-8BCB-4B97-9C7B-BDEDCC4F372F}|WPRProject\\WPRProject.csproj|solutionrelative:wprproject\\models\\vehicle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Customer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Damage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Individual.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Rent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Mail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Business.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\SubscriptionCoverage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\SubscriptionOrder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\SubscriptionDiscount.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\BusinessEmployee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Subscription.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Migrations\\20241202131258_UpdateAnnotations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Migrations\\20241209152455_InitialUpdate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Migrations\\20241202135407_RemovedRequiredAnnotation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Migrations\\20241118124733_IntialCreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Vehicle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\WeatherForecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -112,20 +117,82 @@
       "DocumentGroups": [
         {
           "DockedWidth": 1189,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 13,
               "Title": "CustomerLoginDTO.cs",
               "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\DTOS\\CustomerLoginDTO.cs",
-              "RelativeDocumentMoniker": "WPRProject\\DTOS\\CustomerLoginDTO.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\DTOS\\CustomerLoginDTO.cs",
               "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\DTOS\\CustomerLoginDTO.cs",
-              "RelativeToolTip": "WPRProject\\DTOS\\CustomerLoginDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\DTOS\\CustomerLoginDTO.cs",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-13T20:52:54.732Z",
-              "IsPinned": true,
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "WPRxUnit",
+              "DocumentMoniker": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRxUnit\\WPRxUnit.csproj",
+              "RelativeDocumentMoniker": "WPRxUnit\\WPRxUnit.csproj",
+              "ToolTip": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRxUnit\\WPRxUnit.csproj",
+              "RelativeToolTip": "WPRxUnit\\WPRxUnit.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-01-26T11:44:52.912Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "WPRProject.http",
+              "DocumentMoniker": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRProject\\WPRProject.http",
+              "RelativeDocumentMoniker": "WPRProject\\WPRProject.http",
+              "ToolTip": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRProject\\WPRProject.http",
+              "RelativeToolTip": "WPRProject\\WPRProject.http",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2025-01-26T11:44:00.148Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "appsettings.json copy.example",
+              "DocumentMoniker": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRProject\\appsettings.json copy.example",
+              "RelativeDocumentMoniker": "WPRProject\\appsettings.json copy.example",
+              "ToolTip": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRProject\\appsettings.json copy.example",
+              "RelativeToolTip": "WPRProject\\appsettings.json copy.example",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-01-26T11:43:56.376Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "WPRProject",
+              "DocumentMoniker": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRProject\\WPRProject.csproj",
+              "RelativeDocumentMoniker": "WPRProject\\WPRProject.csproj",
+              "ToolTip": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRProject\\WPRProject.csproj",
+              "RelativeToolTip": "WPRProject\\WPRProject.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-01-26T11:43:08.129Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "UnitTest1.cs",
+              "DocumentMoniker": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRxUnit\\UnitTest1.cs",
+              "RelativeDocumentMoniker": "WPRxUnit\\UnitTest1.cs",
+              "ToolTip": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRxUnit\\UnitTest1.cs",
+              "RelativeToolTip": "WPRxUnit\\UnitTest1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-26T11:39:24.203Z",
               "EditorCaption": ""
             },
             {
@@ -138,20 +205,169 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Alex\\AppData\\Local\\Temp\\.vsdbgsrc\\33aba55612ddf5f3a5396af6427961cc87e2dd94d38bb6e63bee3260fd5bc000\\Program.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\33aba55612ddf5f3a5396af6427961cc87e2dd94d38bb6e63bee3260fd5bc000\\Program.cs",
-              "ToolTip": "C:\\Users\\Alex\\AppData\\Local\\Temp\\.vsdbgsrc\\33aba55612ddf5f3a5396af6427961cc87e2dd94d38bb6e63bee3260fd5bc000\\Program.cs [Read Only]",
-              "RelativeToolTip": "..\\..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\33aba55612ddf5f3a5396af6427961cc87e2dd94d38bb6e63bee3260fd5bc000\\Program.cs [Read Only]",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAACEAAAABAAAAAQAAAA==",
+              "DocumentMoniker": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRProject\\Program.cs",
+              "RelativeDocumentMoniker": "WPRProject\\Program.cs",
+              "ToolTip": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRProject\\Program.cs",
+              "RelativeToolTip": "WPRProject\\Program.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAAwDEAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-13T21:02:58.523Z",
-              "EditorCaption": " [Read Only]"
+              "WhenOpened": "2024-12-13T21:02:58.51Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Employee.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Employee.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Employee.cs",
+              "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Employee.cs",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Employee.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-02T13:07:53.634Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Individual.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Individual.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Individual.cs",
+              "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Individual.cs",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Individual.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-02T13:09:14.985Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Rent.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Rent.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Rent.cs",
+              "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Rent.cs",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Rent.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-02T13:09:37.621Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "Mail.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Mail.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Mail.cs",
+              "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Mail.cs",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Mail.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-02T13:09:28.465Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Business.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Business.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Business.cs",
+              "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Business.cs",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Business.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-02T13:08:12.795Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "SubscriptionCoverage.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\SubscriptionCoverage.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\SubscriptionCoverage.cs",
+              "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\SubscriptionCoverage.cs",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\SubscriptionCoverage.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-02T13:10:21.058Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "SubscriptionOrder.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\SubscriptionOrder.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\SubscriptionOrder.cs",
+              "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\SubscriptionOrder.cs",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\SubscriptionOrder.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-02T13:08:05.238Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRProject\\appsettings.json",
+              "RelativeDocumentMoniker": "WPRProject\\appsettings.json",
+              "ToolTip": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRProject\\appsettings.json",
+              "RelativeToolTip": "WPRProject\\appsettings.json",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-12-09T08:57:05.888Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "WPRProject.csproj",
+              "DocumentMoniker": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRProject\\WPRProject.csproj",
+              "RelativeDocumentMoniker": "WPRProject\\WPRProject.csproj",
+              "ToolTip": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRProject\\WPRProject.csproj",
+              "RelativeToolTip": "WPRProject\\WPRProject.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-12-02T14:26:45.451Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Damage.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Damage.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Damage.cs",
+              "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Damage.cs",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Damage.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-02T13:04:54.676Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Customer.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Customer.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Customer.cs",
+              "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Customer.cs",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Customer.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-02T13:04:52.431Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "RentController.cs",
+              "DocumentMoniker": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRProject\\Controllers\\RentController.cs",
+              "RelativeDocumentMoniker": "WPRProject\\Controllers\\RentController.cs",
+              "ToolTip": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRProject\\Controllers\\RentController.cs",
+              "RelativeToolTip": "WPRProject\\Controllers\\RentController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-13T20:56:04.737Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "SubscriptionDiscount.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\SubscriptionDiscount.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\SubscriptionDiscount.cs",
+              "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\SubscriptionDiscount.cs",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\SubscriptionDiscount.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-02T13:08:10.752Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "Microsoft.Common.CurrentVersion.targets",
               "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
@@ -164,292 +380,127 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "RentController.cs",
-              "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Controllers\\RentController.cs",
-              "RelativeDocumentMoniker": "WPRProject\\Controllers\\RentController.cs",
-              "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Controllers\\RentController.cs",
-              "RelativeToolTip": "WPRProject\\Controllers\\RentController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-13T20:56:04.737Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Customer.cs",
-              "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Customer.cs",
-              "RelativeDocumentMoniker": "WPRProject\\Models\\Customer.cs",
-              "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Customer.cs",
-              "RelativeToolTip": "WPRProject\\Models\\Customer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T13:04:52.431Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Damage.cs",
-              "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Damage.cs",
-              "RelativeDocumentMoniker": "WPRProject\\Models\\Damage.cs",
-              "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Damage.cs",
-              "RelativeToolTip": "WPRProject\\Models\\Damage.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T13:04:54.676Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Employee.cs",
-              "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Employee.cs",
-              "RelativeDocumentMoniker": "WPRProject\\Models\\Employee.cs",
-              "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Employee.cs",
-              "RelativeToolTip": "WPRProject\\Models\\Employee.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T13:07:53.634Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 8,
-              "Title": "Individual.cs",
-              "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Individual.cs",
-              "RelativeDocumentMoniker": "WPRProject\\Models\\Individual.cs",
-              "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Individual.cs",
-              "RelativeToolTip": "WPRProject\\Models\\Individual.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAHAAAAAAAAAA==",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\AppData\\Local\\Temp\\.vsdbgsrc\\33aba55612ddf5f3a5396af6427961cc87e2dd94d38bb6e63bee3260fd5bc000\\Program.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Alex\\AppData\\Local\\Temp\\.vsdbgsrc\\33aba55612ddf5f3a5396af6427961cc87e2dd94d38bb6e63bee3260fd5bc000\\Program.cs",
+              "ToolTip": "C:\\Users\\Alex\\AppData\\Local\\Temp\\.vsdbgsrc\\33aba55612ddf5f3a5396af6427961cc87e2dd94d38bb6e63bee3260fd5bc000\\Program.cs [Read Only]",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Alex\\AppData\\Local\\Temp\\.vsdbgsrc\\33aba55612ddf5f3a5396af6427961cc87e2dd94d38bb6e63bee3260fd5bc000\\Program.cs [Read Only]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T13:09:14.985Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-13T21:02:58.523Z",
+              "EditorCaption": " [Read Only]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Rent.cs",
-              "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Rent.cs",
-              "RelativeDocumentMoniker": "WPRProject\\Models\\Rent.cs",
-              "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Rent.cs",
-              "RelativeToolTip": "WPRProject\\Models\\Rent.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T13:09:37.621Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Mail.cs",
-              "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Mail.cs",
-              "RelativeDocumentMoniker": "WPRProject\\Models\\Mail.cs",
-              "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Mail.cs",
-              "RelativeToolTip": "WPRProject\\Models\\Mail.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T13:09:28.465Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Business.cs",
-              "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Business.cs",
-              "RelativeDocumentMoniker": "WPRProject\\Models\\Business.cs",
-              "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Business.cs",
-              "RelativeToolTip": "WPRProject\\Models\\Business.cs",
-              "ViewState": "AgIAAAEAAAAAAAAAAAASwBAAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T13:08:12.795Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "SubscriptionCoverage.cs",
-              "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\SubscriptionCoverage.cs",
-              "RelativeDocumentMoniker": "WPRProject\\Models\\SubscriptionCoverage.cs",
-              "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\SubscriptionCoverage.cs",
-              "RelativeToolTip": "WPRProject\\Models\\SubscriptionCoverage.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAA2AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T13:10:21.058Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "SubscriptionOrder.cs",
-              "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\SubscriptionOrder.cs",
-              "RelativeDocumentMoniker": "WPRProject\\Models\\SubscriptionOrder.cs",
-              "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\SubscriptionOrder.cs",
-              "RelativeToolTip": "WPRProject\\Models\\SubscriptionOrder.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T13:08:05.238Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "SubscriptionDiscount.cs",
-              "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\SubscriptionDiscount.cs",
-              "RelativeDocumentMoniker": "WPRProject\\Models\\SubscriptionDiscount.cs",
-              "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\SubscriptionDiscount.cs",
-              "RelativeToolTip": "WPRProject\\Models\\SubscriptionDiscount.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T13:08:10.752Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 24,
               "Title": "BusinessEmployee.cs",
               "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\BusinessEmployee.cs",
-              "RelativeDocumentMoniker": "WPRProject\\Models\\BusinessEmployee.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\BusinessEmployee.cs",
               "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\BusinessEmployee.cs",
-              "RelativeToolTip": "WPRProject\\Models\\BusinessEmployee.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\BusinessEmployee.cs",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T13:08:14.372Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-02T13:08:14.372Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 25,
               "Title": "Subscription.cs",
               "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Subscription.cs",
-              "RelativeDocumentMoniker": "WPRProject\\Models\\Subscription.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Subscription.cs",
               "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Subscription.cs",
-              "RelativeToolTip": "WPRProject\\Models\\Subscription.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAHAAAAAAAAAA==",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Subscription.cs",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T13:10:12.227Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-02T13:10:12.227Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\appsettings.json",
-              "RelativeDocumentMoniker": "WPRProject\\appsettings.json",
-              "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\appsettings.json",
-              "RelativeToolTip": "WPRProject\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-12-09T08:57:05.888Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 26,
               "Title": "20241202131258_UpdateAnnotations.cs",
               "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Migrations\\20241202131258_UpdateAnnotations.cs",
-              "RelativeDocumentMoniker": "WPRProject\\Migrations\\20241202131258_UpdateAnnotations.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Migrations\\20241202131258_UpdateAnnotations.cs",
               "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Migrations\\20241202131258_UpdateAnnotations.cs",
-              "RelativeToolTip": "WPRProject\\Migrations\\20241202131258_UpdateAnnotations.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Migrations\\20241202131258_UpdateAnnotations.cs",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-09T09:06:33.871Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 27,
               "Title": "20241209152455_InitialUpdate.cs",
               "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Migrations\\20241209152455_InitialUpdate.cs",
-              "RelativeDocumentMoniker": "WPRProject\\Migrations\\20241209152455_InitialUpdate.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Migrations\\20241209152455_InitialUpdate.cs",
               "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Migrations\\20241209152455_InitialUpdate.cs",
-              "RelativeToolTip": "WPRProject\\Migrations\\20241209152455_InitialUpdate.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Migrations\\20241209152455_InitialUpdate.cs",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-09T15:24:55.61Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 28,
               "Title": "20241202135407_RemovedRequiredAnnotation.cs",
               "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Migrations\\20241202135407_RemovedRequiredAnnotation.cs",
-              "RelativeDocumentMoniker": "WPRProject\\Migrations\\20241202135407_RemovedRequiredAnnotation.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Migrations\\20241202135407_RemovedRequiredAnnotation.cs",
               "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Migrations\\20241202135407_RemovedRequiredAnnotation.cs",
-              "RelativeToolTip": "WPRProject\\Migrations\\20241202135407_RemovedRequiredAnnotation.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Migrations\\20241202135407_RemovedRequiredAnnotation.cs",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-09T09:16:27.549Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 11,
               "Title": "CarsAndAllContextModelSnapshot.cs",
-              "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Migrations\\CarsAndAllContextModelSnapshot.cs",
+              "DocumentMoniker": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRProject\\Migrations\\CarsAndAllContextModelSnapshot.cs",
               "RelativeDocumentMoniker": "WPRProject\\Migrations\\CarsAndAllContextModelSnapshot.cs",
-              "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Migrations\\CarsAndAllContextModelSnapshot.cs",
+              "ToolTip": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRProject\\Migrations\\CarsAndAllContextModelSnapshot.cs",
               "RelativeToolTip": "WPRProject\\Migrations\\CarsAndAllContextModelSnapshot.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAAYwCYAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T14:21:34.739Z"
+              "WhenOpened": "2024-12-02T14:21:34.739Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 29,
               "Title": "20241118124733_IntialCreate.cs",
               "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Migrations\\20241118124733_IntialCreate.cs",
-              "RelativeDocumentMoniker": "WPRProject\\Migrations\\20241118124733_IntialCreate.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Migrations\\20241118124733_IntialCreate.cs",
               "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Migrations\\20241118124733_IntialCreate.cs",
-              "RelativeToolTip": "WPRProject\\Migrations\\20241118124733_IntialCreate.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Migrations\\20241118124733_IntialCreate.cs",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-02T14:24:02.09Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "WPRProject.csproj",
-              "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\WPRProject.csproj",
-              "RelativeDocumentMoniker": "WPRProject\\WPRProject.csproj",
-              "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\WPRProject.csproj",
-              "RelativeToolTip": "WPRProject\\WPRProject.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-12-02T14:26:45.451Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 30,
               "Title": "Vehicle.cs",
               "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Vehicle.cs",
-              "RelativeDocumentMoniker": "WPRProject\\Models\\Vehicle.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Vehicle.cs",
               "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Vehicle.cs",
-              "RelativeToolTip": "WPRProject\\Models\\Vehicle.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\Models\\Vehicle.cs",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-02T13:07:59.67Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 12,
               "Title": "CarsAndAllContext.cs",
-              "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\CarsAndAllContext.cs",
+              "DocumentMoniker": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRProject\\CarsAndAllContext.cs",
               "RelativeDocumentMoniker": "WPRProject\\CarsAndAllContext.cs",
-              "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\CarsAndAllContext.cs",
+              "ToolTip": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRProject\\CarsAndAllContext.cs",
               "RelativeToolTip": "WPRProject\\CarsAndAllContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-18T17:19:23.941Z"
+              "WhenOpened": "2024-11-18T17:19:23.941Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 31,
               "Title": "WeatherForecast.cs",
               "DocumentMoniker": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\WeatherForecast.cs",
-              "RelativeDocumentMoniker": "WPRProject\\WeatherForecast.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\WeatherForecast.cs",
               "ToolTip": "C:\\Users\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\WeatherForecast.cs",
-              "RelativeToolTip": "WPRProject\\WeatherForecast.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Alex\\source\\repos\\WPRProject-1\\backend\\WPRProject\\WeatherForecast.cs",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-18T17:19:25.331Z"
             }
