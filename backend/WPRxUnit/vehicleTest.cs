@@ -57,4 +57,33 @@ public class VehicleTest
         var returnValue = Assert.IsAssignableFrom<IEnumerable<Vehicle>>(okResult.Value);
         Assert.Single(returnValue);
     }
+
+    [Fact]
+    public async Task CreateVehicle_ShouldReturnCreatedAtAction_WhenValidVehicleIsProvided()
+    {
+        // Arrange
+        var newVehicle = new Vehicle
+        {
+            LicensePlate = "NEW123",
+            Brand = "BMW",
+            Model = "X5",
+            Color = "Black",
+            Status = "Available",
+            Note = "Brand new vehicle",
+            Price = 8000,
+            PurchaseYear = 2023,
+            VehicleType = "SUV"
+        };
+
+        // Act
+        var result = await _controller.CreateVehicle(newVehicle);
+
+        // Assert
+        var createdAtActionResult = Assert.IsType<CreatedAtActionResult>(result.Result);
+        Assert.Equal("GetVehicleById", createdAtActionResult.ActionName);
+        var createdVehicle = Assert.IsType<Vehicle>(createdAtActionResult.Value);
+        Assert.Equal(newVehicle.LicensePlate, createdVehicle.LicensePlate);
+        Assert.Equal(newVehicle.Brand, createdVehicle.Brand);
+        Assert.Equal(newVehicle.Model, createdVehicle.Model);
+    }
 }
