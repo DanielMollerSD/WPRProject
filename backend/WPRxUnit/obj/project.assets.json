@@ -10705,19 +10705,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Gleyv\\.nuget\\packages\\": {}
+    "C:\\Users\\Ayberk Yonar\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRxUnit\\WPRxUnit.csproj",
+      "projectUniqueName": "C:\\Users\\Ayberk Yonar\\OneDrive - ROC Mondriaan\\Bureaublad\\WPRProject\\backend\\WPRxUnit\\WPRxUnit.csproj",
       "projectName": "WPRxUnit",
-      "projectPath": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRxUnit\\WPRxUnit.csproj",
-      "packagesPath": "C:\\Users\\Gleyv\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRxUnit\\obj\\",
+      "projectPath": "C:\\Users\\Ayberk Yonar\\OneDrive - ROC Mondriaan\\Bureaublad\\WPRProject\\backend\\WPRxUnit\\WPRxUnit.csproj",
+      "packagesPath": "C:\\Users\\Ayberk Yonar\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Ayberk Yonar\\OneDrive - ROC Mondriaan\\Bureaublad\\WPRProject\\backend\\WPRxUnit\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Gleyv\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Ayberk Yonar\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -10732,8 +10732,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRProject\\WPRProject.csproj": {
-              "projectPath": "C:\\Users\\Gleyv\\Content\\Professional Coding Projects\\WPRProject\\backend\\WPRProject\\WPRProject.csproj"
+            "C:\\Users\\Ayberk Yonar\\OneDrive - ROC Mondriaan\\Bureaublad\\WPRProject\\backend\\WPRProject\\WPRProject.csproj": {
+              "projectPath": "C:\\Users\\Ayberk Yonar\\OneDrive - ROC Mondriaan\\Bureaublad\\WPRProject\\backend\\WPRProject\\WPRProject.csproj"
             }
           }
         }
@@ -10801,7 +10801,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

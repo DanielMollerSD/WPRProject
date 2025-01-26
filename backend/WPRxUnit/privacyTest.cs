@@ -11,16 +11,15 @@ using System.Security.Claims;
 using System.Linq;
 using WPRProject;
 
-public class PrivacyControllerTests
+public class PrivacyTest
 {
     private readonly CarsAndAllContext _context;
     private readonly PrivacyController _controller;
 
-    public PrivacyControllerTests()
+    public PrivacyTest()
     {
-        // Create a unique in-memory database for each test
         var options = new DbContextOptionsBuilder<CarsAndAllContext>()
-            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()) // Unique database
+            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
             .Options;
 
         _context = new CarsAndAllContext(options);

@@ -10,12 +10,12 @@ using System.Security.Claims;
 using System.Collections.Generic;
 using WPRProject;
 
-public class VehicleControllerTests
+public class VehicleTest
 {
     private readonly VehicleController _controller;
     private readonly CarsAndAllContext _context;
 
-    public VehicleControllerTests()
+    public VehicleTest()
     {
         var options = new DbContextOptionsBuilder<CarsAndAllContext>()
             .UseInMemoryDatabase(databaseName: "TestDb") // In-memory database for testing
