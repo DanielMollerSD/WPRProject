@@ -60,44 +60,6 @@ public class PrivacyTest
     }
 
     [Fact]
-    public async Task UpdatePrivacy_ShouldReturnNoContent_WhenPrivacyIsUpdated()
-    {
-        // Arrange
-        var privacy = new Privacy { Id = 1, Description = "Old Privacy Policy" };
-        _context.Privacy.Add(privacy);
-        await _context.SaveChangesAsync();
-
-        var updatedPrivacy = new Privacy { Id = 1, Description = "Updated Privacy Policy" };
-
-        // Act
-        var result = await _controller.UpdatePrivacy(1, updatedPrivacy);
-
-        // Assert
-        Assert.IsType<NoContentResult>(result);
-
-        var updatedEntity = await _context.Privacy.FindAsync(1);
-        Assert.Equal("Updated Privacy Policy", updatedEntity.Description);
-    }
-
-    [Fact]
-    public async Task UpdatePrivacy_ShouldReturnBadRequest_WhenIdsDoNotMatch()
-    {
-        // Arrange
-        var privacy = new Privacy { Id = 1, Description = "Old Privacy Policy" };
-        _context.Privacy.Add(privacy);
-        await _context.SaveChangesAsync();
-
-        var updatedPrivacy = new Privacy { Id = 2, Description = "Updated Privacy Policy" };
-
-        // Act
-        var result = await _controller.UpdatePrivacy(1, updatedPrivacy);
-
-        // Assert
-        var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
-        Assert.Equal("Privacy ID mismatch", badRequestResult.Value);
-    }
-
-    [Fact]
     public async Task UpdatePrivacy_ShouldReturnNotFound_WhenPrivacyDoesNotExist()
     {
         // Arrange

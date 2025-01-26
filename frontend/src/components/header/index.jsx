@@ -151,7 +151,7 @@ function Header() {
                         {isLoggedIn ? (
                             <h1 className="header-title">Welkom {loadingUsername ? "Loading..." : userData.firstName}</h1>
                         ) : (
-                            <h1 className="header-title">Cars and All</h1>
+                            <h1 className="header-title">CarsAndAll</h1>
                         )}
 
                         <p className="header-description">
