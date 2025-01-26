@@ -1,12 +1,7 @@
 import { defineConfig } from "cypress";
 
 export default defineConfig({
-  component: {
-    devServer: {
-      framework: "react",
-      bundler: "vite",
-    },
-  },
+  projectId: 'eaurz2',
 
   component: {
     devServer: {
@@ -16,8 +11,10 @@ export default defineConfig({
   },
 
   e2e: {
+    baseUrl: 'http://localhost:5173', // Zorg voor een consistente base URL
     setupNodeEvents(on, config) {
-      // implement node event listeners here
+      // Je kunt hier plugins en events configureren
     },
+    specPattern: "cypress/e2e/**/*.cy.{js,jsx,ts,tsx}", // Welke bestanden als tests worden herkend
   },
 });
