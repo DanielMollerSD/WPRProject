@@ -1,8 +1,19 @@
 main {
     min-height: calc(100vh - 436px);
-    
-    .page.page-home{
+
+    .page.page-home {
         padding-top: 50px;
         padding-bottom: 50px;
+
+        .card-img-top {
+            margin-top: 20px;
+            border-radius: 25px;
+            width: 100%;
+            height: auto;
+          }
     }
+    
+
+
+
 }
