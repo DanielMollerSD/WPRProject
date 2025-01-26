@@ -50,7 +50,7 @@ public class VehicleControllerTests
         await _context.SaveChangesAsync();
 
         // Act
-        var result = await _controller.GetVehicles("Car", "Toyota", null, null, null, null);
+        var result = await _controller.GetVehicles("Car", "Honda", null, null, null, null);
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
