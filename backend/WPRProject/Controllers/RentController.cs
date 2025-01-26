@@ -91,12 +91,12 @@ namespace WPRProject.Controllers
 
             try
             {
-                var subject = "Huur bevestiging - CarsAndAll";
-                var message = $"<h1>Uw huur is bevestigd!</h1>" +
-                              $"<p>Voertuig: {vehicle.Brand} {vehicle.Model}</p>" +
-                              $"<p>Huur periode: {rent.StartDate:yyyy-MM-dd} tot {rent.EndDate:yyyy-MM-dd}</p>";
+                // var subject = "Huur bevestiging - CarsAndAll";
+                // var message = $"<h1>Uw huur is bevestigd!</h1>" +
+                //               $"<p>Voertuig: {vehicle.Brand} {vehicle.Model}</p>" +
+                //               $"<p>Huur periode: {rent.StartDate:yyyy-MM-dd} tot {rent.EndDate:yyyy-MM-dd}</p>";
 
-                await _emailService.SendEmailAsync(userEmail, subject, message);
+                // await _emailService.SendEmailAsync(userEmail, subject, message);
 
                 rent.Status = Rent.Pending; // Set default status
                 _context.Rent.Add(rent);
@@ -113,7 +113,6 @@ namespace WPRProject.Controllers
             }
         }
 
-        // PATCH rent status (Authenticated users)
         [Authorize(Roles = "Backoffice")]
         [HttpPatch("{id}/status")]
         public async Task<IActionResult> UpdateStatus(int id, [FromBody] string newStatus)
@@ -123,24 +122,70 @@ namespace WPRProject.Controllers
                 return BadRequest("Status cannot be empty.");
             }
 
-            var rent = await _context.Rent.FindAsync(id);
+            var rent = await _context.Rent
+                .Include(r => r.Vehicle)
+                .Include(r => r.Customer)
+                .FirstOrDefaultAsync(r => r.Id == id);
 
             if (rent == null)
             {
                 return NotFound();
             }
 
-            // Validate the new status value
             if (newStatus != Rent.Pending && newStatus != Rent.Accepted && newStatus != Rent.Declined)
             {
                 return BadRequest("Invalid status value. Allowed values are: 'pending', 'accepted', 'declined'.");
             }
 
             rent.Status = newStatus;
-            await _context.SaveChangesAsync();
 
-            return Ok(rent);
+            try
+            {
+                await _context.SaveChangesAsync();
+
+                var userEmail = rent.Customer?.Email;
+                if (!string.IsNullOrEmpty(userEmail))
+                {
+                    string subject;
+                    string message;
+
+                    if (newStatus == Rent.Accepted)
+                    {
+                        subject = "Huur geaccepteerd - CarsAndAll";
+                        message = $"<h1>Uw huur is geaccepteerd!</h1>" +
+                                $"<p>Voertuig: {rent.Vehicle.Brand} {rent.Vehicle.Model}</p>" +
+                                $"<p>Huur periode: {rent.StartDate:yyyy-MM-dd} tot {rent.EndDate:yyyy-MM-dd}</p>";
+                    }
+                    else if (newStatus == Rent.Declined)
+                    {
+                        subject = "Huur geweigerd - CarsAndAll";
+                        message = $"<h1>Uw huur is geweigerd!</h1>" +
+                                $"<p>Voertuig: {rent.Vehicle.Brand} {rent.Vehicle.Model}</p>" +
+                                $"<p>Neem contact op met ons voor meer informatie.</p>";
+                    }
+                    else
+                    {
+                        subject = "Huurstatus bijgewerkt - CarsAndAll";
+                        message = $"<h1>De status van uw huur is gewijzigd!</h1>" +
+                                $"<p>Nieuwe status: {newStatus}</p>" +
+                                $"<p>Voertuig: {rent.Vehicle.Brand} {rent.Vehicle.Model}</p>";
+                    }
+
+                    await _emailService.SendEmailAsync(userEmail, subject, message);
+                }
+
+                return Ok(rent);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = "An error occurred while updating the rent status.",
+                    details = ex.Message
+                });
+            }
         }
+
 
         [Authorize(Roles = "Backoffice, Wagenparkbeheerder, Medewerker, Individual")]
         [HttpGet("requests")]
