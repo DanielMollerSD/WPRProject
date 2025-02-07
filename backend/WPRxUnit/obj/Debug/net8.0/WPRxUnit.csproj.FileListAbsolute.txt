@@ -954,3 +954,4 @@ C:\Users\Ayberk Yonar\OneDrive - ROC Mondriaan\Bureaublad\WPRProject\backend\WPR
 C:\Users\Ayberk Yonar\OneDrive - ROC Mondriaan\Bureaublad\WPRProject\backend\WPRxUnit\obj\Debug\net8.0\WPRxUnit.pdb
 C:\Users\Ayberk Yonar\OneDrive - ROC Mondriaan\Bureaublad\WPRProject\backend\WPRxUnit\obj\Debug\net8.0\WPRxUnit.genruntimeconfig.cache
 C:\Users\Ayberk Yonar\OneDrive - ROC Mondriaan\Bureaublad\WPRProject\backend\WPRxUnit\obj\Debug\net8.0\ref\WPRxUnit.dll
+C:\Users\Ayberk Yonar\OneDrive - ROC Mondriaan\Bureaublad\WPRProject\backend\WPRxUnit\bin\Debug\net8.0\appsettings.json

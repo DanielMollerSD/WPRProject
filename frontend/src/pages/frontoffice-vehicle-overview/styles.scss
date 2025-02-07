@@ -7,15 +7,16 @@
         padding: 20px 30px;
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: auto;
 
         .vehicle-list {
             margin-top: 20px;
 
             .vehicle-table {
-                width: 100%;
                 border-collapse: collapse;
                 overflow-x: auto;
-                display: block; 
+                width: 100%;
+                margin-top: 20px;
 
                 thead {
                     tr {
@@ -114,10 +115,10 @@
 }
 
 @media (max-width: 768px) {
-    .page.page-rent-screen {
+    .page.page-frontoffice-vehicle-overview {
         padding: 20px;
 
-        .rent-screen-content {
+        .container {
             padding: 15px;
             width: 100%;
             box-shadow: none;
